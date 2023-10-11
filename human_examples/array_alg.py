@@ -73,5 +73,3 @@ def findThePrefixCommonArray(arr1: np.array, arr2: np.array):
       seen.add(cur2)
     ret.append(curCount)
   return np.array(ret)
-
-findThePrefixCommonArray(np.array([1,3,2,4]), np.array([3,1,2,4]))

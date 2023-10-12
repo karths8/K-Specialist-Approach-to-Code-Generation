@@ -266,16 +266,13 @@ def solve(initial, empty_tile_pos, final):
 Given an input N for a NxN chessboard place N queens such that no two queens attack each other. Return the NxN board with the Queens marked as Q. If the problem is not solvable return Solution does not exist
 """
 N = 8
- 
-""" A utility function to print solution """
+
 def printSolution(board):
     for i in range(N):
         for j in range(N):
             print(board[i][j], end = " ")
         print()
- 
-""" A Optimized function to check if 
-a queen can be placed on board[row][col] """
+
 def isSafe(row, col, slashCode, backslashCode, 
            rowLookup, slashCodeLookup, 
                        backslashCodeLookup):
@@ -284,56 +281,31 @@ def isSafe(row, col, slashCode, backslashCode,
         rowLookup[row]):
         return False
     return True
- 
-""" A recursive utility function 
-   to solve N Queen problem """
+
 def solveNQueensUtil(board, col, slashCode, backslashCode, 
                      rowLookup, slashCodeLookup,
                      backslashCodeLookup):
-                         
-    """ base case: If all queens are 
-       placed then return True """
     if(col >= N):
         return True
     for i in range(N):
         if(isSafe(i, col, slashCode, backslashCode, 
                   rowLookup, slashCodeLookup,
                   backslashCodeLookup)):
-                     
-            """ Place this queen in board[i][col] """
             board[i][col] = 1
             rowLookup[i] = True
             slashCodeLookup[slashCode[i][col]] = True
             backslashCodeLookup[backslashCode[i][col]] = True
-             
-            """ recur to place rest of the queens """
             if(solveNQueensUtil(board, col + 1, 
                                 slashCode, backslashCode, 
                                 rowLookup, slashCodeLookup, 
                                 backslashCodeLookup)):
                 return True
-             
-            """ If placing queen in board[i][col] 
-            doesn't lead to a solution,then backtrack """
-             
-            """ Remove queen from board[i][col] """
             board[i][col] = 0
             rowLookup[i] = False
             slashCodeLookup[slashCode[i][col]] = False
             backslashCodeLookup[backslashCode[i][col]] = False
              
-    """ If queen can not be place in any row in 
-    this column col then return False """
     return False
- 
-""" This function solves the N Queen problem using 
-Branch or Bound. It mainly uses solveNQueensUtil()to 
-solve the problem. It returns False if queens 
-cannot be placed,otherwise return True or 
-prints placement of queens in the form of 1s. 
-Please note that there may be more than one 
-solutions,this function prints one of the 
-feasible solutions."""
 def solveNQueens():
     board = [[0 for i in range(N)] 
                 for j in range(N)]
@@ -458,3 +430,111 @@ def find_min_cost(cost_matrix):
             child.pathCost = min.pathCost + cost_matrix[i][j]
             child.cost = child.pathCost + calcCost(cost_matrix, i, j, child.assigned)
             pq.push(child)
+
+"""
+Given a set of cities and distance between every pair of cities, the problem is to find the shortest possible tour that visits every city exactly once and returns to the starting point.
+
+"""
+import math
+maxsize = float('inf')
+def copyToFinal(curr_path):
+	final_path[:N + 1] = curr_path[:]
+	final_path[N] = curr_path[0]
+def firstMin(adj, i):
+	min = maxsize
+	for k in range(N):
+		if adj[i][k] < min and i != k:
+			min = adj[i][k]
+
+	return min
+
+def secondMin(adj, i):
+	first, second = maxsize, maxsize
+	for j in range(N):
+		if i == j:
+			continue
+		if adj[i][j] <= first:
+			second = first
+			first = adj[i][j]
+
+		elif(adj[i][j] <= second and
+			adj[i][j] != first):
+			second = adj[i][j]
+
+	return second
+
+def TSPRec(adj, curr_bound, curr_weight, 
+			level, curr_path, visited):
+	global final_res
+
+	if level == N:
+
+		if adj[curr_path[level - 1]][curr_path[0]] != 0:
+			curr_res = curr_weight + adj[curr_path[level - 1]]\
+										[curr_path[0]]
+			if curr_res < final_res:
+				copyToFinal(curr_path)
+				final_res = curr_res
+		return
+
+	for i in range(N):
+		if (adj[curr_path[level-1]][i] != 0 and
+							visited[i] == False):
+			temp = curr_bound
+			curr_weight += adj[curr_path[level - 1]][i]
+			if level == 1:
+				curr_bound -= ((firstMin(adj, curr_path[level - 1]) +
+								firstMin(adj, i)) / 2)
+			else:
+				curr_bound -= ((secondMin(adj, curr_path[level - 1]) +
+								firstMin(adj, i)) / 2)
+			if curr_bound + curr_weight < final_res:
+				curr_path[level] = i
+				visited[i] = True
+				TSPRec(adj, curr_bound, curr_weight, 
+					level + 1, curr_path, visited)
+			curr_weight -= adj[curr_path[level - 1]][i]
+			curr_bound = temp
+			visited = [False] * len(visited)
+			for j in range(level):
+				if curr_path[j] != -1:
+					visited[curr_path[j]] = True
+def TSP(adj):
+	curr_bound = 0
+	curr_path = [-1] * (N + 1)
+	visited = [False] * N
+	for i in range(N):
+		curr_bound += (firstMin(adj, i) +
+					secondMin(adj, i))
+	curr_bound = math.ceil(curr_bound / 2)
+	visited[0] = True
+	curr_path[0] = 0
+	TSPRec(adj, curr_bound, 0, 1, curr_path, visited)
+
+# Driver code
+
+# Adjacency matrix for the given graph
+adj = [[0, 10, 15, 20],
+	[10, 0, 35, 25],
+	[15, 35, 0, 30],
+	[20, 25, 30, 0]]
+N = 4
+
+# final_path[] stores the final solution 
+# i.e. the // path of the salesman.
+final_path = [None] * (N + 1)
+
+# visited[] keeps track of the already
+# visited nodes in a particular path
+visited = [False] * N
+
+# Stores the final minimum weight
+# of shortest tour.
+final_res = maxsize
+
+TSP(adj)
+
+print("Minimum cost :", final_res)
+print("Path Taken : ", end = ' ')
+for i in range(N + 1):
+	print(final_path[i], end = ' ')

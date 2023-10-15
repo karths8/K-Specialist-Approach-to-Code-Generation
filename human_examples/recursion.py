@@ -1,4 +1,10 @@
-#Return nth number in the fibonacci sequence
+import json
+p = [
+{
+"question":
+"Return nth number in the fibonacci sequence",
+"code" :
+"""
 def fib(n, a=0, b=1):
   if n <= 0:
     return b
@@ -6,14 +12,24 @@ def fib(n, a=0, b=1):
   a = b
   b = c
   return fib(n-1, a, b)
-
-#Return the factorial of a given number n
+"""
+},
+{
+"question":
+"Return the factorial of a given number n",
+"code":
+"""
 def fact(n):
   if n <= 1:
     return 1
   return n*fact(n)
-
-#Given a numerator and a denominator return the fraction in string format. If the fractional part is repeating enclose the repeating part in parentheses
+"""
+},
+{
+"question":
+"Given a numerator and a denominator return the fraction in string format. If the fractional part is repeating enclose the repeating part in parentheses",
+"code":
+"""
 def helper(cur, numerator, denominator, numerators_seen):
   if numerator == 0:
     return cur
@@ -48,7 +64,10 @@ def fractionToDecimal(numerator, denominator):
   else:
     cur += "0."
     return helper(cur, numerator*10, denominator, dict())
-  
+"""
+},
+{
+"question":
 """You are given the root of a binary search tree (BST), where the values of exactly two nodes of the tree were swapped by mistake. Recover the tree without changing its structure.
 Definition for a binary tree node.
 class TreeNode(object):
@@ -56,6 +75,8 @@ class TreeNode(object):
         self.val = val
         self.left = left
         self.right = right
+""",
+"code":
 """
 def forward(root, n):
     if root is None:
@@ -98,8 +119,10 @@ def recoverTree(root):
     x, y = forward(root, []), backward(root, [])
     x.val, y.val = y.val, x.val
     return root
-
-
+"""
+},
+{
+"question":
 """Given a list of values output a root binary tree node with appropiate children. None should not have a Tree Node created for them.
 Definition for a binary tree node.
 class TreeNode(object):
@@ -107,6 +130,8 @@ class TreeNode(object):
         self.val = val
         self.left = left
         self.right = right
+""",
+"code":
 """
 class TreeNode(object):
     def __init__(self, val=0, left=None, right=None):
@@ -127,3 +152,8 @@ def createTree(nums):
       else:
          return None
    return helper(0)
+"""
+}
+]
+with open("recursion.json", 'w') as f:
+  json.dump(p, f)

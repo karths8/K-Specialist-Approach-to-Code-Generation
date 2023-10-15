@@ -1,6 +1,9 @@
-#https://www.geeksforgeeks.org/the-knights-tour-problem/
-"""
-Given a N*N board with the Knight placed on the first block of an empty board. Moving according to the rules of chess knight must visit each square exactly once. Print the order of each cell in which they are visited.
+import json
+p = [
+{
+"question": """Given a N*N board with the Knight placed on the first block of an empty board. Moving according to the rules of chess knight must visit each square exactly once. Print the order of each cell in which they are visited.
+""",
+"code":
 """
 def isSafe(x, y, board, n): 
   if(x >= 0 and y >= 0 and x < n and y < n and board[x][y] == -1): 
@@ -38,14 +41,17 @@ def solveKTUtil(n, board, curr_x, curr_y, move_x, move_y, pos):
         return True
       board[new_x][new_y] = -1
   return False
-
-#https://www.geeksforgeeks.org/rat-in-a-maze/
 """
-A Maze is given as N*N binary matrix of blocks where source block is maze[0][0] and destination block is maze[N-1][N-1]. 
+},
+{
+"question": 
+"""A Maze is given as N*N binary matrix of blocks where source block is maze[0][0] and destination block is maze[N-1][N-1]. 
 A rat starts from source and has to reach the destination. The rat can move only in two directions: forward and down. 
 
 In the maze matrix, 0 means the block is a dead end and 1 means the block can be used in the path from source to destination. 
 Given an N*N input maze Output a N*N matrix where all entries in the solution path are marked as 1 or output Solution does not exist if no solution exists.
+""",
+"code" :
 """
 def isValid(n, maze, x, y, res):
   if x >= 0 and y >= 0 and x < n and y < n and maze[x][y] == 1 and res[x][y] == 0:
@@ -78,10 +84,12 @@ def solveMaze(maze):
             print()
     else:
         print('Solution does not exist')
-
-# https://www.geeksforgeeks.org/n-queen-problem-backtracking-3/
 """
-Given an input N for a NxN chessboard place N queens such that no two queens attack each other. Return the NxN board with the Queens marked as Q. If the problem is not solvable return Solution does not exist
+},
+{
+"question": """Given an input N for a NxN chessboard place N queens such that no two queens attack each other. Return the NxN board with the Queens marked as Q. If the problem is not solvable return Solution does not exist
+""",
+"code":
 """
 def printSolution(board):
   for i in range(len(board)):
@@ -123,10 +131,13 @@ def solveNQ(N):
   if solveNQUtil(board, 0) == False:
     print("Solution does not exist")
   printSolution(board)
-
-#https://www.geeksforgeeks.org/subset-sum-problem/
 """
-Given a set[] of non-negative integers and a value sum, return the subset of the given set whose sum is equal to the given sum or None if one doesn't exist
+},
+{
+"question":
+"""Given a set[] of non-negative integers and a value sum, return the subset of the given set whose sum is equal to the given sum or None if one doesn't exist
+""",
+"code":
 """
 def subsetSum_helper(cur_idx: int, fullset: list, target_sum: int, subset: list):
   if target_sum == 0:
@@ -149,9 +160,12 @@ def subsetSum_helper(cur_idx: int, fullset: list, target_sum: int, subset: list)
 
 def subsetsum(fullset: list, target_sum: int):
   return subsetSum_helper(0, fullset, target_sum, [])
-
-#https://www.geeksforgeeks.org/m-coloring-problem/
-"Given an undirected graph in the form of an adjacency matrix and a number m color the graph with m colors such that no two adjacent vertices share the same color. Return a list of colors for each vertex or None if no solution exists."
+"""
+},
+{
+"question": "Given an undirected graph in the form of an adjacency matrix and a number m color the graph with m colors such that no two adjacent vertices share the same color. Return a list of colors for each vertex or None if no solution exists.",
+"code":
+"""
 def isSafe(graph, v, colour, c):
   for i in range(len(graph)):
     if graph[v][i] == 1 and colour[i] == c:
@@ -175,3 +189,9 @@ def graphColouring(graph:[[int]], m):
     return colour
   else:
     return None
+"""
+}
+]
+print(p)
+with open("backtracking.json", 'w') as f:
+  json.dump(p, f)

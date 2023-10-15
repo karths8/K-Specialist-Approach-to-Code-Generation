@@ -1,4 +1,10 @@
+import json
+p = [
+{
+"question":
 """ Given a queue reverse it
+""",
+"code" :
 """
 from collections import deque
 def reverse(queue: deque):
@@ -6,13 +12,18 @@ def reverse(queue: deque):
         temp = queue.pop()
         reverse(queue)
         queue.appendleft(temp)
-
+"""
+},
+{
+"question":
 """Given a root treenode convert the entire tree into a list of values such that the nth entry has children 2*n+1 and 2*n+2.
 class TreeNode(object):
     def __init__(self, val=0, left=None, ight=None):
         self.val = val
         self.left = left
         self.right = right
+""",
+"code" :
 """
 class TreeNode(object):
     def __init__(self, val=0, left=None, right=None):
@@ -44,9 +55,11 @@ def tree_to_list(root: TreeNode):
                 still_nodes = True
         cur_queue = next_queue
     return ret
-
 """
-Design your implementation of the circular queue. The circular queue is a linear data structure in which the operations are performed based on FIFO (First In First Out) principle, and the last position is connected back to the first position to make a circle. It is also called "Ring Buffer".
+},
+{
+"question":
+"""Design your implementation of the circular queue. The circular queue is a linear data structure in which the operations are performed based on FIFO (First In First Out) principle, and the last position is connected back to the first position to make a circle. It is also called "Ring Buffer".
 
 Implement the MyCircularQueue class:
 
@@ -57,6 +70,8 @@ boolean enQueue(int value) Inserts an element into the circular queue. Return tr
 boolean deQueue() Deletes an element from the circular queue. Return true if the operation is successful.
 boolean isEmpty() Checks whether the circular queue is empty or not.
 boolean isFull() Checks whether the circular queue is full or not.
+""",
+"code" :
 """
 class MyCircularQueue:
     def __init__(self, k):
@@ -104,7 +119,10 @@ class MyCircularQueue:
         if self.rear==(self.front-1)%(self.size):
             return True
         return False
-
+"""
+},
+{
+"question":
 """
 Design a queue that supports push and pop operations in the front, middle, and back.
 
@@ -118,6 +136,8 @@ int popFront() Removes the front element of the queue and returns it. If the que
 int popMiddle() Removes the middle element of the queue and returns it. If the queue is empty, return -1.
 int popBack() Removes the back element of the queue and returns it. If the queue is empty, return -1.
 Notice that when there are two middle position choices, the operation is performed on the frontmost middle position choice
+""",
+"code" :
 """
 class FrontMiddleBackQueue(object):
     def __init__(self):
@@ -154,11 +174,15 @@ class FrontMiddleBackQueue(object):
         else:
             res=self.queue.pop()
             return res
-    
 """
-You are given a string s and an integer k. You can choose one of the first k letters of s and append it at the end of the string.
+},
+{
+"question":  
+"""You are given a string s and an integer k. You can choose one of the first k letters of s and append it at the end of the string.
 
 Return the lexicographically smallest string you could have after applying the mentioned step any number of moves.
+""",
+"code" :
 """
 def orderlyQueue(s: str, k: int) -> str:
     if k == 1:
@@ -170,3 +194,8 @@ def orderlyQueue(s: str, k: int) -> str:
         return lex_min_str
     
     return "".join(sorted(s))
+"""
+}
+]
+with open("queue_algs.json", 'w') as f:
+  json.dump(p, f)

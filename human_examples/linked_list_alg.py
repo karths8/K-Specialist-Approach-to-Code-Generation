@@ -1,10 +1,15 @@
-"""
-Given the head of a singly linked list, reverse the list, and return the reversed list.
+import json
+p = [
+{
+"question":
+"""Given the head of a singly linked list, reverse the list, and return the reversed list.
 Definition for singly-linked list.
 class ListNode(object):
     def __init__(self, val=0, next=None):
         self.val = val
         self.next = next
+""",
+"code":
 """
 def reverseList(head):
     if head == None:
@@ -19,14 +24,18 @@ def reverseList(head):
 
     head.next = None
     return cur
-
 """
-Given the head of a singly linked list, return true if it is a palindrome or false otherwise.
+},
+{
+"question":
+"""Given the head of a singly linked list, return true if it is a palindrome or false otherwise.
 Definition for singly-linked list.
 class ListNode(object):
     def __init__(self, val=0, next=None):
         self.val = val
         self.next = next
+""",
+"code" :
 """
 def isPalindrome(head):
     slow = fast = head 
@@ -47,9 +56,11 @@ def isPalindrome(head):
         
     stack2.reverse()
     return stack1 == stack2
-
 """
-Given the head of a singly linked list and an integer k, split the linked list into k consecutive linked list parts.
+},
+{
+"question":
+"""Given the head of a singly linked list and an integer k, split the linked list into k consecutive linked list parts.
 
 The length of each part should be as equal as possible: no two parts should have a size differing by more than one. This may lead to some parts being null.
 
@@ -61,6 +72,8 @@ class ListNode(object):
     def __init__(self, val=0, next=None):
         self.val = val
         self.next = next
+""",
+"code" :
 """
 def splitListToParts(head, k):
     cur = head
@@ -80,9 +93,11 @@ def splitListToParts(head, k):
             cur.next, cur = None, cur.next
         ans.append(head)
     return ans
-
 """
-Given the head of a singly linked list, return the middle node of the linked list.
+},
+{
+"question":
+"""Given the head of a singly linked list, return the middle node of the linked list.
 
 If there are two middle nodes, return the second middle node.
 Definition for singly-linked list.
@@ -90,6 +105,8 @@ class ListNode(object):
     def __init__(self, val=0, next=None):
         self.val = val
         self.next = next
+""",
+"code" :
 """
 def middleNode(head):
     slow = fast = head
@@ -97,9 +114,11 @@ def middleNode(head):
         slow = slow.next
         fast = fast.next.next
     return slow
-
 """
-You are given the head of a linked list, and an integer k.
+},
+{
+"question":
+"""You are given the head of a linked list, and an integer k.
 
 Return the head of the linked list after swapping the values of the kth node from the beginning and the kth node from the end (the list is 1-indexed).
 Definition for singly-linked list.
@@ -107,38 +126,31 @@ class ListNode(object):
     def __init__(self, val=0, next=None):
         self.val = val
         self.next = next
+""",
+"code" :
 """
 def swapNodes(self, head, k):
-    """
-    :type head: ListNode
-    :type k: int
-    :rtype: ListNode
-    """
-    cur = head
-    prev = None
-    n = 0
-    for i in range(k):
-        if cur is None:
-          return None
-        prev = cur
-        cur = cur.next
-        n += 1
-    lprev = prev
-    l = cur
-    while cur.next:
-        n += 1
-        cur = cur.next
-    prev = None
-    cur = head
-    for i in range(n-k):
-        prev = cur
-        cur = cur.next
-    r = cur
-    rprev = prev
+    node1 = node2 = fast = head
+    #Finding kth node from the start 
+    k-=1
+    while (k):
+        node1 = node1.next
+        fast = fast.next
+        k-=1
 
-    tmplnext = l.next
-    l.next = r.next
-    r.next = tmplnext
-    lprev.next = r
-    rprev.next = l
-    #Gone through k nodes
+    #Finding kth node from the end
+    while (fast and fast.next):
+        node2 = node2.next
+        fast = fast.next
+
+    #Swapping the values only
+    temp = node1.val
+    node1.val = node2.val
+    node2.val = temp
+
+    return head
+"""
+}
+]
+with open("linked_list_alg.json", 'w') as f:
+  json.dump(p, f)

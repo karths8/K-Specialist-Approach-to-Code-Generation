@@ -1,3 +1,8 @@
+import json
+p = [
+{
+"question": """Given an array reorder it so that even numbers appear first""",
+"code": """
 import numpy as np
 
 def even_odd_reorder(arr: np.array):
@@ -11,6 +16,12 @@ def even_odd_reorder(arr: np.array):
       arr[nextEven] = arr[nextOdd]
       arr[nextOdd] = temp
       nextOdd -= 1
+"""
+},
+{
+"question": """Given an array with 3 different values sort the array""",
+"code": """
+import numpy as np
 
 def dutch_flag_partition(pivot_idx: int, arr: np.array):
   for i in range(len(arr)):
@@ -32,14 +43,24 @@ def dutch_flag_partition(pivot_idx: int, arr: np.array):
         arr[i] = arr[j]
         arr[j] = tmp
         break
+"""
+},
+{
+"question": """Given two arrays return an array with the set intersection of their common elements""",
+"code": """
+import numpy as np
 
-#https://leetcode.com/problems/intersection-of-two-arrays/
 def array_intersection(arr1: np.array, arr2: np.array):
   set1 = set(arr1)
   ret = [x for x in arr2 if x in set1]
   return np.array(ret)
+"""
+},
+{
+"question": """Given two integer arrays nums1 and nums2, return an array of their intersection. Each element in the result must appear as many times as it shows in both arrays and you may return the result in any order.""",
+"code": """
+import numpy as np
 
-#https://leetcode.com/problems/intersection-of-two-arrays-ii/solutions/
 def array_intersection_with_freq(arr1: np.array, arr2: np.array):
   freq = dict()
   ret = []
@@ -53,8 +74,19 @@ def array_intersection_with_freq(arr1: np.array, arr2: np.array):
           ret.append(num)
           freq[num] = freq[num] - 1
   return np.array(ret)
+"""
+},
+{
+"question": """You are given two 0-indexed integer permutations A and B of length n.
 
-#https://leetcode.com/problems/find-the-prefix-common-array-of-two-arrays/description/
+A prefix common array of A and B is an array C such that C[i] is equal to the count of numbers that are present at or before the index i in both A and B.
+
+Return the prefix common array of A and B.
+
+A sequence of n integers is called a permutation if it contains all integers from 1 to n exactly once.""",
+"code": """
+import numpy as np
+
 def findThePrefixCommonArray(arr1: np.array, arr2: np.array):
   max = arr1.size if arr1.size > arr2.size else arr2.size
   seen = set()
@@ -73,3 +105,8 @@ def findThePrefixCommonArray(arr1: np.array, arr2: np.array):
       seen.add(cur2)
     ret.append(curCount)
   return np.array(ret)
+"""
+}
+]
+with open("array_alg.json", 'w') as f:
+  json.dump(p, f)

@@ -1,5 +1,12 @@
+import json
+p = [
+{
+"question":
+"""Write a function that reverses a string. The input string is given as an array of characters s.
 
-#https://leetcode.com/problems/reverse-string/
+You must do this by modifying the input array in-place with O(1) extra memory.""",
+"code":
+"""
 def reverse_string(s: str):
   l = 0
   r = len(s) - 1
@@ -9,8 +16,15 @@ def reverse_string(s: str):
     s[r] = tmp
     l += 1
     r -= 1
+"""
+},
+{
+"question":
+"""Given two strings s1 and s2, return true if s2 contains a permutation of s1, or false otherwise.
 
-#https://leetcode.com/problems/permutation-in-string/editorial/
+In other words, return true if one of s1's permutations is the substring of s2.""",
+"code":
+"""
 def permutation_in_string(s1: str, s2: str):
   window = len(s1)
   if window > len(s2):
@@ -45,8 +59,15 @@ def permutation_in_string(s1: str, s2: str):
       matches -= 1
     
   return matches == 26
+"""
+},
+{
+"question":
+"""You are given a string s and an integer array indices of the same length. The string s will be shuffled such that the character at the ith position moves to indices[i] in the shuffled string.
 
-#https://leetcode.com/problems/shuffle-string/submissions/
+Return the shuffled string.""",
+"code":
+"""
 def shuffle_string(s: str, indices: list[int]):
   ret = ['_']*len(s)
   for idx, i in enumerate(indices):
@@ -64,9 +85,15 @@ def partitionString(s):
     else:
       cur_str.add(s[i])
   return substrings
+"""
+},
+{
+"question":
+"""Given an integer n, return the number of strings of length n that consist only of vowels (a, e, i, o, u) and are lexicographically sorted.
 
-
-#https://leetcode.com/problems/count-sorted-vowel-strings/description/
+A string s is lexicographically sorted if for all valid i, s[i] is the same as or comes before s[i+1] in the alphabet.""",
+"code" :
+"""
 letters = ["a","e","i","o","u"]
 dynamic = {
   'a1' : 5,
@@ -88,10 +115,11 @@ def helper(n, letter_idx):
   
 
 def countVowelStrings(n):
-  """
-  :type n: int
-  :rtype: int
-  """
   return helper(n, 0)
 
 print(countVowelStrings(33))
+"""
+}
+]
+with open("string_alg.json", 'w') as f:
+  json.dump(p, f)

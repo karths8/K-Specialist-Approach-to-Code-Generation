@@ -1,10 +1,13 @@
-#https://www.geeksforgeeks.org/0-1-knapsack-using-branch-and-bound/
-"""
-Given two integer arrays val[0..n-1] and wt[0..n-1] that represent values and weights associated with n items respectively. 
+import json
+p = [
+{
+"question":
+"""Given two integer arrays val[0..n-1] and wt[0..n-1] that represent values and weights associated with n items respectively. 
 
 Find out the maximum value subset of val[] such that sum of the weights of this subset is smaller than or equal to Knapsack capacity W.
+""",
+"code":
 """
-
 from queue import Queue
 class Item:
     def __init__(self, weight, value):
@@ -75,13 +78,17 @@ def knapsack_solution(W, arr, n):
             q.put(v)
  
     return maxProfit
-
 """
-Given a 3×3 board with 8 tiles (every tile has one number from 1 to 8) and one empty space. The objective is to place the numbers on tiles to match the final configuration using the empty space. We can slide four adjacent (left, right, above, and below) tiles into the empty space. 
+},
+{
+"question":
+"""Given a 3×3 board with 8 tiles (every tile has one number from 1 to 8) and one empty space. The objective is to place the numbers on tiles to match the final configuration using the empty space. We can slide four adjacent (left, right, above, and below) tiles into the empty space. 
 
 For example, 
 initial: [[1,2,3],[5,6,None],[7,8,4]]
 final: [[1,2,3],[5,8,6],[None,7,4]]
+""",
+"code":
 """
 import copy
 from heapq import heappush, heappop
@@ -261,9 +268,13 @@ def solve(initial, empty_tile_pos, final):
  
                 # Add child to list of live nodes
                 pq.push(child)
-
 """
-Given an input N for a NxN chessboard place N queens such that no two queens attack each other. Return the NxN board with the Queens marked as Q. If the problem is not solvable return Solution does not exist
+},
+{
+"question":
+"""Given an input N for a NxN chessboard place N queens such that no two queens attack each other. Return the NxN board with the Queens marked as Q. If the problem is not solvable return Solution does not exist
+""",
+"code":
 """
 N = 8
 
@@ -340,10 +351,14 @@ def solveNQueens():
     # solution found 
     printSolution(board)
     return True
-
 """
-Let there be N workers and N jobs. Any worker can be assigned to perform any job, incurring some cost that may vary depending on the work-job assignment. It is required to perform all jobs by assigning exactly one worker to each job and exactly one job to each agent in such a way that the total cost of the assignment is minimized.
+},
+{
+"question":
+"""Let there be N workers and N jobs. Any worker can be assigned to perform any job, incurring some cost that may vary depending on the work-job assignment. It is required to perform all jobs by assigning exactly one worker to each job and exactly one job to each agent in such a way that the total cost of the assignment is minimized.
 Your input will be an NxN matrix of cost for each work to do each job. Return an assignment matrix with the least cost.
+""",
+"code":
 """
 import math
 from heapq import heappush, heappop
@@ -430,10 +445,13 @@ def find_min_cost(cost_matrix):
             child.pathCost = min.pathCost + cost_matrix[i][j]
             child.cost = child.pathCost + calcCost(cost_matrix, i, j, child.assigned)
             pq.push(child)
-
 """
-Given a set of cities and distance between every pair of cities, the problem is to find the shortest possible tour that visits every city exactly once and returns to the starting point.
-
+},
+{
+"question":
+"""Given a set of cities and distance between every pair of cities, the problem is to find the shortest possible tour that visits every city exactly once and returns to the starting point.
+""",
+"code":
 """
 import math
 maxsize = float('inf')
@@ -538,3 +556,8 @@ print("Minimum cost :", final_res)
 print("Path Taken : ", end = ' ')
 for i in range(N + 1):
 	print(final_path[i], end = ' ')
+"""
+}
+]
+with open("branch_and_bound.json", 'w') as f:
+  json.dump(p, f)

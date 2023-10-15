@@ -1,0 +1,51 @@
+Done on meta/llama-2-70b
+https://replicate.com/meta/llama-2-70b
+PROMPT:
+question: 
+Write a function that reverses a string. The input string is given as an array of characters s. You must do this by modifying the input array in-place with O(1) extra memory.
+code:
+def reverse_string(s: str):
+  l = 0
+  r = len(s) - 1
+  while l < r:
+    tmp = s[l]
+    s[l] = s[r]
+    s[r] = tmp
+    l += 1
+    r -= 1
+
+question:
+
+RESPONSE:
+Design an algorithm to find all duplicate numbers in an array of integers. Each element in the result must appear as many times as it occurs in the array, and the elements in the result must be sorted in ascending order. Could you solve it using only constant space complexity?
+code:
+def getDuplicateNumbers(a: List[int]) -> List[int]:
+ d = dict()
+ 
+ for i in range(len(a)):
+   if a[i] not in d:
+     d[a[i]] = 0
+   
+   else:
+     d[a[i]] += 1
+     
+ res = []
+ for key, val in d.items():
+   if val > 1:
+     res.extend([key]*val)
+    
+ return res
+
+ RESPONSE2: this is from meta/codellama-34b-python https://replicate.com/meta/codellama-34b-python
+ Given an integer array nums and an integer val, remove all occurrences of val in nums in-place. The relative order of the elements may be changed.
+
+Since it is impossible to change the length of the array in some languages, you must instead have the result be placed in the first part of the array nums. More formally, if there are k elements after removing the duplicates, then the first k elements of nums should hold the final result. It does not matter what you leave beyond the first k elements.
+Return the new length after removing the duplicates.
+code:
+def remove_element(self, nums, val):
+  l = len(nums) - 1
+  while l >= 0 and val in nums:
+    if nums[l] == val:
+      del nums[l]
+    l -= 1
+  return len(nums)

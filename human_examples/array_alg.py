@@ -16,7 +16,8 @@ def even_odd_reorder(arr: np.array):
       arr[nextEven] = arr[nextOdd]
       arr[nextOdd] = temp
       nextOdd -= 1
-"""
+""",
+"categories":["array, sorting"]
 },
 {
 "question": """Given an array with 3 different values sort the array""",
@@ -43,7 +44,8 @@ def dutch_flag_partition(pivot_idx: int, arr: np.array):
         arr[i] = arr[j]
         arr[j] = tmp
         break
-"""
+""",
+"categories":["array, sorting"]
 },
 {
 "question": """Given two arrays return an array with the set intersection of their common elements""",
@@ -54,7 +56,8 @@ def array_intersection(arr1: np.array, arr2: np.array):
   set1 = set(arr1)
   ret = [x for x in arr2 if x in set1]
   return np.array(ret)
-"""
+""",
+"categories":["array"]
 },
 {
 "question": """Given two integer arrays nums1 and nums2, return an array of their intersection. Each element in the result must appear as many times as it shows in both arrays and you may return the result in any order.""",
@@ -74,7 +77,8 @@ def array_intersection_with_freq(arr1: np.array, arr2: np.array):
           ret.append(num)
           freq[num] = freq[num] - 1
   return np.array(ret)
-"""
+""",
+"categories":["array"]
 },
 {
 "question": """You are given two 0-indexed integer permutations A and B of length n.
@@ -105,8 +109,9 @@ def findThePrefixCommonArray(arr1: np.array, arr2: np.array):
       seen.add(cur2)
     ret.append(curCount)
   return np.array(ret)
-"""
+""",
+"categories":["array"]
 }
 ]
-with open("array_alg.json", 'w') as f:
+with open("human_examples/array_alg.json", 'w') as f:
   json.dump(p, f)

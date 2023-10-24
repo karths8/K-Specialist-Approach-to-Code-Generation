@@ -12,7 +12,8 @@ def reverse(queue: deque):
         temp = queue.pop()
         reverse(queue)
         queue.appendleft(temp)
-"""
+""",
+"categories":["queue"]
 },
 {
 "question":
@@ -55,7 +56,8 @@ def tree_to_list(root: TreeNode):
                 still_nodes = True
         cur_queue = next_queue
     return ret
-"""
+""",
+"categories":["queue", "tree"]
 },
 {
 "question":
@@ -119,7 +121,8 @@ class MyCircularQueue:
         if self.rear==(self.front-1)%(self.size):
             return True
         return False
-"""
+""",
+"categories":["queue"]
 },
 {
 "question":
@@ -174,7 +177,8 @@ class FrontMiddleBackQueue(object):
         else:
             res=self.queue.pop()
             return res
-"""
+""",
+"categories":["queue"]
 },
 {
 "question":  
@@ -194,8 +198,9 @@ def orderlyQueue(s: str, k: int) -> str:
         return lex_min_str
     
     return "".join(sorted(s))
-"""
+""",
+"categories":["queue", "string"]
 }
 ]
-with open("queue_algs.json", 'w') as f:
+with open("human_examples/queue_algs.json", 'w') as f:
   json.dump(p, f)

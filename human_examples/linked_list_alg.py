@@ -24,7 +24,8 @@ def reverseList(head):
 
     head.next = None
     return cur
-"""
+""",
+"categories":["linked list"]
 },
 {
 "question":
@@ -56,7 +57,8 @@ def isPalindrome(head):
         
     stack2.reverse()
     return stack1 == stack2
-"""
+""",
+"categories":["linked list"]
 },
 {
 "question":
@@ -93,7 +95,8 @@ def splitListToParts(head, k):
             cur.next, cur = None, cur.next
         ans.append(head)
     return ans
-"""
+""",
+"categories":["linked list"]
 },
 {
 "question":
@@ -114,7 +117,8 @@ def middleNode(head):
         slow = slow.next
         fast = fast.next.next
     return slow
-"""
+""",
+"categories":["linked list"]
 },
 {
 "question":
@@ -149,8 +153,9 @@ def swapNodes(self, head, k):
     node2.val = temp
 
     return head
-"""
+""",
+"categories":["linked list"]
 }
 ]
-with open("linked_list_alg.json", 'w') as f:
+with open("human_examples/linked_list_alg.json", 'w') as f:
   json.dump(p, f)

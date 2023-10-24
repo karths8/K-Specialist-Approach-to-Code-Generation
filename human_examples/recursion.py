@@ -12,7 +12,8 @@ def fib(n, a=0, b=1):
   a = b
   b = c
   return fib(n-1, a, b)
-"""
+""",
+"categories":["recursion", "mathematical"]
 },
 {
 "question":
@@ -23,7 +24,8 @@ def fact(n):
   if n <= 1:
     return 1
   return n*fact(n)
-"""
+""",
+"categories":["recursion", "mathematical"]
 },
 {
 "question":
@@ -64,7 +66,8 @@ def fractionToDecimal(numerator, denominator):
   else:
     cur += "0."
     return helper(cur, numerator*10, denominator, dict())
-"""
+""",
+"categories":["recursion", "mathematical", "string"]
 },
 {
 "question":
@@ -119,7 +122,8 @@ def recoverTree(root):
     x, y = forward(root, []), backward(root, [])
     x.val, y.val = y.val, x.val
     return root
-"""
+""",
+"categories":["recursion", "tree"]
 },
 {
 "question":
@@ -152,8 +156,9 @@ def createTree(nums):
       else:
          return None
    return helper(0)
-"""
+""",
+"categories":["recursion", "tree"]
 }
 ]
-with open("recursion.json", 'w') as f:
+with open("human_examples/recursion.json", 'w') as f:
   json.dump(p, f)

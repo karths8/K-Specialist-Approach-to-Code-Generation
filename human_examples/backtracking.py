@@ -41,7 +41,8 @@ def solveKTUtil(n, board, curr_x, curr_y, move_x, move_y, pos):
         return True
       board[new_x][new_y] = -1
   return False
-"""
+""",
+"categories":["backtracking", "matrix/grid"]
 },
 {
 "question": 
@@ -84,7 +85,8 @@ def solveMaze(maze):
             print()
     else:
         print('Solution does not exist')
-"""
+""",
+"categories":["backtracking", "matrix/grid"]
 },
 {
 "question": """Given an input N for a NxN chessboard place N queens such that no two queens attack each other. Return the NxN board with the Queens marked as Q. If the problem is not solvable return Solution does not exist
@@ -131,7 +133,8 @@ def solveNQ(N):
   if solveNQUtil(board, 0) == False:
     print("Solution does not exist")
   printSolution(board)
-"""
+""",
+"categories":["backtracking", "matrix/grid"]
 },
 {
 "question":
@@ -160,7 +163,8 @@ def subsetSum_helper(cur_idx: int, fullset: list, target_sum: int, subset: list)
 
 def subsetsum(fullset: list, target_sum: int):
   return subsetSum_helper(0, fullset, target_sum, [])
-"""
+""",
+"categories":["backtracking", "recursion"]
 },
 {
 "question": "Given an undirected graph in the form of an adjacency matrix and a number m color the graph with m colors such that no two adjacent vertices share the same color. Return a list of colors for each vertex or None if no solution exists.",
@@ -189,9 +193,9 @@ def graphColouring(graph:[[int]], m):
     return colour
   else:
     return None
-"""
+""",
+"categories":["backtracking", "graph"]
 }
 ]
-print(p)
-with open("backtracking.json", 'w') as f:
+with open("human_examples/backtracking.json", 'w') as f:
   json.dump(p, f)

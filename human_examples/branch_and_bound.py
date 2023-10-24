@@ -78,7 +78,8 @@ def knapsack_solution(W, arr, n):
             q.put(v)
  
     return maxProfit
-"""
+""",
+"categories":["branch and bound"]
 },
 {
 "question":
@@ -268,7 +269,8 @@ def solve(initial, empty_tile_pos, final):
  
                 # Add child to list of live nodes
                 pq.push(child)
-"""
+""",
+"categories":["branch and bound", "matrix/grid"]
 },
 {
 "question":
@@ -351,7 +353,8 @@ def solveNQueens():
     # solution found 
     printSolution(board)
     return True
-"""
+""",
+"categories":["branch and bound", "matrix/grid"]
 },
 {
 "question":
@@ -445,7 +448,8 @@ def find_min_cost(cost_matrix):
             child.pathCost = min.pathCost + cost_matrix[i][j]
             child.cost = child.pathCost + calcCost(cost_matrix, i, j, child.assigned)
             pq.push(child)
-"""
+""",
+"categories":["branch and bound", "matrix/grid"]
 },
 {
 "question":
@@ -556,8 +560,9 @@ print("Minimum cost :", final_res)
 print("Path Taken : ", end = ' ')
 for i in range(N + 1):
 	print(final_path[i], end = ' ')
-"""
+""",
+"categories":["branch and bound", "graph"]
 }
 ]
-with open("branch_and_bound.json", 'w') as f:
+with open("human_examples/branch_and_bound.json", 'w') as f:
   json.dump(p, f)

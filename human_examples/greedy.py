@@ -15,7 +15,8 @@ def reconstructQueue(people):
         output.insert(a[1], a)
     
     return output
-"""
+""",
+"categories":["greedy", "array"]
 },
 {
 "question":
@@ -36,7 +37,8 @@ def assignHole(mices, holes):
             Max = abs(mices[i] - holes[i])
      
     return Max
-"""
+""",
+"categories":["greedy", "array", "sorting"]
 },
 {
 "question":
@@ -64,7 +66,8 @@ def egyptianFraction(nr, dr):
         else:
             print(" 1/{0}" .
                     format(ef[i]), end = " ")
-"""
+""",
+"categories":["greedy", "mathematical"]
 },
 {
 "question":         
@@ -133,7 +136,8 @@ def solve(n, p, arr):
     print(len(a))
     for j in range(len(a)):
         print(a[j], b[j], c[j])
-"""
+""",
+"categories":["greedy", "graph"]
 },
 {
 "question":
@@ -163,8 +167,9 @@ def printMaxActivities(s, f):
         if s[j] >= f[i]:
             print(j, end=' ')
             i = j
-"""
+""",
+"categories":["greedy"]
 }
 ]
-with open("greedy.json", 'w') as f:
+with open("human_examples/greedy.json", 'w') as f:
   json.dump(p, f)

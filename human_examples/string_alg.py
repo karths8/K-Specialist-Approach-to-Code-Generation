@@ -16,7 +16,8 @@ def reverse_string(s: str):
     s[r] = tmp
     l += 1
     r -= 1
-"""
+""",
+"categories":["string"]
 },
 {
 "question":
@@ -59,7 +60,8 @@ def permutation_in_string(s1: str, s2: str):
       matches -= 1
     
   return matches == 26
-"""
+""",
+"categories":["string", "pattern searching"]
 },
 {
 "question":
@@ -85,7 +87,8 @@ def partitionString(s):
     else:
       cur_str.add(s[i])
   return substrings
-"""
+""",
+"categories":["string"]
 },
 {
 "question":
@@ -118,8 +121,9 @@ def countVowelStrings(n):
   return helper(n, 0)
 
 print(countVowelStrings(33))
-"""
+""",
+"categories":["string"]
 }
 ]
-with open("string_alg.json", 'w') as f:
+with open("human_examples/string_alg.json", 'w') as f:
   json.dump(p, f)

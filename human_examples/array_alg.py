@@ -17,7 +17,7 @@ def even_odd_reorder(arr: np.array):
       arr[nextOdd] = temp
       nextOdd -= 1
 """,
-"categories":["array, sorting"]
+"categories":["array", "sorting"]
 },
 {
 "question": """Given an array with 3 different values sort the array""",
@@ -45,7 +45,7 @@ def dutch_flag_partition(pivot_idx: int, arr: np.array):
         arr[j] = tmp
         break
 """,
-"categories":["array, sorting"]
+"categories":["array", "sorting"]
 },
 {
 "question": """Given two arrays return an array with the set intersection of their common elements""",

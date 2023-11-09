@@ -24,7 +24,7 @@ def make_chat_template(chat_type,data):
 def write_csv(rows,file_path):
     with open(file_path, "w", newline="") as file:
         writer = csv.writer(file)
-        writer.writerows([['question','prompt', 'category']] + rows)
+        writer.writerows(rows)
 
 def make_prompt_str(data):
     prompt_str=f'''Question:
@@ -82,13 +82,13 @@ def get_llama_prompts(df, args, test=False):
         # print(tokenizer.apply_chat_template(chat_content, tokenize=False))
         # print(idx)
         # print(seed_samples[idx])
-        llama_prompts.append({'question':seed_samples[idx]['Question'],'prompt':tokenizer.apply_chat_template(chat_content, tokenize=False),'category':seed_samples[idx]['Categories'].replace('[','').replace(']','')})
+        llama_prompts.append({'question':seed_samples[idx]['Question'],'prompt':tokenizer.apply_chat_template(chat_content, tokenize=False),'category':seed_samples[idx]['Categories'].replace('[','').replace(']',''), 'answer':seed_samples[idx]['Method 1']})
     return llama_prompts
 
 def make_set_list(data_prompts):
-    data_list = [['question','prompt', 'category']]
+    data_list = [['question','prompt', 'category', 'answer']]
     for i in data_prompts:
-        data_list.append([i['question'], i['prompt'], i['category']])
+        data_list.append([i['question'], i['prompt'], i['category'], i['answer']])
     return data_list
 
 def main():
@@ -96,10 +96,10 @@ def main():
     df_train, df_test = split_train_test(df)
     train_prompts = get_llama_prompts(df_train, args)
     test_prompts = get_llama_prompts(df_test, args, test=True)
-    print(train_prompts[0])
+    # print(train_prompts[0])
     train_list = make_set_list(train_prompts)
     test_list = make_set_list(test_prompts)
-    print(test_prompts[0])
+    # print(test_prompts[0])
     write_csv(train_list,'train.csv')
     write_csv(test_list,'test.csv')
     dataset = load_dataset("csv", data_files={'train':'train.csv', 'test':'test.csv'})

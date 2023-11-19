@@ -1,0 +1,1655 @@
+Question,Examples,Asserts,Categories,Other Categories,Difficulty,Link ,Code,Code 2,Test Cases
+"Search in a Binary Search Tree: You are given the root of a binary search tree (BST) and an integer val. Find the node in the BST that the node's value equals val and return the subtree rooted with that node. If such a node does not exist, return null","The tree is given as a list containing the level order traversal of the binary tree
+
+Input: root = [4,2,7,1,3], val = 2
+Output: [2,1,3]
+Input: root = [4,2,7,1,3], val = 5
+Output: []",,Tree,"Binary Serch Tree, Binary Tree",Easy,https://leetcode.com/problems/search-in-a-binary-search-tree/description/,"class Solution:
+    def searchBST(self, root: TreeNode, val: int) -> TreeNode:
+        if root is None or val == root.val:
+            return root
+        
+        return self.searchBST(root.left, val) if val < root.val \
+            else self.searchBST(root.right, val)","class Solution:
+    def searchBST(self, root: TreeNode, val: int) -> TreeNode:
+        while root is not None and root.val != val:
+            root = root.left if val < root.val else root.right
+        return root",
+"Binary Tree Inorder Traversal: Given the root of a binary tree, return the inorder traversal of its nodes' values.","The tree is given as a list containing the level order traversal of the binary tree
+
+Input: root = [1,null,2,3]
+Output: [1,3,2]
+Input: root = []
+Output: []
+Input: root = [1]
+Output: [1]",,Tree,"Stack, Binary Tree, Depth-First Search",Easy,https://leetcode.com/problems/binary-tree-inorder-traversal/description/,"def inorderTraversal(self, root):
+    res, stack = [], []
+    while True:
+        while root:
+            stack.append(root)
+            root = root.left
+        if not stack:
+            return res
+        node = stack.pop()
+        res.append(node.val)
+        root = node.right","def inorderTraversal1(self, root):
+    res = []
+    self.helper(root, res)
+    return res
+    
+def helper(self, root, res):
+    if root:
+        self.helper(root.left, res)
+        res.append(root.val)
+        self.helper(root.right, res)",
+"Deepest Leaves Sum: Given the root of a binary tree, return the sum of values of its deepest leaves.","The tree is given as a list containing the level order traversal of the binary tree
+
+Input: root = [1,2,3,4,5,null,6,7,null,null,null,null,8]
+Output: 15
+Input: root = [6,7,8,2,7,1,3,9,null,1,4,null,null,null,5]
+Output: 19",,Tree,"Binary Tree, Depth-First Search Breadth-First Search",Medium,https://leetcode.com/problems/deepest-leaves-sum/description/,"class Solution:
+    def deepestLeavesSum(self, root: TreeNode) -> int:
+        deepest_sum = depth = 0
+        stack = [(root, 0) ]
+        
+        while stack:
+            node, curr_depth = stack.pop()
+            if node.left is None and node.right is None:
+                # if this leaf is the deepest one seen so far
+                if depth < curr_depth:
+                    deepest_sum = node.val      # start new sum
+                    depth = curr_depth          # note new depth
+                # if there were already leaves at this depth
+                elif depth == curr_depth:
+                    deepest_sum += node.val     # update existing sum
+                    
+            else:
+                if node.right:
+                    stack.append((node.right, curr_depth + 1))
+                if node.left:
+                    stack.append((node.left, curr_depth + 1))
+                        
+        return deepest_sum","class Solution:
+    def deepestLeavesSum(self, root: TreeNode) -> int:
+        deepest_sum = depth = 0
+        queue = deque([(root, 0),])
+
+        while queue:
+            node, curr_depth = queue.popleft()
+            if node.left is None and node.right is None:
+                # if this leaf is the deepest one seen so far
+                if depth < curr_depth:
+                    deepest_sum = node.val      # start new sum
+                    depth = curr_depth          # note new depth
+                # if there were already leaves at this depth
+                elif depth == curr_depth:
+                    deepest_sum += node.val     # update existing sum    
+            else:
+                if node.left:
+                    queue.append((node.left, curr_depth + 1))
+                if node.right:
+                    queue.append((node.right, curr_depth + 1))
+                        
+        return deepest_sum",
+"Binary Tree Level Order Traversal: Given the root of a binary tree, return the level order traversal of its nodes' values. (i.e., from left to right, level by level).","The tree is given as a list containing the level order traversal of the binary tree
+
+Input: root = [3,9,20,null,null,15,7]
+Output: [[3],[9,20],[15,7]]
+Input: root = [1]
+Output: [[1]]
+Input: root = []
+Output: []",,Tree,"Breadth-First Search, Binary Tree",Medium,https://leetcode.com/problems/binary-tree-level-order-traversal/description/,"class Solution:
+    def levelOrder(self, root):
+        """"""
+        :type root: TreeNode
+        :rtype: List[List[int]]
+        """"""
+        levels = []
+        if not root:
+            return levels
+        
+        def helper(node, level):
+            # start the current level
+            if len(levels) == level:
+                levels.append([])
+
+            # append the current node value
+            levels[level].append(node.val)
+
+            # process child nodes for the next level
+            if node.left:
+                helper(node.left, level + 1)
+            if node.right:
+                helper(node.right, level + 1)
+            
+        helper(root, 0)
+        return levels","from collections import deque
+class Solution:
+    def levelOrder(self, root):
+        """"""
+        :type root: TreeNode
+        :rtype: List[List[int]]
+        """"""
+        levels = []
+        if not root:
+            return levels
+        
+        level = 0
+        queue = deque([root,])
+        while queue:
+            # start the current level
+            levels.append([])
+            # number of elements in the current level 
+            level_length = len(queue)
+            
+            for i in range(level_length):
+                node = queue.popleft()
+                # fulfill the current level
+                levels[level].append(node.val)
+                
+                # add child nodes of the current level
+                # in the queue for the next level
+                if node.left:
+                    queue.append(node.left)
+                if node.right:
+                    queue.append(node.right)
+            
+            # go to next level
+            level += 1
+        
+        return levels",
+"Binary Tree Maximum Path Sum: A path in a binary tree is a sequence of nodes where each pair of adjacent nodes in the sequence has an edge connecting them. A node can only appear in the sequence at most once. Note that the path does not need to pass through the root.
+
+The path sum of a path is the sum of the node's values in the path.
+
+Given the root of a binary tree, return the maximum path sum of any non-empty path.","The tree is given as a list containing the level order traversal of the binary tree
+
+Input: root = [1,2,3]
+Output: 6
+Explanation: The optimal path is 2 -> 1 -> 3 with a path sum of 2 + 1 + 3 = 6.
+Input: root = [-10,9,20,null,null,15,7]
+Output: 42
+Explanation: The optimal path is 15 -> 20 -> 7 with a path sum of 15 + 20 + 7 = 42.",,Tree,"Depth-First Search, Binary Tree, Dynamic Programming",Hard,https://leetcode.com/problems/binary-tree-maximum-path-sum/description/,"class Solution:
+    def max_path_sum(self, root: Optional[TreeNode]) -> int:
+        max_path = -float('inf')
+
+        # post order traversal of subtree rooted at `node`
+        def gain_from_subtree(node: Optional[TreeNode]) -> int:
+            nonlocal max_path
+
+            if not node:
+                return 0
+
+            # add the gain from the left subtree. Note that if the
+            # gain is negative, we can ignore it, or count it as 0.
+            # This is the reason we use `max` here.
+            gain_from_left = max(gain_from_subtree(node.left), 0)
+
+            # add the gain / path sum from right subtree. 0 if negative
+            gain_from_right = max(gain_from_subtree(node.right), 0)
+
+            # if left or right gain are negative, they are counted
+            # as 0, so this statement takes care of all four scenarios
+            max_path = max(max_path, gain_from_left + gain_from_right + node.val)
+
+            # return the max sum for a path starting at the root of subtree
+            return max(
+                gain_from_left + node.val,
+                gain_from_right + node.val
+            )
+
+        gain_from_subtree(root)
+        return max_path",,
+"Find Center of Star Graph: There is an undirected star graph consisting of n nodes labeled from 1 to n. A star graph is a graph where there is one center node and exactly n - 1 edges that connect the center node with every other node.
+
+You are given a 2D integer array edges where each edges[i] = [ui, vi] indicates that there is an edge between the nodes ui and vi. Return the center of the given star graph.","Input: edges = [[1,2],[2,3],[4,2]]
+Output: 2
+Explanation: As shown in the figure above, node 2 is connected to every other node, so 2 is the center.
+Input: edges = [[1,2],[5,1],[1,3],[1,4]]
+Output: 1
+",,Graph,,Easy,https://leetcode.com/problems/find-center-of-star-graph/description/,"def findCenter(self, e: List[List[int]]) -> int:
+        if e[0][0]==e[1][0] or e[0][0]==e[1][1]:
+                return e[0][0]
+        return e[0][1]",,
+"Keys and Rooms: There are n rooms labeled from 0 to n - 1 and all the rooms are locked except for room 0. Your goal is to visit all the rooms. However, you cannot enter a locked room without having its key.
+
+When you visit a room, you may find a set of distinct keys in it. Each key has a number on it, denoting which room it unlocks, and you can take all of them with you to unlock the other rooms.
+
+Given an array rooms where rooms[i] is the set of keys that you can obtain if you visited room i, return true if you can visit all the rooms, or false otherwise.","Input: rooms = [[1],[2],[3],[]]
+Output: true
+Explanation: 
+We visit room 0 and pick up key 1.
+We then visit room 1 and pick up key 2.
+We then visit room 2 and pick up key 3.
+We then visit room 3.
+Since we were able to visit every room, we return true.
+Input: rooms = [[1,3],[3,0,1],[2],[0]]
+Output: false
+Explanation: We can not enter room number 2 since the only key that unlocks it is in that room.
+",,Graph,"Depth-First Search, Breadth-First Search",Easy,https://leetcode.com/problems/keys-and-rooms/description/,"class Solution(object):
+    def canVisitAllRooms(self, rooms):
+        seen = [False] * len(rooms)
+        seen[0] = True
+        stack = [0]
+        #At the beginning, we have a todo list ""stack"" of keys to use.
+        #'seen' represents at some point we have entered this room.
+        while stack:  #While we have keys...
+            node = stack.pop() # get the next key 'node'
+            for nei in rooms[node]: # For every key in room # 'node'...
+                if not seen[nei]: # ... that hasn't been used yet
+                    seen[nei] = True # mark that we've entered the room
+                    stack.append(nei) # add the key to the todo list
+        return all(seen) # Return true iff we've visited every room",,
+"Number of Connected Components in an Undirected Graph: You have a graph of n nodes. You are given an integer n and an array edges where edges[i] = [ai, bi] indicates that there is an edge between ai and bi in the graph.
+
+Return the number of connected components in the graph.
+","Input: n = 5, edges = [[0,1],[1,2],[3,4]]
+Output: 2
+Input: n = 5, edges = [[0,1],[1,2],[2,3],[3,4]]
+Output: 1",,Graph,"Depth-First Search, Breadth-First Search, Union Find",Medium,https://leetcode.com/problems/number-of-connected-components-in-an-undirected-graph/description/,"def countComponents(n, edges):
+        def dfs(n, g, visited):
+            if visited[n]:
+                return
+            visited[n] = 1
+            for x in g[n]:
+                dfs(x, g, visited)
+                
+        visited = [0] * n
+        g = {x:[] for x in xrange(n)}
+        for x, y in edges:
+            g[x].append(y)
+            g[y].append(x)
+            
+        ret = 0
+        for i in xrange(n):
+            if not visited[i]:
+                dfs(i, g, visited)
+                ret += 1
+                
+        return ret","def countComponents(n, edges):
+        def find(x):
+            if parent[x] != x:
+                parent[x] = find(parent[x])
+            return parent[x]
+            
+        def union(xy):
+            x, y = map(find, xy)
+            if rank[x] < rank[y]:
+                parent[x] = y
+            else:
+                parent[y] = x
+                if rank[x] == rank[y]:
+                    rank[x] += 1
+        
+        parent, rank = range(n), [0] * n
+        map(union, edges)
+        return len({find(x) for x in parent})",
+"Parallel Courses: You are given an integer n, which indicates that there are n courses labeled from 1 to n. You are also given an array relations where relations[i] = [prevCoursei, nextCoursei], representing a prerequisite relationship between course prevCoursei and course nextCoursei: course prevCoursei has to be taken before course nextCoursei.
+
+In one semester, you can take any number of courses as long as you have taken all the prerequisites in the previous semester for the courses you are taking.
+
+Return the minimum number of semesters needed to take all courses. If there is no way to take all the courses, return -1.","Input: n = 3, relations = [[1,3],[2,3]]
+Output: 2
+Explanation: The figure above represents the given graph.
+In the first semester, you can take courses 1 and 2.
+In the second semester, you can take course 3.
+Input: n = 3, relations = [[1,2],[2,3],[3,1]]
+Output: -1
+Explanation: No course can be studied because they are prerequisites of each other.
+",,Graph,Topological Sort,Medium,https://leetcode.com/problems/parallel-courses/description/,"class Solution:
+    def minimumSemesters(self, N: int, relations: List[List[int]]) -> int:
+        graph = {i: [] for i in range(1, N + 1)}
+        in_count = {i: 0 for i in range(1, N + 1)}  # or in-degree
+        for start_node, end_node in relations:
+            graph[start_node].append(end_node)
+            in_count[end_node] += 1
+
+        queue = []
+        # we use list here since we are not
+        # poping from front the this code
+        for node in graph:
+            if in_count[node] == 0:
+                queue.append(node)
+
+        step = 0
+        studied_count = 0
+        # start learning with BFS
+        while queue:
+            # start new semester
+            step += 1
+            next_queue = []
+            for node in queue:
+                studied_count += 1
+                end_nodes = graph[node]
+                for end_node in end_nodes:
+                    in_count[end_node] -= 1
+                    # if all prerequisite courses learned
+                    if in_count[end_node] == 0:
+                        next_queue.append(end_node)
+            queue = next_queue
+
+        return step if studied_count == N else -1","class Solution:
+    def minimumSemesters(self, N: int, relations: List[List[int]]) -> int:
+        graph = {i: [] for i in range(1, N + 1)}
+        for start_node, end_node in relations:
+            graph[start_node].append(end_node)
+
+        # check if the graph contains a cycle
+        visited = {}
+
+        def dfs_check_cycle(node: int) -> bool:
+            # return True if graph has a cycle
+            if node in visited:
+                return visited[node]
+            else:
+                # mark as visiting
+                visited[node] = -1
+            for end_node in graph[node]:
+                if dfs_check_cycle(end_node):
+                    # we meet a cycle!
+                    return True
+            # mark as visited
+            visited[node] = False
+            return False
+
+        # if has cycle, return -1
+        for node in graph.keys():
+            if dfs_check_cycle(node):
+                return -1
+
+        # if no cycle, return the longest path
+        visited_length = {}
+
+        def dfs_max_path(node: int) -> int:
+            # return the longest path (inclusive)
+            if node in visited_length:
+                return visited_length[node]
+            max_length = 1
+            for end_node in graph[node]:
+                length = dfs_max_path(end_node)
+                max_length = max(length+1, max_length)
+            # store it
+            visited_length[node] = max_length
+            return max_length
+
+        return max(dfs_max_path(node)for node in graph.keys())",
+"Minimum Degree of a Connected Trio in a Graph: You are given an undirected graph. You are given an integer n which is the number of nodes in the graph and an array edges, where each edges[i] = [ui, vi] indicates that there is an undirected edge between ui and vi.
+
+A connected trio is a set of three nodes where there is an edge between every pair of them.
+
+The degree of a connected trio is the number of edges where one endpoint is in the trio, and the other is not.
+
+Return the minimum degree of a connected trio in the graph, or -1 if the graph has no connected trios.
+
+","Input: n = 6, edges = [[1,2],[1,3],[3,2],[4,1],[5,2],[3,6]]
+Output: 3
+Explanation: There is exactly one trio, which is [1,2,3]. The edges that form its degree are bolded in the figure above.
+Input: n = 7, edges = [[1,3],[4,1],[4,3],[2,5],[5,6],[6,7],[7,5],[2,6]]
+Output: 0
+Explanation: There are exactly three trios:
+1) [1,4,3] with degree 0.
+2) [2,5,6] with degree 2.
+3) [5,6,7] with degree 2.",,Graph,,Hard,https://leetcode.com/problems/minimum-degree-of-a-connected-trio-in-a-graph/description/,"class Solution:
+    def minTrioDegree(self, n: int, edges: List[List[int]]) -> int:
+        g = collections.defaultdict(set)
+        for (a,b) in edges:
+            g[a].add(b)
+            g[b].add(a)
+            
+        d = collections.defaultdict(int)
+        for n in g:
+            d[n] = len(g[n])
+            
+        res = float('inf')
+        for n in g:
+            for m in g[n]:
+                for o in g[n] & g[m]:
+                    res = min(res, d[n]+d[m]+d[o]-6)
+                    if n in g[o]:
+                        g[o].remove(n)
+                if n in g[m]:
+                    g[m].remove(n)
+        if res == float('inf'):
+            return -1
+        else:
+            return res",,
+"Get Maximum in Generated Array: You are given an integer n. A 0-indexed integer array nums of length n + 1 is generated in the following way:
+
+nums[0] = 0
+nums[1] = 1
+nums[2 * i] = nums[i] when 2 <= 2 * i <= n
+nums[2 * i + 1] = nums[i] + nums[i + 1] when 2 <= 2 * i + 1 <= n
+Return the maximum integer in the array nums​​​.","Input: n = 7
+Output: 3
+Explanation: According to the given rules:
+  nums[0] = 0
+  nums[1] = 1
+  nums[(1 * 2) = 2] = nums[1] = 1
+  nums[(1 * 2) + 1 = 3] = nums[1] + nums[2] = 1 + 1 = 2
+  nums[(2 * 2) = 4] = nums[2] = 1
+  nums[(2 * 2) + 1 = 5] = nums[2] + nums[3] = 1 + 2 = 3
+  nums[(3 * 2) = 6] = nums[3] = 2
+  nums[(3 * 2) + 1 = 7] = nums[3] + nums[4] = 2 + 1 = 3
+Hence, nums = [0,1,1,2,1,3,2,3], and the maximum is max(0,1,1,2,1,3,2,3) = 3.
+Input: n = 2
+Output: 1
+Explanation: According to the given rules, nums = [0,1,1]. The maximum is max(0,1,1) = 1.
+Input: n = 3
+Output: 2
+Explanation: According to the given rules, nums = [0,1,1,2]. The maximum is max(0,1,1,2) = 2.",assert getMaximumGenerated(2)==1,Dynamic Programming,"Array, Simulation",Easy,https://leetcode.com/problems/get-maximum-in-generated-array/,"def getMaximumGenerated(n: int) -> int:
+    if n<2:
+        return n
+    nums=[0]*(n+1)
+    nums[0]=0
+    nums[1]=1
+    for i in range(2,n+1):
+        if i%2==0:
+            nums[i]=nums[i//2]
+        else:
+            nums[i]=nums[i//2]+nums[i//2+1]
+    return max(nums)",,
+"N-th Tribonacci Number: The Tribonacci sequence Tn is defined as follows: 
+
+T0 = 0, T1 = 1, T2 = 1, and Tn+3 = Tn + Tn+1 + Tn+2 for n >= 0.
+
+Given n, return the value of Tn.","Input: n = 4
+Output: 4
+Explanation:
+T_3 = 0 + 1 + 1 = 2
+T_4 = 1 + 1 + 2 = 4",assert tribonacci(25)==1389537,Dynamic Programming,Math,Easy,https://leetcode.com/problems/n-th-tribonacci-number/description/,"def tribonacci(n: int) -> int:
+    dp = {0: 0, 1: 1, 2: 1}
+    def dfs(i):
+        if i in dp:
+            return dp[i]
+        dp[i] = dfs(i - 1) + dfs(i - 2) + dfs(i - 3)
+        return dp[i]
+    
+    return dfs(n)","class Solution:
+    def tribonacci(self, n: int) -> int:
+        if n < 3:
+            return 1 if n else 0
+        dp = [0] * (n + 1)
+        dp[1] = dp[2] = 1
+        for i in range(3, n + 1):
+            dp[i] = dp[i - 1] + dp[i - 2] + dp[i - 3]
+        return dp[n]",
+"Best Time to Buy and Sell Stock II: You are given an integer array prices where prices[i] is the price of a given stock on the ith day.
+
+On each day, you may decide to buy and/or sell the stock. You can only hold at most one share of the stock at any time. However, you can buy it then immediately sell it on the same day.
+
+Find and return the maximum profit you can achieve.","Input: prices = [7,1,5,3,6,4]
+Output: 7
+Explanation: Buy on day 2 (price = 1) and sell on day 3 (price = 5), profit = 5-1 = 4.
+Then buy on day 4 (price = 3) and sell on day 5 (price = 6), profit = 6-3 = 3.
+Total profit is 4 + 3 = 7.
+Input: prices = [7,6,4,3,1]
+Output: 0
+Explanation: There is no way to make a positive profit, so we never buy the stock to achieve the maximum profit of 0.","assert maxProfit([1,2,3,4,5])==4",Dynamic Programming,"Array, Greedy",Medium,https://leetcode.com/problems/best-time-to-buy-and-sell-stock-ii/description/,"def maxProfit(prices: List[int]) -> int:
+    cur_hold, cur_not_hold = -float('inf'), 0
+    
+    for stock_price in prices:
+        
+        prev_hold, prev_not_hold = cur_hold, cur_not_hold
+        cur_hold = max( prev_hold, prev_not_hold - stock_price )
+        cur_not_hold = max( prev_not_hold, prev_hold + stock_price )
+    return cur_not_hold","class Solution:
+    def maxProfit(self, prices: List[int]) -> int:
+        
+        profit_from_price_gain = 0
+        for idx in range( len(prices)-1 ):
+            
+            if prices[idx] < prices[idx+1]:
+                profit_from_price_gain += ( prices[idx+1] - prices[idx])
+                
+        return profit_from_price_gain",
+"Coin Change II: You are given an integer array coins representing coins of different denominations and an integer amount representing a total amount of money.
+
+Return the number of combinations that make up that amount. If that amount of money cannot be made up by any combination of the coins, return 0.
+
+You may assume that you have an infinite number of each kind of coin.
+
+The answer is guaranteed to fit into a signed 32-bit integer.","Input: amount = 5, coins = [1,2,5]
+Output: 4
+Explanation: there are four ways to make up the amount:
+5=5
+5=2+2+1
+5=2+1+1+1
+5=1+1+1+1+1
+Input: amount = 3, coins = [2]
+Output: 0
+Explanation: the amount of 3 cannot be made up just with coins of 2.","assert change(10,[10])==1",Dynamic Programming,Array,Medium,https://leetcode.com/problems/coin-change-ii/description/,"def change(amount: int, coins: List[int]) -> int:
+    def numberOfWays(i: int, amount: int) -> int:
+        if amount == 0:
+            return 1
+        if i == len(coins):
+            return 0
+        if memo[i][amount] != -1:
+            return memo[i][amount]
+
+        if coins[i] > amount:
+            memo[i][amount] = numberOfWays(i + 1, amount)
+        else:
+            memo[i][amount] = numberOfWays(i, amount - coins[i]) + numberOfWays(i + 1, amount)
+        
+        return memo[i][amount]
+
+    memo = [[-1] * (amount + 1) for _ in range(len(coins))]
+    return numberOfWays(0, amount)","class Solution:
+    def change(self, amount: int, coins: List[int]) -> int:
+        n = len(coins)
+        dp = [[0] * (amount + 1) for _ in range(n + 1)]
+        for i in range(n):
+            dp[i][0] = 1
+
+        for i in range(n - 1, -1, -1):
+            for j in range(1, amount + 1):
+                if coins[i] > j:
+                    dp[i][j] = dp[i + 1][j]
+                else:
+                    dp[i][j] = dp[i + 1][j] + dp[i][j - coins[i]]
+
+        return dp[0][amount]",
+"Longest Valid Parentheses: Given a string containing just the characters '(' and ')', return the length of the longest valid (well-formed) parentheses 
+substring.","Input: s = ""(()""
+Output: 2
+Explanation: The longest valid parentheses substring is ""()"".
+Input: s = "")()())""
+Output: 4
+Explanation: The longest valid parentheses substring is ""()()"".
+Input: s = """"
+Output: 0",DITCH,Dynamic Programming,"Stack, String",Hard,https://leetcode.com/problems/longest-valid-parentheses/description/,"import functools
+class Solution:
+    def __init__(self):
+        self.max = 0
+        
+    def longestValidParentheses(self, s: str) -> int:
+        
+        @functools.lru_cache(maxsize = None)
+        def dp(s, i):
+            if i < 0:
+                return 0
+
+            if s[i] == '(':
+                return 0
+
+            ans = 0
+            length = dp(s, i - 1)
+            if i - length - 1 >= 0 and s[i - length - 1] == '(':
+                ans = length + 2 + dp(s, i - length - 1 - 1)
+
+            self.max = max(self.max, ans)
+            return ans
+
+        for i in range(len(s)):
+            dp(s, i)
+            
+        return self.max","class Solution(object):
+    def longestValidParentheses(self, s):
+        """"""
+        :type s: str
+        :rtype: int
+        """"""
+        # use 1D DP
+        # dp[i] records the longestValidParenthese EXACTLY ENDING at s[i]
+        dp = [0 for x in xrange(len(s))]
+        max_to_now = 0
+        for i in xrange(1,len(s)):
+            if s[i] == ')':
+                # case 1: ()()
+                if s[i-1] == '(':
+                    # add nearest parentheses pairs + 2
+                    dp[i] = dp[i-2] + 2
+                # case 2: (()) 
+                # i-dp[i-1]-1 is the index of last ""("" not paired until this "")""
+                elif i-dp[i-1]-1 >= 0 and s[i-dp[i-1]-1] == '(':
+                    if dp[i-1] > 0: # content within current matching pair is valid 
+                    # add nearest parentheses pairs + 2 + parentheses before last ""(""
+                        dp[i] = dp[i-1] + 2 + dp[i-dp[i-1]-2]
+                    else:
+                    # otherwise is 0
+                        dp[i] = 0
+                max_to_now = max(max_to_now, dp[i])
+        return max_to_now",
+"Backspace String Compare: Given two strings s and t, return true if they are equal when both are typed into empty text editors. '#' means a backspace character.
+
+Note that after backspacing an empty text, the text will continue empty.","Input: s = ""ab#c"", t = ""ad#c""
+Output: True
+Explanation: Both s and t become ""ac"".
+Input: s = ""a#c"", t = ""b""
+Output: False
+Explanation: s becomes ""c"" while t becomes ""b"".","assert backspaceCompare(''ab##"", ""c#d#"")==True",Stack,"Two Pointers, String, Simulation",Easy,https://leetcode.com/problems/backspace-string-compare/description/,"def backspaceCompare(S, T):
+    def build(S):
+        ans = []
+        for c in S:
+            if c != '#':
+                ans.append(c)
+            elif ans:
+                ans.pop()
+        return """".join(ans)
+        return build(S) == build(T)","class Solution(object):
+    def backspaceCompare(self, S, T):
+        def F(S):
+            skip = 0
+            for x in reversed(S):
+                if x == '#':
+                    skip += 1
+                elif skip:
+                    skip -= 1
+                else:
+                    yield x
+
+        return all(x == y for x, y in itertools.izip_longest(F(S), F(T)))",
+"Valid Parentheses: Given a string s containing just the characters '(', ')', '{', '}', '[' and ']', determine if the input string is valid.
+
+An input string is valid if:
+
+Open brackets must be closed by the same type of brackets.
+Open brackets must be closed in the correct order.
+Every close bracket has a corresponding open bracket of the same type.","Input: s = ""()""
+Output: true
+Input: s = ""()[]{}""
+Output: true","assert isValid(""(]"")==False",Stack,String,Easy,https://leetcode.com/problems/valid-parentheses/description/,"def isValid(s):
+    stack = []
+    mapping = {"")"": ""("", ""}"": ""{"", ""]"": ""[""}
+    for char in s:
+        if char in mapping:
+            top_element = stack.pop() if stack else '#'
+            if mapping[char] != top_element:
+                return False
+        else:
+            stack.append(char)
+    return not stack",,
+"Minimum Remove to Make Valid Parentheses: Given a string s of '(' , ')' and lowercase English characters.
+
+Your task is to remove the minimum number of parentheses ( '(' or ')', in any positions ) so that the resulting parentheses string is valid and return any valid string.
+
+Formally, a parentheses string is valid if and only if:
+
+It is the empty string, contains only lowercase characters, or
+It can be written as AB (A concatenated with B), where A and B are valid strings, or
+It can be written as (A), where A is a valid string.","Input: s = ""lee(t(c)o)de)""
+Output: ""lee(t(c)o)de""
+Explanation: ""lee(t(co)de)"" , ""lee(t(c)ode)"" would also be accepted.
+Input: s = ""a)b(c)d""
+Output: ""ab(c)d""
+Input: s = ""))((""
+Output: """"
+Explanation: An empty string is also valid.","assert minRemoveToMakeValid(""a)b(c)d"")==""ab(c)d""",Stack,String,Medium,https://leetcode.com/problems/minimum-remove-to-make-valid-parentheses/description/,"def minRemoveToMakeValid(s: str) -> str:
+    indexes_to_remove = set()
+    stack = []
+    for i, c in enumerate(s):
+        if c not in ""()"":
+            continue
+        if c == ""("":
+            stack.append(i)
+        elif not stack:
+            indexes_to_remove.add(i)
+        else:
+            stack.pop()
+    indexes_to_remove = indexes_to_remove.union(set(stack))
+    string_builder = []
+    for i, c in enumerate(s):
+        if i not in indexes_to_remove:
+            string_builder.append(c)
+    return """".join(string_builder)","class Solution:
+    def minRemoveToMakeValid(self, s: str) -> str:
+
+        def delete_invalid_closing(string, open_symbol, close_symbol):
+            sb = []
+            balance = 0
+            for c in string:
+                if c == open_symbol:
+                    balance += 1
+                if c == close_symbol:
+                    if balance == 0:
+                        continue
+                    balance -= 1
+                sb.append(c)
+            return """".join(sb)
+
+        # Note that s[::-1] gets the reverse of s.
+        s = delete_invalid_closing(s, ""("", "")"")
+        s = delete_invalid_closing(s[::-1], "")"", ""("")
+        return s[::-1]",
+"Min Stack: Design a stack that supports push, pop, top, and retrieving the minimum element in constant time.
+
+Implement the MinStack class:
+
+MinStack() initializes the stack object.
+void push(int val) pushes the element val onto the stack.
+void pop() removes the element on the top of the stack.
+int top() gets the top element of the stack.
+int getMin() retrieves the minimum element in the stack.
+You must implement a solution with O(1) time complexity for each function.","Input
+[""MinStack"",""push"",""push"",""push"",""getMin"",""pop"",""top"",""getMin""]
+[[],[-2],[0],[-3],[],[],[],[]]
+
+Output
+[null,null,null,null,-3,null,0,-2]
+
+Explanation
+MinStack minStack = new MinStack();
+minStack.push(-2);
+minStack.push(0);
+minStack.push(-3);
+minStack.getMin(); // return -3
+minStack.pop();
+minStack.top();    // return 0
+minStack.getMin(); // return -2",DITCH,Stack,,Medium,https://leetcode.com/problems/min-stack/description/,"class MinStack:
+
+    def __init__(self):
+        self.stack = []
+        
+
+    def push(self, x: int) -> None:
+        
+        # If the stack is empty, then the min value
+        # must just be the first value we add
+        if not self.stack:
+            self.stack.append((x, x))
+            return
+
+        current_min = self.stack[-1][1]
+        self.stack.append((x, min(x, current_min)))
+        
+        
+    def pop(self) -> None:
+        self.stack.pop()
+        
+
+    def top(self) -> int:
+        return self.stack[-1][0]
+        
+
+    def getMin(self) -> int:
+        return self.stack[-1][1]","class MinStack:
+
+    def __init__(self):
+        self.stack = []
+        self.min_stack = []        
+        
+
+    def push(self, x: int) -> None:
+        self.stack.append(x)
+        if not self.min_stack or x <= self.min_stack[-1]:
+            self.min_stack.append(x)
+    
+    def pop(self) -> None:
+        if self.min_stack[-1] == self.stack[-1]:
+            self.min_stack.pop()
+        self.stack.pop()
+
+    def top(self) -> int:
+        return self.stack[-1]
+
+    def getMin(self) -> int:
+        return self.min_stack[-1]",
+"Trapping Rain Water: Given n non-negative integers representing an elevation map where the width of each bar is 1, compute how much water it can trap after raining.","Input: height = [0,1,0,2,1,0,1,3,2,1,2,1]
+Output: 6
+Explanation: The above elevation map (black section) is represented by array [0,1,0,2,1,0,1,3,2,1,2,1]. In this case, 6 units of rain water (blue section) are being trapped.
+Input: height = [4,2,0,3,2,5]
+Output: 9","assert trap([4,2,0,3,2,5])==9",Stack,"Array, Two Pointers, Dynamic Programming, Monotonic Stack",Hard,https://leetcode.com/problems/trapping-rain-water/description/,"def trap(bars):
+    if not bars or len(bars) < 3:
+        return 0
+    volume = 0
+    left, right = 0, len(bars) - 1
+    l_max, r_max = bars[left], bars[right]
+    while left < right:
+        l_max, r_max = max(bars[left], l_max), max(bars[right], r_max)
+        if l_max <= r_max:
+            volume += l_max - bars[left]
+            left += 1
+        else:
+            volume += r_max - bars[right]
+            right -= 1
+    return volume","def trap(self, height):
+    waterLevel = []
+    left = 0
+    for h in height:
+        left = max(left, h) 
+        waterLevel += [left] # over-fill it to left max height
+    right = 0
+    for i, h in reversed(list(enumerate(height))):
+        right = max(right, h)
+        waterLevel[i] = min(waterLevel[i], right) - h # drain to the right height
+    return sum(waterLevel)",
+"Majority Element: Given an array nums of size n, return the majority element.
+
+The majority element is the element that appears more than ⌊n / 2⌋ times. You may assume that the majority element always exists in the array.","Input: nums = [3,2,3]
+Output: 3","assert majorityElement([2,2,1,1,1,2,2])==2",Divide and Conquer,"Array, Hash Table, Sorting, Counting",Easy,https://leetcode.com/problems/majority-element/description/,"def majorityElement(nums, lo=0, hi=None):
+    def majority_element_rec(lo, hi):
+        if lo == hi:
+            return nums[lo]
+        mid = (hi-lo)//2 + lo
+        left = majority_element_rec(lo, mid)
+        right = majority_element_rec(mid+1, hi)
+        if left == right:
+            return left
+        left_count = sum(1 for i in range(lo, hi+1) if nums[i] == left)
+        right_count = sum(1 for i in range(lo, hi+1) if nums[i] == right)
+
+        return left if left_count > right_count else right
+
+    return majority_element_rec(0, len(nums)-1)
+",,
+"Convert Sorted Array to Binary Search Tree: Given an integer array nums where the elements are sorted in ascending order, convert it to a 
+height-balanced binary search tree.
+A height-balanced binary tree is a binary tree in which the depth of the two subtrees of every node never differs by more than one.","Input: nums = [-10,-3,0,5,9]
+Output: [0,-3,9,-10,null,5]
+Explanation: [0,-10,5,null,-3,null,9] is also accepted
+Input: nums = [1,3]
+Output: [3,1]
+Explanation: [1,null,3] and [3,1] are both height-balanced BSTs.
+",DITCH,Divide and Conquer,"Array, Tree, Binary Search Tree, Binary Tree",Easy,https://leetcode.com/problems/convert-sorted-array-to-binary-search-tree/description/,"def sortedArrayToBST(nums: List[int]) -> TreeNode:        
+    def helper(left, right):
+        if left > right:
+            return None
+        p = (left + right) // 2
+        root = TreeNode(nums[p])
+        root.left = helper(left, p - 1)
+        root.right = helper(p + 1, right)
+        return root
+    
+    return helper(0, len(nums) - 1)","class Solution:
+    def sortedArrayToBST(self, nums: List[int]) -> TreeNode:        
+        def helper(left, right):
+            if left > right:
+                return None
+            
+            # always choose right middle node as a root
+            p = (left + right) // 2 
+            if (left + right) % 2:
+                p += 1 
+
+            # preorder traversal: node -> left -> right
+            root = TreeNode(nums[p])
+            root.left = helper(left, p - 1)
+            root.right = helper(p + 1, right)
+            return root
+        
+        return helper(0, len(nums) - 1)",
+"Kth Largest Element in an Array: Given an integer array nums and an integer k, return the kth largest element in the array.
+
+Note that it is the kth largest element in the sorted order, not the kth distinct element.
+
+Can you solve it without sorting?","Input: nums = [3,2,1,5,6,4], k = 2
+Output: 5
+Input: nums = [3,2,3,1,2,4,5,5,6], k = 4
+Output: 4",DITCH,Divide and Conquer,"Array, Sorting, Heap, Quickselect",Medium,https://leetcode.com/problems/kth-largest-element-in-an-array/description/,"class Solution:
+    def findKthLargest(self, nums, k):
+        def partition(left, right, pivot_index):
+            pivot = nums[pivot_index]
+            nums[pivot_index], nums[right] = nums[right], nums[pivot_index]  
+            store_index = left
+            for i in range(left, right):
+                if nums[i] < pivot:
+                    nums[store_index], nums[i] = nums[i], nums[store_index]
+                    store_index += 1
+            nums[right], nums[store_index] = nums[store_index], nums[right]  
+            
+            return store_index
+        
+        def select(left, right, k_smallest):
+            """"""
+            Returns the k-th smallest element of list within left..right
+            """"""
+            if left == right:       # If the list contains only one element,
+                return nums[left]   # return that element
+            
+            # select a random pivot_index between 
+            pivot_index = random.randint(left, right)     
+                            
+            # find the pivot position in a sorted list   
+            pivot_index = partition(left, right, pivot_index)
+            
+            # the pivot is in its final sorted position
+            if k_smallest == pivot_index:
+                 return nums[k_smallest]
+            # go left
+            elif k_smallest < pivot_index:
+                return select(left, pivot_index - 1, k_smallest)
+            # go right
+            else:
+                return select(pivot_index + 1, right, k_smallest)
+
+        # kth largest is (n - k)th smallest 
+        return select(0, len(nums) - 1, len(nums) - k)",,
+"Search a 2D Matrix II: Write an efficient algorithm that searches for a value target in an m x n integer matrix matrix. This matrix has the following properties:
+
+Integers in each row are sorted in ascending from left to right.
+Integers in each column are sorted in ascending from top to bottom.","Input: matrix = [[1,4,7,11,15],[2,5,8,12,19],[3,6,9,16,22],[10,13,14,17,24],[18,21,23,26,30]], target = 5
+Output: true
+Input: matrix = [[1,4,7,11,15],[2,5,8,12,19],[3,6,9,16,22],[10,13,14,17,24],[18,21,23,26,30]], target = 20
+Output: false
+",DITCH,Divide and Conquer,"Array, Binary Search, Matrix",Medium,https://leetcode.com/problems/search-a-2d-matrix-ii/description/,"class Solution:
+    def searchMatrix(self, matrix: List[List[int]], target: int) -> bool:
+        # an empty matrix obviously does not contain `target`
+        if not matrix:
+            return False
+
+        def search_rec(left, up, right, down):
+            # this submatrix has no height or no width.
+            if left > right or up > down:
+                return False
+            # `target` is already larger than the largest element or smaller
+            # than the smallest element in this submatrix.
+            elif target < matrix[up][left] or target > matrix[down][right]:
+                return False
+
+            mid = left + (right-left) // 2
+
+            # Locate `row` such that matrix[row-1][mid] < target < matrix[row][mid]
+            row = up
+            while row <= down and matrix[row][mid] <= target:
+                if matrix[row][mid] == target:
+                    return True
+                row += 1
+            
+            return search_rec(left, row, mid - 1, down) or \
+                   search_rec(mid + 1, up, right, row - 1)
+
+        return search_rec(0, 0, len(matrix[0]) - 1, len(matrix) - 1)","class Solution:
+    def searchMatrix(self, matrix: List[List[int]], target: int) -> bool:
+        # an empty matrix obviously does not contain `target` (make this check
+        # because we want to cache `width` for efficiency's sake)
+        if len(matrix) == 0 or len(matrix[0]) == 0:
+            return False
+
+        # cache these, as they won't change.
+        height = len(matrix)
+        width = len(matrix[0])
+
+        # start our ""pointer"" in the bottom-left
+        row = height - 1
+        col = 0
+
+        while col < width and row >= 0:
+            if matrix[row][col] > target:
+                row -= 1
+            elif matrix[row][col] < target:
+                col += 1
+            else: # found it
+                return True
+        
+        return False",
+"Create Sorted Array through Instructions: Given an integer array instructions, you are asked to create a sorted array from the elements in instructions. You start with an empty container nums. For each element from left to right in instructions, insert it into nums. The cost of each insertion is the minimum of the following:
+
+The number of elements currently in nums that are strictly less than instructions[i].
+The number of elements currently in nums that are strictly greater than instructions[i].
+For example, if inserting element 3 into nums = [1,2,3,5], the cost of insertion is min(2, 1) (elements 1 and 2 are less than 3, element 5 is greater than 3) and nums will become [1,2,3,3,5].
+
+Return the total cost to insert all elements from instructions into nums. Since the answer may be large, return it modulo 109 + 7","Input: instructions = [1,5,6,2]
+Output: 1
+Explanation: Begin with nums = [].
+Insert 1 with cost min(0, 0) = 0, now nums = [1].
+Insert 5 with cost min(1, 0) = 0, now nums = [1,5].
+Insert 6 with cost min(2, 0) = 0, now nums = [1,5,6].
+Insert 2 with cost min(1, 2) = 1, now nums = [1,2,5,6].
+The total cost is 0 + 0 + 0 + 1 = 1.
+Input: instructions = [1,2,3,6,5,4]
+Output: 3
+Explanation: Begin with nums = [].
+Insert 1 with cost min(0, 0) = 0, now nums = [1].
+Insert 2 with cost min(1, 0) = 0, now nums = [1,2].
+Insert 3 with cost min(2, 0) = 0, now nums = [1,2,3].
+Insert 6 with cost min(3, 0) = 0, now nums = [1,2,3,6].
+Insert 5 with cost min(3, 1) = 1, now nums = [1,2,3,5,6].
+Insert 4 with cost min(3, 2) = 2, now nums = [1,2,3,4,5,6].
+The total cost is 0 + 0 + 0 + 0 + 1 + 2 = 3.
+Input: instructions = [1,3,3,3,2,4,2,1,2]
+Output: 4
+Explanation: Begin with nums = [].
+Insert 1 with cost min(0, 0) = 0, now nums = [1].
+Insert 3 with cost min(1, 0) = 0, now nums = [1,3].
+Insert 3 with cost min(1, 0) = 0, now nums = [1,3,3].
+Insert 3 with cost min(1, 0) = 0, now nums = [1,3,3,3].
+Insert 2 with cost min(1, 3) = 1, now nums = [1,2,3,3,3].
+Insert 4 with cost min(5, 0) = 0, now nums = [1,2,3,3,3,4].
+​​​​​​​Insert 2 with cost min(1, 4) = 1, now nums = [1,2,2,3,3,3,4].
+​​​​​​​Insert 1 with cost min(0, 6) = 0, now nums = [1,1,2,2,3,3,3,4].
+​​​​​​​Insert 2 with cost min(2, 4) = 2, now nums = [1,1,2,2,2,3,3,3,4].
+The total cost is 0 + 0 + 0 + 0 + 1 + 0 + 1 + 0 + 2 = 4.",DITCH,Divide and Conquer,"Array, Binary Search, Segment Tree, Binary Indexed Tree, Merge Sort, Ordered Set",Hard,https://leetcode.com/problems/create-sorted-array-through-instructions/description/,"class Solution:
+    def createSortedArray(self, instructions: List[int]) -> int:
+        n = len(instructions)
+        smaller = [0]*n
+        larger = [0]*n
+        temp = [0]*n  # record some temporal information
+
+        def sort_smaller(arr, left, right):
+            if left == right:
+                return
+            mid = (left + right) // 2
+            sort_smaller(arr, left, mid)
+            sort_smaller(arr, mid+1, right)
+            merge_smaller(arr, left, right, mid)
+
+        def merge_smaller(arr, left, right, mid):
+            # merge [left, mid] and [mid+1, right]
+            i = left
+            j = mid+1
+            k = left
+            # use temp[left...right] to temporarily store sorted array
+            while i <= mid and j <= right:
+                if arr[i][0] < arr[j][0]:
+                    temp[k] = arr[i]
+                    k += 1
+                    i += 1
+                else:
+                    temp[k] = arr[j]
+                    smaller[arr[j][1]] += i - left
+                    k += 1
+                    j += 1
+
+            while i <= mid:
+                temp[k] = arr[i]
+                k += 1
+                i += 1
+            while j <= right:
+                temp[k] = arr[j]
+                smaller[arr[j][1]] += i - left
+                k += 1
+                j += 1
+            # restore from temp
+            for i in range(left, right+1):
+                arr[i] = temp[i]
+
+        def sort_larger(arr, left, right):
+            if left == right:
+                return
+            mid = (left + right) // 2
+            sort_larger(arr, left, mid)
+            sort_larger(arr, mid+1, right)
+            merge_larger(arr, left, right, mid)
+
+        def merge_larger(arr, left, right, mid):
+            # merge [left, mid] and [mid+1, right]
+            i = left
+            j = mid+1
+            k = left
+            # use temp[left...right] to temporarily store sorted array
+            while i <= mid and j <= right:
+                if arr[i][0] <= arr[j][0]:
+                    temp[k] = arr[i]
+                    k += 1
+                    i += 1
+                else:
+                    temp[k] = arr[j]
+                    larger[arr[j][1]] += mid - i + 1
+                    k += 1
+                    j += 1
+
+            while i <= mid:
+                temp[k] = arr[i]
+                k += 1
+                i += 1
+            while j <= right:
+                temp[k] = arr[j]
+                larger[arr[j][1]] += mid - i + 1
+                k += 1
+                j += 1
+            # restore from temp
+            for i in range(left, right+1):
+                arr[i] = temp[i]
+
+        MOD = 10**9+7
+        cost = 0
+
+        arr_smaller = [[v, i] for i, v in enumerate(instructions)]
+        arr_larger = [[v, i] for i, v in enumerate(instructions)]
+
+        sort_smaller(arr_smaller, 0, n-1)
+        sort_larger(arr_larger, 0, n-1)
+
+        for i in range(n):
+            cost += min(smaller[i], larger[i])
+        return cost % MOD","class Solution:
+    def createSortedArray(self, instructions: List[int]) -> int:
+        # implement Segment Tree
+        def update(index, value, tree, m):
+            index += m
+            tree[index] += value
+            while index > 1:
+                index >>= 1
+                tree[index] = tree[index << 1] + tree[(index << 1)+1]
+
+        def query(left, right, tree, m):
+            result = 0
+            left += m
+            right += m
+            while left < right:
+                if left & 1:
+                    result += tree[left]
+                    left += 1
+                left >>= 1
+                if right & 1:
+                    right -= 1
+                    result += tree[right]
+                right >>= 1
+            return result
+
+        MOD = 10**9+7
+        m = max(instructions)+1
+        tree = [0]*(2*m)
+        cost = 0
+        for x in instructions:
+            left_cost = query(0, x, tree, m)
+            right_cost = query(x+1, m, tree, m)
+            cost += min(left_cost, right_cost)
+            update(x, 1, tree, m)
+        return cost % MOD",
+"Excel Sheet Column Number: Given a string columnTitle that represents the column title as appears in an Excel sheet, return its corresponding column number.
+
+For example:
+
+A -> 1
+B -> 2
+C -> 3
+...
+Z -> 26
+AA -> 27
+AB -> 28 
+...
+","Input: columnTitle = ""A""
+Output: 1
+Input: columnTitle = ""ZY""
+Output: 701","assert titleToNumber(""AB"")==28",Math,String,Easy,https://leetcode.com/problems/excel-sheet-column-number/description/,"def titleToNumber(s: str) -> int:
+    result = 0
+    alpha_map = {chr(i + 65): i + 1 for i in range(26)}
+    n = len(s)
+    for i in range(n):
+        cur_char = s[n - 1 - i]
+        result += (alpha_map[cur_char] * (26 ** i))
+    return result","class Solution:
+    def titleToNumber(self, s: str) -> int:
+        result = 0
+        n = len(s)
+        for i in range(n):
+            result = result * 26
+            result += (ord(s[i]) - ord('A') + 1)
+        return result",
+"Arranging Coins: You have n coins and you want to build a staircase with these coins. The staircase consists of k rows where the ith row has exactly i coins. The last row of the staircase may be incomplete.
+
+Given the integer n, return the number of complete rows of the staircase you will build.","Input: n = 5
+Output: 2
+Explanation: Because the 3rd row is incomplete, we return 2.",assert arrangeCoins(8)==3,Math,Binary Search,Easy,https://leetcode.com/problems/arranging-coins/description/,"def arrangeCoins(n: int) -> int:
+    return (int)((2 * n + 0.25)**0.5 - 0.5)","class Solution:
+    def arrangeCoins(self, n: int) -> int:
+        left, right = 0, n
+        while left <= right:
+            k = (right + left) // 2
+            curr = k * (k + 1) // 2
+            if curr == n:
+                return k
+            if n < curr:
+                right = k - 1
+            else:
+                left = k + 1
+        return right",
+"Squirrel Simulation: You are given two integers height and width representing a garden of size height x width. You are also given:
+
+an array tree where tree = [treer, treec] is the position of the tree in the garden,
+an array squirrel where squirrel = [squirrelr, squirrelc] is the position of the squirrel in the garden,
+and an array nuts where nuts[i] = [nutir, nutic] is the position of the ith nut in the garden.
+The squirrel can only take at most one nut at one time and can move in four directions: up, down, left, and right, to the adjacent cell.
+
+Return the minimal distance for the squirrel to collect all the nuts and put them under the tree one by one.
+
+The distance is the number of moves.","Input: height = 5, width = 7, tree = [2,2], squirrel = [4,4], nuts = [[3,0], [2,5]]
+Output: 12
+Explanation: The squirrel should go to the nut at [2, 5] first to achieve a minimal distance.","assert minDistance(1,3, [0,1], [0,0], [[0,2]])==3",Math,Array,Medium,https://leetcode.com/problems/squirrel-simulation/description/,"def minDistance(height: int, width: int, tree: List[int], squirrel: List[int], nuts: List[List[int]]) -> int:
+        firstPath = float('-inf')
+        total_dist = 0
+        for nut in nuts:
+            dist_to_Sq = abs(squirrel[0]-nut[0])+abs(squirrel[1]-nut[1])
+            dist_to_Tr = abs(tree[0]-nut[0])+abs(tree[1]-nut[1])
+            if (dist_to_Tr-dist_to_Sq)>firstPath:
+                firstPath = dist_to_Tr-dist_to_Sq
+            total_dist+=2*dist_to_Tr
+        total_dist = total_dist - firstPath
+        return total_dist","def minDistance(self, height: int, width: int, tree: List[int], squirrel: List[int], nuts: List[List[int]]) -> int:
+
+        def manhattan(a,b):
+                return abs(a[0] - b[0]) + abs(a[1] - b[1])
+
+        res = float('inf')
+        dist = [manhattan(n, tree) for n in nuts] # Distance from each nut to the tree
+        total = sum(dist)
+        all_except = [total-d for d in dist]      # Sum of distance to tree for all nuts except for nuts[i] (the starting nut)
+        
+        # Try choosing each nut as the ""starting nut"" and calculate the total distance
+        for i in range(len(nuts)):
+                a = manhattan(squirrel, nuts[i])
+                b = dist[i]
+                c = 2*all_except[i]
+                res = min(res, a+b+c)
+
+        return res",
+"Perfect Squares: Given an integer n, return the least number of perfect square numbers that sum to n.
+
+A perfect square is an integer that is the square of an integer; in other words, it is the product of some integer with itself. For example, 1, 4, 9, and 16 are perfect squares while 3 and 11 are not.
+
+","Input: n = 12
+Output: 3
+Explanation: 12 = 4 + 4 + 4.
+Input: n = 13
+Output: 2
+Explanation: 13 = 4 + 9.",DITCH,Math,"Dynamic Programming, Breadth-First Search",Medium,https://leetcode.com/problems/perfect-squares/description/,"class Solution:
+    def isSquare(self, n: int) -> bool:
+        sq = int(math.sqrt(n))
+        return sq*sq == n
+
+    def numSquares(self, n: int) -> int:
+        # four-square and three-square theorems
+        while (n & 3) == 0:
+            n >>= 2      # reducing the 4^k factor from number
+        if (n & 7) == 7: # mod 8
+            return 4
+
+        if self.isSquare(n):
+            return 1
+        for i in range(1, int(n**(0.5)) + 1):
+            if self.isSquare(n - i*i):
+                return 2
+        return 3","class Solution:
+    def numSquares(self, n):
+        
+        def is_divided_by(n, count):
+            """"""
+                return: true if ""n"" can be decomposed into ""count"" number of perfect square numbers.
+                e.g. n=12, count=3:  true.
+                     n=12, count=2:  false
+            """"""
+            if count == 1:
+                return n in square_nums
+            
+            for k in square_nums:
+                if is_divided_by(n - k, count - 1):
+                    return True
+            return False
+
+        square_nums = set([i * i for i in range(1, int(n**0.5)+1)])
+    
+        for count in range(1, n+1):
+            if is_divided_by(n, count):
+                return count",
+"Consecutive Numbers Sum: Given an integer n, return the number of ways you can write n as the sum of consecutive positive integers.","Input: n = 5
+Output: 2
+Explanation: 5 = 2 + 3
+Input: n = 15
+Output: 4
+Explanation: 15 = 8 + 7 = 4 + 5 + 6 = 1 + 2 + 3 + 4 + 5",assert consecutiveNumbersSum(9)==3,Math,Enumeration,Hard,https://leetcode.com/problems/consecutive-numbers-sum/description/,"def consecutiveNumbersSum(N: int) -> int:
+    count = 0
+    upper_limit = ceil((2 * N + 0.25)**0.5 - 0.5) + 1
+    for k in range(1, upper_limit):
+        if (N - k * (k + 1) // 2) % k == 0:
+            count += 1
+    return count","class Solution:
+    def consecutiveNumbersSum(self, N: int) -> int:
+        count = 0
+        upper_limit = ceil((2 * N + 0.25)**0.5 - 0.5) + 1
+        for k in range(1, upper_limit):
+            N -= k
+            if N % k == 0:
+                count += 1
+        return count",
+"Minimum Time Visiting All Points: On a 2D plane, there are n points with integer coordinates points[i] = [xi, yi]. Return the minimum time in seconds to visit all the points in the order given by points.
+
+You can move according to these rules:
+
+In 1 second, you can either:
+move vertically by one unit,
+move horizontally by one unit, or
+move diagonally sqrt(2) units (in other words, move one unit vertically then one unit horizontally in 1 second).
+You have to visit the points in the same order as they appear in the array.
+You are allowed to pass through points that appear later in the order, but these do not count as visits.","Input: points = [[1,1],[3,4],[-1,0]]
+Output: 7
+Explanation: One optimal path is [1,1] -> [2,2] -> [3,3] -> [3,4] -> [2,3] -> [1,2] -> [0,1] -> [-1,0]   
+Time from [1,1] to [3,4] = 3 seconds 
+Time from [3,4] to [-1,0] = 4 seconds
+Total time = 7 seconds","assert minTimeToVisitAllPoints([[3,2],[-2,2]])==5",Geometry,"Math, Array",Easy,https://leetcode.com/problems/minimum-time-visiting-all-points/description/,"def minTimeToVisitAllPoints(points: List[List[int]]) -> int:
+    def rule(A, B):
+        return max(abs(A[0] - B[0]), abs(A[1] - B[1]))
+    sum = 0
+    for tup1, tup2 in zip(points[:-1], points[1:]):
+        sum += rule(tup1, tup2)
+    
+    return sum","class Solution:
+    def minTimeToVisitAllPoints(self, points: List[List[int]]) -> int:
+        def rule(A, B):
+            return max(abs(A[0] - B[0]), abs(A[1] - B[1]))
+        
+        sum = 0
+        
+        for tup1, tup2 in zip(points[:-1], points[1:]):
+            sum += rule(tup1, tup2)
+        
+        return sum",
+"Projection Area of 3D Shapes: You are given an n x n grid where we place some 1 x 1 x 1 cubes that are axis-aligned with the x, y, and z axes.
+
+Each value v = grid[i][j] represents a tower of v cubes placed on top of the cell (i, j).
+
+We view the projection of these cubes onto the xy, yz, and zx planes.
+
+A projection is like a shadow, that maps our 3-dimensional figure to a 2-dimensional plane. We are viewing the ""shadow"" when looking at the cubes from the top, the front, and the side.
+
+Return the total area of all three projections.","Input: grid = [[1,2],[3,4]]
+Output: 17
+Explanation: Here are the three projections (""shadows"") of the shape made with each axis-aligned plane.
+Input: grid = [[1,0],[0,2]]
+Output: 8",assert projectionArea([[2]])==5,Geometry,"Math, Array, Matrix",Easy,https://leetcode.com/problems/projection-area-of-3d-shapes/description/,"def projectionArea(grid):
+    N = len(grid)
+    ans = 0
+    for i in xrange(N):
+        best_row = 0
+        best_col = 0 
+        for j in xrange(N):
+            if grid[i][j]: ans += 1
+            best_row = max(best_row, grid[i][j])
+            best_col = max(best_col, grid[j][i])
+
+        ans += best_row + best_col
+
+    return ans",,
+"K Closest Points to Origin: Given an array of points where points[i] = [xi, yi] represents a point on the X-Y plane and an integer k, return the k closest points to the origin (0, 0).
+
+The distance between two points on the X-Y plane is the Euclidean distance (i.e., √(x1 - x2)2 + (y1 - y2)2).
+
+You may return the answer in any order. The answer is guaranteed to be unique (except for the order that it is in).","Input: points = [[1,3],[-2,2]], k = 1
+Output: [[-2,2]]
+Explanation:
+The distance between (1, 3) and the origin is sqrt(10).
+The distance between (-2, 2) and the origin is sqrt(8).
+Since sqrt(8) < sqrt(10), (-2, 2) is closer to the origin.
+We only want the closest k = 1 points from the origin, so the answer is just [[-2,2]].","assert kClosest([[3,3],[5,-1],[-2,4]], 2)==[[3,3],[-2,4]]",Geometry,"Array, Math, Divide and Conquer, Sorting, Quickselect, Heap",Medium,https://leetcode.com/problems/k-closest-points-to-origin/description/,"def kClosest(points, K):
+    dist = lambda i: points[i][0]**2 + points[i][1]**2
+
+    def sort(i, j, K):
+        if i >= j: return
+        k = random.randint(i, j)
+        points[i], points[k] = points[k], points[i]
+
+        mid = partition(i, j)
+        if K < mid - i + 1:
+            sort(i, mid - 1, K)
+        elif K > mid - i + 1:
+            sort(mid + 1, j, K - (mid - i + 1))
+
+    def partition(i, j):
+        oi = i
+        pivot = dist(i)
+        i += 1
+
+        while True:
+            while i < j and dist(i) < pivot:
+                i += 1
+            while i <= j and dist(j) >= pivot:
+                j -= 1
+            if i >= j: break
+            points[i], points[j] = points[j], points[i]
+
+        points[oi], points[j] = points[j], points[oi]
+        return j
+
+    sort(0, len(points) - 1, K)
+    return points[:K]","class Solution(object):
+    def kClosest(self, points, K):
+        points.sort(key = lambda P: P[0]**2 + P[1]**2)
+        return points[:K]",
+"Generate Random Point in a Circle: Given the radius and the position of the center of a circle, implement the function randPoint which generates a uniform random point inside the circle.
+
+Implement the Solution class:
+
+Solution(double radius, double x_center, double y_center) initializes the object with the radius of the circle radius and the position of the center (x_center, y_center).
+randPoint() returns a random point inside the circle. A point on the circumference of the circle is considered to be in the circle. The answer is returned as an array [x, y].","Input
+[""Solution"", ""randPoint"", ""randPoint"", ""randPoint""]
+[[1.0, 0.0, 0.0], [], [], []]
+Output
+[null, [-0.02493, -0.38077], [0.82314, 0.38945], [0.36572, 0.17248]]
+
+Explanation
+Solution solution = new Solution(1.0, 0.0, 0.0);
+solution.randPoint(); // return [-0.02493, -0.38077]
+solution.randPoint(); // return [0.82314, 0.38945]
+solution.randPoint(); // return [0.36572, 0.17248]
+",DITCH,Geometry,"Math, Rejection Sampling, Randomized",Medium,https://leetcode.com/problems/generate-random-point-in-a-circle/description/,"class Solution:
+  def __init__(self, radius: float, x_center: float, y_center: float):
+    self.radius = radius
+    self.x_center = x_center
+    self.y_center = y_center
+
+  def randPoint(self) -> List[float]:
+    length = math.sqrt(random.uniform(0, self.radius**2))
+    degree = random.uniform(0, 1) * 2 * math.pi
+    x = self.x_center + length * math.cos(degree)
+    y = self.y_center + length * math.sin(degree)
+    return [x, y]",,
+"Erect the Fence: You are given an array trees where trees[i] = [xi, yi] represents the location of a tree in the garden.
+
+Fence the entire garden using the minimum length of rope, as it is expensive. The garden is well-fenced only if all the trees are enclosed.
+
+Return the coordinates of trees that are exactly located on the fence perimeter. You may return the answer in any order.","Input: trees = [[1,1],[2,2],[2,0],[2,4],[3,3],[4,2]]
+Output: [[1,1],[2,0],[4,2],[3,3],[2,4]]
+Explanation: All the trees will be on the perimeter of the fence except the tree at [2, 2], which will be inside the fence.
+Input: trees = [[1,2],[2,2],[4,2]]
+Output: [[4,2],[2,2],[1,2]]
+Explanation: The fence forms a line that passes through all the trees.",DITCH,Geometry,"Array, Math",Hard,https://leetcode.com/problems/erect-the-fence/description/,"import itertools
+
+# Monotone Chain Algorithm
+class Solution(object):
+    def outerTrees(self, points):
+        
+        def ccw(A, B, C):
+            return (B[0]-A[0])*(C[1]-A[1]) - (B[1]-A[1])*(C[0]-A[0])
+
+        if len(points) <= 1:
+            return points
+
+        hull = []
+        points.sort()
+        for i in itertools.chain(range(len(points)), reversed(range(len(points)-1))):
+            while len(hull) >= 2 and ccw(hull[-2], hull[-1], points[i]) < 0:
+                hull.pop()
+            hull.append(points[i])
+        hull.pop()
+
+        for i in range(1, (len(hull)+1)//2):
+            if hull[i] != hull[-1]:
+                break
+            hull.pop()
+        return hull","class Solution:
+    def outerTrees(self, trees: List[List[int]]) -> List[List[int]]:
+        
+
+        def check_clockwise(p1,p2,p3):
+            
+            x1,y1 = p1
+            x2,y2 = p2
+            x3,y3 = p3
+            """"""
+            slope of p1 and p2 will be y2-y1/x2-x1
+            
+            slope of p2 and p3 will be y3-y2/x3-x2
+            
+            combining them both gives
+            
+            y3-y2/x3-x2   -   y2-y1/x2-x1 
+            
+            this eqn represents the resultant formed by those two
+            if this is greater than 0 then direction will be counter clockwise else clockwise
+            """"""
+            return (y3-y2)*(x2-x1)-(y2-y1)*(x3-x2) #return <0 if clockwise
+        
+        
+        trees.sort()
+        upper = []
+        lower = []
+        
+        for t in trees:
+            
+            while len(upper)>1 and check_clockwise(upper[-1],upper[-2],t)>0:
+                upper.pop()
+            
+            while len(lower)>1 and check_clockwise(lower[-1],lower[-2],t)<0:
+                lower.pop()
+            
+            upper.append(tuple(t))
+            lower.append(tuple(t))
+        
+        return list(set(upper+lower))",
+"Repeated Substring Pattern: Given a string s, check if it can be constructed by taking a substring of it and appending multiple copies of the substring together.","Input: s = ""aba""
+Output: false
+Explanation: It is the substring ""ab"" twice.
+Input: s = ""abcabcabcabc""
+Output: true
+Explanation: It is the substring ""abc"" four times or the substring ""abcabc"" twice.","assert repeatedSubstringPattern(""abab"")==True",Pattern,String,Easy,https://leetcode.com/problems/repeated-substring-pattern/description/,"def repeatedSubstringPattern(s: str) -> bool:
+    n = len(s)
+    for i in range(1, n // 2 + 1):
+        if n % i == 0:
+            pattern = s[:i] * (n // i)
+            if s == pattern:
+                return True
+    return False","class Solution:
+    def repeatedSubstringPattern(self, s: str) -> bool:
+        t = s + s
+        if s in t[1:-1]:
+            return True
+        return False",
+"Detect Pattern of Length M Repeated K or More Times: Given an array of positive integers arr, find a pattern of length m that is repeated k or more times.
+
+A pattern is a subarray (consecutive sub-sequence) that consists of one or more values, repeated multiple times consecutively without overlapping. A pattern is defined by its length and the number of repetitions.
+
+Return true if there exists a pattern of length m that is repeated k or more times, otherwise return false.","Input: arr = [1,2,1,2,1,1,1,3], m = 2, k = 2
+Output: true
+Explanation: The pattern (1,2) of length 2 is repeated 2 consecutive times. Another valid pattern (2,1) is also repeated 2 times.
+Input: arr = [1,2,1,2,1,3], m = 2, k = 3
+Output: false
+Explanation: The pattern (1,2) is of length 2 but is repeated only 2 times. There is no pattern of length 2 that is repeated 3 or more times.
+","assert containsPattern([1,2,4,4,4,4],1,3)==True",Pattern,"Array, Enumeration",Easy,https://leetcode.com/problems/detect-pattern-of-length-m-repeated-k-or-more-times/description/,"def containsPattern(arr: List[int], m: int, k: int) -> bool:
+    i = 0
+    while i <= len(arr)-1:
+            p = arr[i:i+m]
+            if p * k == arr[i:i+m*k]:
+                    return True
+            i += 1
+    return False","def containsPattern(self, arr: List[int], m: int, k: int) -> bool:
+    streak = 0
+    for i in range(len(arr)-m):
+        streak = streak + 1 if arr[i] == arr[i+m] else 0
+        if streak == (k-1)*m: return True
+    return False",
+"Word Pattern: Given a pattern and a string s, find if s follows the same pattern.
+
+Here follow means a full match, such that there is a bijection between a letter in pattern and a non-empty word in s.","Input: pattern = ""abba"", s = ""dog cat cat fish""
+Output: false
+Input: pattern = ""aaaa"", s = ""dog cat cat dog""
+Output: false","assert wordPattern(""abba"", ""dog cat cat dog"")==True",Pattern,"Hash Table, String",Easy,https://leetcode.com/problems/word-pattern/,"def wordPattern(pattern: str, s: str) -> bool:
+    map_char = {}
+    map_word = {}
+    
+    words = s.split(' ')
+    if len(words) != len(pattern):
+        return False
+    
+    for c, w in zip(pattern, words):
+        if c not in map_char:
+            if w in map_word:
+                return False
+            else:
+                map_char[c] = w
+                map_word[w] = c
+        else:
+            if map_char[c] != w:
+                return False
+    return True","class Solution:
+    def wordPattern(self, pattern: str, s: str) -> bool:
+        map_index = {}
+        words = s.split()
+        
+        if len(pattern) != len(words):
+            return False
+        
+        for i in range(len(words)):
+            c = pattern[i]
+            w = words[i]
+
+            char_key = 'char_{}'.format(c)
+            char_word = 'word_{}'.format(w)
+            
+            if char_key not in map_index:
+                map_index[char_key] = i
+            
+            if char_word not in map_index:
+                map_index[char_word] = i 
+            
+            if map_index[char_key] != map_index[char_word]:
+                return False
+        
+        return True",
+"Find and Replace Pattern: Given a list of strings words and a string pattern, return a list of words[i] that match pattern. You may return the answer in any order.
+
+A word matches the pattern if there exists a permutation of letters p so that after replacing every letter x in the pattern with p(x), we get the desired word.
+
+Recall that a permutation of letters is a bijection from letters to letters: every letter maps to another letter, and no two letters map to the same letter.","Input: words = [""abc"",""deq"",""mee"",""aqq"",""dkd"",""ccc""], pattern = ""abb""
+Output: [""mee"",""aqq""]
+Explanation: ""mee"" matches the pattern because there is a permutation {a -> m, b -> e, ...}. 
+""ccc"" does not match the pattern because {a -> c, b -> c, ...} is not a permutation, since a and b map to the same letter.","assert findAndReplacePattern([""a"",""b"",""c""], ""a"")==[""a"",""b"",""c""]",Pattern,"Array, String, Hash Table",Medium,https://leetcode.com/problems/find-and-replace-pattern/description/,"def findAndReplacePattern(words, pattern):
+    def match(word):
+        m1, m2 = {}, {}
+        for w, p in zip(word, pattern):
+            if w not in m1: m1[w] = p
+            if p not in m2: m2[p] = w
+            if (m1[w], m2[p]) != (p, w):
+                return False
+        return True
+
+    return filter(match, words)","class Solution(object):
+    def findAndReplacePattern(self, words, pattern):
+        def match(word):
+            P = {}
+            for x, y in zip(pattern, word):
+                if P.setdefault(x, y) != y:
+                    return False
+            return len(set(P.values())) == len(P.values())
+
+        return filter(match, words)",
+"Word Pattern II: Given a pattern and a string s, return true if s matches the pattern.
+
+A string s matches a pattern if there is some bijective mapping of single characters to non-empty strings such that if each character in pattern is replaced by the string it maps to, then the resulting string is s. A bijective mapping means that no two characters map to the same string, and no character maps to two different strings.","Input: pattern = ""abab"", s = ""redblueredblue""
+Output: true
+Explanation: One possible mapping is as follows:
+'a' -> ""red""
+'b' -> ""blue""
+Input: pattern = ""aabb"", s = ""xyzabcxzyabc""
+Output: false","assert wordPatternMatch(""aaaa"", ""asdasdasdasd"")==True",Pattern,"Hash Table, String, Backtracking",Medium,https://leetcode.com/problems/word-pattern-ii/description/,"def wordPatternMatch(pattern: str, s: str) -> bool:
+    def backtrack(cur: str, pattern: str, mappings: dict):
+        if not pattern:
+            return not cur
+        if pattern[0] in mappings:
+            if cur[:len(mappings[pattern[0]])] != mappings[pattern[0]]:
+                return False
+            return backtrack(cur[len(mappings[pattern[0]]):], pattern[1:], mappings)
+        for i in range(len(cur)):
+            if cur[:i+1] in mappings.values():
+                continue
+            mappings[pattern[0]] = cur[:i+1]
+            if backtrack(cur[i+1:], pattern[1:], mappings):
+                return True
+            del mappings[pattern[0]]
+        return False
+    return backtrack(s, pattern, {})","class Solution:
+    def wordPatternMatch(self, pattern: str, s: str) -> bool:
+        lp, ls = len(pattern), len(s)
+        for nums in itertools.combinations(range(1, ls), lp-1):
+            p_to_word, word_to_p, prev = dict(), dict(), 0
+            nums += (ls,)
+            for i in range(lp):
+                if pattern[i] in p_to_word and p_to_word[pattern[i]] != s[prev:nums[i]] or \
+                s[prev:nums[i]] in word_to_p and word_to_p[s[prev:nums[i]]] != pattern[i]:
+                    break
+                else:    
+                    p_to_word[pattern[i]] = s[prev:nums[i]]
+                    word_to_p[s[prev:nums[i]]] = pattern[i]
+                prev = nums[i]
+            else:
+                return True
+        return False",

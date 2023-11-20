@@ -10,7 +10,7 @@
         [
             "Matrix/Grid"
         ],
-        "code": "def middlesum(mat):\n\n        row_sum = 0\n        col_sum = 0\n        n = len(mat)\n\n        for i in range(n):\n                row_sum += mat[n // 2][i]\n        \n        for i in range(n):\n                col_sum += mat[i][n // 2]\n\n        mid_sum = [row_sum, col_sum]\n        return mid_sum\n        \n        ",
+        "code": "def middlesum(mat: list) -> list:\n\n        row_sum = 0\n        col_sum = 0\n        n = len(mat)\n\n        for i in range(n):\n                row_sum += mat[n // 2][i]\n        \n        for i in range(n):\n                col_sum += mat[i][n // 2]\n\n        mid_sum = [row_sum, col_sum]\n        return mid_sum\n        \n        \n",
         "asserts":
         [
             "assert middlesum([[2, 5, 7],[3, 7, 2],[5, 6, 9]]) == [12, 18]"
@@ -27,7 +27,7 @@
         [
             "Matrix/Grid"
         ],
-        "code": "\nMAX = 1000\n\ndef isPermutedMatrix(mat) :\n        \n        n = len(mat)\n        str_cat = \"\"\n        for i in range(n) :\n                str_cat = str_cat + \"-\" + str(mat[0][i])\n\n        str_cat = str_cat + str_cat\n\n        for i in range(1, n) :\n                curr_str = \"\"\n                \n                for j in range(n) :\n                        curr_str = curr_str + \"-\" + str(mat[i][j])\n\n                if (str_cat.find(curr_str)) : \n                        return True\n                        \n        return False\n",
+        "code": "\nMAX = 1000\n\ndef isPermutedMatrix(mat: list) -> bool:\n        \n        n = len(mat)\n        str_cat = \"\"\n        for i in range(n) :\n                str_cat = str_cat + \"-\" + str(mat[0][i])\n\n        str_cat = str_cat + str_cat\n\n        for i in range(1, n) :\n                curr_str = \"\"\n                \n                for j in range(n) :\n                        curr_str = curr_str + \"-\" + str(mat[i][j])\n\n                if (str_cat.find(curr_str)) : \n                        return True\n                        \n        return False\n",
         "asserts":
         [
             "assert isPermutedMatrix([[1, 2, 3, 4], [4, 1, 2, 3], [3, 4, 1, 2], [2, 3, 4, 1]]) == True"
@@ -44,7 +44,7 @@
         [
             "Matrix/Grid"
         ],
-        "code": "\ndef countZeroes(mat):\n        \n        N = 5;\n        row = N - 1;\n        col = 0;\n        count = 0;\n\n        while (col < N):\n                while (mat[row][col]):\n                        if (row < 0):\n                                return count;\n                        row = row - 1;\n                count = count + (row + 1);\n                col = col + 1;\n\n        return count",
+        "code": "\ndef countZeroes(mat: list) -> int:\n        \n        N = 5;\n        row = N - 1;\n        col = 0;\n        count = 0;\n\n        while (col < N):\n                while (mat[row][col]):\n                        if (row < 0):\n                                return count;\n                        row = row - 1;\n                count = count + (row + 1);\n                col = col + 1;\n\n        return count\n",
         "asserts":
         [
             "assert countZeroes([[0, 0, 0, 0, 1],[0, 0, 0, 1, 1],[0, 1, 1, 1, 1],[1, 1, 1, 1, 1],[1, 1, 1, 1, 1]]) == 8"
@@ -61,7 +61,7 @@
         [
             "Heap"
         ],
-        "code": "def kLargest(arr, k):\n        arr.sort(reverse=True)\n        return arr[0:k]",
+        "code": "def kLargest(arr: list, k: int) -> list:\n        arr.sort(reverse=True)\n        return arr[0:k]\n",
         "asserts":
         [
             "assert kLargest([1, 23, 12, 9, 30, 2, 50], 3) == [50, 30, 23]"
@@ -78,7 +78,7 @@
         [
             "Heap"
         ],
-        "code": "def heapSort(arr):\n        def heapify(arr, n, i):\n                smallest = i \n                l = 2 * i + 1 \n                r = 2 * i + 2\n\n                if l < n and arr[l] < arr[smallest]: \n                        smallest = l \n\n                if r < n and arr[r] < arr[smallest]: \n                        smallest = r \n\n                if smallest != i: \n                        (arr[i], \n                        arr[smallest]) = (arr[smallest],\n                                                        arr[i])\n\n                        heapify(arr, n, smallest)\n         \n        n = len(arr)\n        for i in range(int(n / 2) - 1, -1, -1):\n                heapify(arr, n, i) \n\n        for i in range(n-1, -1, -1):\n                \n                arr[0], arr[i] = arr[i], arr[0]\n\n                heapify(arr, i, 0)\n\n        return arr",
+        "code": "def heapSort(arr: list) -> list:\n        def heapify(arr, n, i):\n                smallest = i \n                l = 2 * i + 1 \n                r = 2 * i + 2\n\n                if l < n and arr[l] < arr[smallest]: \n                        smallest = l \n\n                if r < n and arr[r] < arr[smallest]: \n                        smallest = r \n\n                if smallest != i: \n                        (arr[i], \n                        arr[smallest]) = (arr[smallest],\n                                                        arr[i])\n\n                        heapify(arr, n, smallest)\n         \n        n = len(arr)\n        for i in range(int(n / 2) - 1, -1, -1):\n                heapify(arr, n, i) \n\n        for i in range(n-1, -1, -1):\n                \n                arr[0], arr[i] = arr[i], arr[0]\n\n                heapify(arr, i, 0)\n\n        return arr\n",
         "asserts":
         [
             "assert heapSort([4,6,3,2,9]) == [9,6,4,3,2]"
@@ -95,7 +95,7 @@
         [
             "Heap"
         ],
-        "code": "\ndef maxDistinctNum(a, k):\n        s = {}\n        n = len(a)\n        for i in range(n):\n                if a[i] not in s or k == 0:\n                        s[a[i]] = s.get(a[i], 0)+1\n                else:\n                        s[a[i]] = 1\n                        k -= 1\n        if k != 0:\n                return len(s)-k\n        else:\n\n                st = set()\n                for i in s:\n                        st.add(i)\n                return len(st)",
+        "code": "\ndef maxDistinctNum(a: list, k: int) -> int:\n        s = {}\n        n = len(a)\n        for i in range(n):\n                if a[i] not in s or k == 0:\n                        s[a[i]] = s.get(a[i], 0)+1\n                else:\n                        s[a[i]] = 1\n                        k -= 1\n        if k != 0:\n                return len(s)-k\n        else:\n\n                st = set()\n                for i in s:\n                        st.add(i)\n                return len(st)\n",
         "asserts":
         [
             "assert maxDistinctNum([5, 7, 5, 5, 1, 2, 2], 3) == 4"
@@ -112,7 +112,7 @@
         [
             "Heap"
         ],
-        "code": "def kthLargestSum(arr, K):\n    N = len(arr)\n    result = []\n    for i in range(N):\n        sum = 0\n        for j in range(i, N):\n                sum += arr[j]\n                result.append(sum)\n\n    result.sort(reverse=True)\n\n    return result[K - 1]",
+        "code": "def kthLargestSum(arr: list, K: int) -> int:\n    N = len(arr)\n    result = []\n    for i in range(N):\n        sum = 0\n        for j in range(i, N):\n                sum += arr[j]\n                result.append(sum)\n\n    result.sort(reverse=True)\n\n    return result[K - 1]\n",
         "asserts":
         [
             "assert kthLargestSum([20, -5, -1], 3) == 14"
@@ -129,7 +129,7 @@
         [
             "Searching Algorithm"
         ],
-        "code": "def search(arr, x): \n        for i in range(0, len(arr)): \n                if (arr[i] == x): \n                        return i \n        return -1",
+        "code": "def search(arr: list, x: int) -> int:\n        for i in range(0, len(arr)): \n                if (arr[i] == x): \n                        return i \n        return -1\n",
         "asserts":
         [
             "assert search([2, 3, 4, 10, 40], 10) == 3"
@@ -146,7 +146,7 @@
         [
             "Searching Algorithm"
         ],
-        "code": "def binarySearch(arr, x):\n        l = 0\n        r = len(arr) - 1\n        while l <= r:\n                mid = l + (r - l) // 2\n                if arr[mid] == x:\n                        return mid\n\n                elif arr[mid] < x:\n                        l = mid + 1\n\n                else:\n                        r = mid - 1\n\n        return -1",
+        "code": "def binarySearch(arr: list, x: int) -> int:\n        l = 0\n        r = len(arr) - 1\n        while l <= r:\n                mid = l + (r - l) // 2\n                if arr[mid] == x:\n                        return mid\n\n                elif arr[mid] < x:\n                        l = mid + 1\n\n                else:\n                        r = mid - 1\n\n        return -1\n",
         "asserts":
         [
             "assert binarySearch([2, 3, 4, 10, 40], 10) == 3"
@@ -163,7 +163,7 @@
         [
             "Searching Algorithm"
         ],
-        "code": "\nimport math\n\ndef jumpSearch( arr , x):\n        n = len(arr)\n        step = math.sqrt(n)\n        prev = 0\n        while arr[int(min(step, n)-1)] < x:\n                prev = step\n                step += math.sqrt(n)\n                if prev >= n:\n                        return -1\n        while arr[int(prev)] < x:\n                prev += 1\n                if prev == min(step, n):\n                        return -1\n        if arr[int(prev)] == x:\n                return prev\n        \n        return -1",
+        "code": "\nimport math\n\ndef jumpSearch( arr : list, x: int) -> int:\n        n = len(arr)\n        step = math.sqrt(n)\n        prev = 0\n        while arr[int(min(step, n)-1)] < x:\n                prev = step\n                step += math.sqrt(n)\n                if prev >= n:\n                        return -1\n        while arr[int(prev)] < x:\n                prev += 1\n                if prev == min(step, n):\n                        return -1\n        if arr[int(prev)] == x:\n                return prev\n        \n        return -1\n",
         "asserts":
         [
             "assert jumpSearch([0,1,1,2,3,5,8,13,21,34,55,89,144,233,377,610], 55) == 10"
@@ -180,7 +180,7 @@
         [
             "Hash"
         ],
-        "code": "def max_distance(arr): \n        n = len(arr) \n        max_d = -1\n        for i in range(n - 1): \n                for j in range(i + 1, n): \n                        if arr[i] == arr[j]: \n                                temp = abs(j - i) \n                                max_d = max(max_d, temp) \n        return max_d ",
+        "code": "def max_distance(arr: list) -> int:\n        n = len(arr) \n        max_d = -1\n        for i in range(n - 1): \n                for j in range(i + 1, n): \n                        if arr[i] == arr[j]: \n                                temp = abs(j - i) \n                                max_d = max(max_d, temp) \n        return max_d \n",
         "asserts":
         [
             "assert max_distance([1, 2, 4, 1, 3, 4, 2, 5, 6, 5]) == 5"
@@ -197,7 +197,7 @@
         [
             "Hash"
         ],
-        "code": "def subset(ar):\n    n = len(ar)\n    res = 0\n \n    ar.sort()\n    for i in range(0, n) :\n        count = 1\n \n        for i in range(n - 1):\n            if ar[i] == ar[i + 1]:\n                count+=1\n            else:\n                break\n             \n        res = max(res, count)\n     \n    return res",
+        "code": "def subset(ar: list) -> int:\n    n = len(ar)\n    res = 0\n \n    ar.sort()\n    for i in range(0, n) :\n        count = 1\n \n        for i in range(n - 1):\n            if ar[i] == ar[i + 1]:\n                count+=1\n            else:\n                break\n             \n        res = max(res, count)\n     \n    return res\n",
         "asserts":
         [
             "assert subset([5, 6, 9, 3, 4, 3, 4]) == 2"
@@ -214,7 +214,7 @@
         [
             "Hash"
         ],
-        "code": "def longestSubarrWthSumDivByK(arr, k):\n        N = len(arr)\n        maxl = 0\n        for i in range(N):\n                sum1 = 0\n                for j in range(i, N):\n                        sum1 += arr[j]\n                        if sum1 % k == 0:\n                                maxl = max(maxl, j - i + 1)\n        return maxl",
+        "code": "def longestSubarrWthSumDivByK(arr: list, k: int) -> int:\n        N = len(arr)\n        maxl = 0\n        for i in range(N):\n                sum1 = 0\n                for j in range(i, N):\n                        sum1 += arr[j]\n                        if sum1 % k == 0:\n                                maxl = max(maxl, j - i + 1)\n        return maxl\n",
         "asserts":
         [
             "assert longestSubarrWthSumDivByK([2, 7, 6, 1, 4, 5], 3) == 4"
@@ -231,7 +231,7 @@
         [
             "Hash"
         ],
-        "code": "def countDistinct(arr, K):\n        def countWindowDistinct(win, K):\n                dist_count = 0\n                for i in range(K):\n                        j = 0\n                        while j < i:\n                                if (win[i] == win[j]):\n                                        break\n                                else:\n                                        j += 1\n                        if (j == i):\n                                dist_count += 1\n\n                return dist_count\n        N = len(arr)\n        result = []\n        for i in range(N - K + 1):\n                result.append(countWindowDistinct(arr[i:K + i], K))\n        return result",
+        "code": "def countDistinct(arr: list, K: int) -> list:\n        def countWindowDistinct(win, K):\n                dist_count = 0\n                for i in range(K):\n                        j = 0\n                        while j < i:\n                                if (win[i] == win[j]):\n                                        break\n                                else:\n                                        j += 1\n                        if (j == i):\n                                dist_count += 1\n\n                return dist_count\n        N = len(arr)\n        result = []\n        for i in range(N - K + 1):\n                result.append(countWindowDistinct(arr[i:K + i], K))\n        return result\n",
         "asserts":
         [
             "assert countDistinct([1, 2, 1, 3, 4, 2, 3], 4) == [3,4,4,3]"
@@ -248,7 +248,7 @@
         [
             "Hash"
         ],
-        "code": "def findSubArray(arr):\n        n = len(arr)\n        sum = 0\n        maxsize = -1\n        for i in range(0, n-1):\n        \n                sum = -1 if(arr[i] == 0) else 1\n                for j in range(i + 1, n):\n                        sum = sum + (-1) if (arr[j] == 0) else sum + 1\n\n                        if (sum == 0 and maxsize < j-i + 1):\n                                \n                                maxsize = j - i + 1\n                                startindex = i\n        return maxsize",
+        "code": "def findSubArray(arr: list) -> int:\n        n = len(arr)\n        sum = 0\n        maxsize = -1\n        for i in range(0, n-1):\n        \n                sum = -1 if(arr[i] == 0) else 1\n                for j in range(i + 1, n):\n                        sum = sum + (-1) if (arr[j] == 0) else sum + 1\n\n                        if (sum == 0 and maxsize < j-i + 1):\n                                \n                                maxsize = j - i + 1\n                                startindex = i\n        return maxsize\n",
         "asserts":
         [
             "assert findSubArray([1, 0, 0, 1, 0, 1, 1]) == 6"
@@ -265,7 +265,7 @@
         [
             "Hash"
         ],
-        "code": "\ndef countDistinctSubarray(arr):\n        n = len(arr)\n        unst1 = set(arr)\n        totalDist = len(unst1)\n        count = 0\n\n        for i in range(n):\n                unst = set()\n                for j in range(i, n):\n                        unst.add(arr[j])\n                        if len(unst) == totalDist:\n                                count += 1\n\n        return count",
+        "code": "\ndef countDistinctSubarray(arr: list) -> int:\n        n = len(arr)\n        unst1 = set(arr)\n        totalDist = len(unst1)\n        count = 0\n\n        for i in range(n):\n                unst = set()\n                for j in range(i, n):\n                        unst.add(arr[j])\n                        if len(unst) == totalDist:\n                                count += 1\n\n        return count\n",
         "asserts":
         [
             "assert countDistinctSubarray([2, 1, 3, 2, 3]) == 5"
@@ -282,7 +282,7 @@
         [
             "Bitwise Algorithms"
         ],
-        "code": "INT_BITS = 32\ndef leftRotate(n, d):\n        return (n << d)|(n >> (INT_BITS - d))",
+        "code": "INT_BITS = 32\ndef leftRotate(n: int, d: int) -> int:\n        return (n << d)|(n >> (INT_BITS - d))\n",
         "asserts":
         [
             "assert leftRotate(16, 2) == 64"
@@ -299,7 +299,7 @@
         [
             "Bitwise Algorithms"
         ],
-        "code": "import math\n\ndef Log2(x):\n        if x == 0:\n                return False\n\n        return (math.log10(x) /\n                        math.log10(2))\n\ndef isPowerOfTwo(n):\n        return (math.ceil(Log2(n)) ==\n                        math.floor(Log2(n)))",
+        "code": "import math\n\ndef Log2(x):\n        if x == 0:\n                return False\n\n        return (math.log10(x) /\n                        math.log10(2))\n\ndef isPowerOfTwo(n: int) -> bool:\n        return (math.ceil(Log2(n)) ==\n                        math.floor(Log2(n)))\n",
         "asserts":
         [
             "assert isPowerOfTwo(31) == False"
@@ -316,7 +316,7 @@
         [
             "Bitwise Algorithms"
         ],
-        "code": "def swapBits(x, p1, p2, n):\n        set1 = (x >> p1) & ((1<< n) - 1)\n        set2 = (x >> p2) & ((1 << n) - 1)\n\n        xor = (set1 ^ set2)\n        xor = (xor << p1) | (xor << p2)\n        result = x ^ xor\n\n        return result",
+        "code": "def swapBits(x: int, p1: int, p2: int, n: int) -> int:\n        set1 = (x >> p1) & ((1<< n) - 1)\n        set2 = (x >> p2) & ((1 << n) - 1)\n\n        xor = (set1 ^ set2)\n        xor = (xor << p1) | (xor << p2)\n        result = x ^ xor\n\n        return result\n",
         "asserts":
         [
             "assert swapBits(47, 1, 5, 3) == 227"
@@ -333,7 +333,7 @@
         [
             "Bitwise Algorithms"
         ],
-        "code": "def maxSubarrayXOR(arr):\n        n = len(arr)\n        ans = -2147483648\n\n        for i in range(n):\n                curr_xor = 0\n                for j in range(i,n):\n                \n                        curr_xor = curr_xor ^ arr[j]\n                        ans = max(ans, curr_xor)\n        return ans",
+        "code": "def maxSubarrayXOR(arr: list) -> int:\n        n = len(arr)\n        ans = -2147483648\n\n        for i in range(n):\n                curr_xor = 0\n                for j in range(i,n):\n                \n                        curr_xor = curr_xor ^ arr[j]\n                        ans = max(ans, curr_xor)\n        return ans\n",
         "asserts":
         [
             "assert maxSubarrayXOR([1, 2, 3, 4]) == 7"
@@ -350,7 +350,7 @@
         [
             "Bitwise Algorithms"
         ],
-        "code": "def float_bin(number, places = 3):\n    def decimal_converter(num): \n        while num > 1:\n                num /= 10\n        return num\n    whole, dec = str(number).split(\".\")\n    whole = int(whole)\n    dec = int (dec)\n    res = bin(whole).lstrip(\"0b\") + \".\"\n    for x in range(places):\n            whole, dec = str((decimal_converter(dec)) * 2).split(\".\")\n            dec = int(dec)\n            res += whole\n    return res",
+        "code": "def float_bin(number: float, places : int =  3) -> str:\n    def decimal_converter(num): \n        while num > 1:\n                num /= 10\n        return num\n    whole, dec = str(number).split(\".\")\n    whole = int(whole)\n    dec = int (dec)\n    res = bin(whole).lstrip(\"0b\") + \".\"\n    for x in range(places):\n            whole, dec = str((decimal_converter(dec)) * 2).split(\".\")\n            dec = int(dec)\n            res += whole\n    return res\n",
         "asserts":
         [
             "assert float_bin(11.234, 4) == '1011.0011'"
@@ -367,7 +367,7 @@
         [
             "Sorting Algorithms"
         ],
-        "code": "def bitonicGenerator(arr):\n        n = len(arr) \n        evenArr = [] \n        oddArr = [] \n        for i in range(n): \n                if ((i % 2) == 0): \n                        evenArr.append(arr[i]) \n                else: \n                        oddArr.append(arr[i]) \n        evenArr = sorted(evenArr) \n        oddArr = sorted(oddArr) \n        oddArr = oddArr[::-1] \n\n        i = 0\n        for j in range(len(evenArr)): \n                arr[i] = evenArr[j] \n                i += 1\n        for j in range(len(oddArr)): \n                arr[i] = oddArr[j] \n                i += 1\n        return arr",
+        "code": "def bitonicGenerator(arr: list) -> list:\n        n = len(arr) \n        evenArr = [] \n        oddArr = [] \n        for i in range(n): \n                if ((i % 2) == 0): \n                        evenArr.append(arr[i]) \n                else: \n                        oddArr.append(arr[i]) \n        evenArr = sorted(evenArr) \n        oddArr = sorted(oddArr) \n        oddArr = oddArr[::-1] \n\n        i = 0\n        for j in range(len(evenArr)): \n                arr[i] = evenArr[j] \n                i += 1\n        for j in range(len(oddArr)): \n                arr[i] = oddArr[j] \n                i += 1\n        return arr\n",
         "asserts":
         [
             "assert bitonicGenerator([0, 1, 2, 3, 4, 5, 6, 7]) == [0, 2, 4, 6, 7, 5, 3, 1]"
@@ -384,7 +384,7 @@
         [
             "Sorting Algorithms"
         ],
-        "code": "def minSwapsToSort(arr):\n        n = len(arr)\n        arrPos = [[0 for x in range(2)] \n                                for y in range(n)] \n        \n        for i in range(n):         \n                arrPos[i][0] = arr[i] \n                arrPos[i][1] = i \n        arrPos.sort() \n        vis = [False] * (n) \n        ans = 0\n\n        for i in range(n): \n                if (vis[i] or arrPos[i][1] == i): \n                        continue\n                cycle_size = 0\n                j = i \n                \n                while (not vis[j]):                 \n                        vis[j] = 1\n                        j = arrPos[j][1] \n                        cycle_size+= 1\n                ans += (cycle_size - 1) \n\n        return ans \n\ndef minSwapToMakeArraySame(a, b):\n        n = len(a) \n        mp = {} \n        for i in range(n): \n                mp[b[i]] = i \n        for i in range(n): \n                b[i] = mp[a[i]] \n        return minSwapsToSort(b) ",
+        "code": "def minSwapsToSort(arr):\n        n = len(arr)\n        arrPos = [[0 for x in range(2)] \n                                for y in range(n)] \n        \n        for i in range(n):         \n                arrPos[i][0] = arr[i] \n                arrPos[i][1] = i \n        arrPos.sort() \n        vis = [False] * (n) \n        ans = 0\n\n        for i in range(n): \n                if (vis[i] or arrPos[i][1] == i): \n                        continue\n                cycle_size = 0\n                j = i \n                \n                while (not vis[j]):                 \n                        vis[j] = 1\n                        j = arrPos[j][1] \n                        cycle_size+= 1\n                ans += (cycle_size - 1) \n\n        return ans \n\ndef minSwapToMakeArraySame(a: list, b: list) -> int:\n        n = len(a) \n        mp = {} \n        for i in range(n): \n                mp[b[i]] = i \n        for i in range(n): \n                b[i] = mp[a[i]] \n        return minSwapsToSort(b) \n",
         "asserts":
         [
             "assert minSwapToMakeArraySame([3, 6, 4, 8], [4, 6, 8, 3]) == 2"
@@ -401,7 +401,7 @@
         [
             "Sorting Algorithms"
         ],
-        "code": "def findSubsequenceCount(s, t):\n    def f(i, j, s, t):\n        if(j >= len(t)):\n                return 1\n        \n        if(i >= len(s)):\n                return 0\n        \n        if(s[i] == t[j]):\n                return f(i + 1, j + 1, s, t) + f(i + 1, j, s, t)\n        \n        return f(i + 1, j, s, t)\n    return f(0, 0, s, t)",
+        "code": "def findSubsequenceCount(s: str, t: str) -> int:\n    def f(i, j, s, t):\n        if(j >= len(t)):\n                return 1\n        \n        if(i >= len(s)):\n                return 0\n        \n        if(s[i] == t[j]):\n                return f(i + 1, j + 1, s, t) + f(i + 1, j, s, t)\n        \n        return f(i + 1, j, s, t)\n    return f(0, 0, s, t)\n",
         "asserts":
         [
             "assert findSubsequenceCount(\"banana\", \"ban\") == 3"
@@ -486,7 +486,7 @@
         [
             "Stack"
         ],
-        "code": "def backspaceCompare(S, T):\n    def build(S):\n        ans = []\n        for c in S:\n            if c != '#':\n                ans.append(c)\n            elif ans:\n                ans.pop()\n        return \"\".join(ans)\n    return build(S) == build(T)",
+        "code": "def backspaceCompare(S: str, T: str) -> bool:\n    def build(S):\n        ans = []\n        for c in S:\n            if c != '#':\n                ans.append(c)\n            elif ans:\n                ans.pop()\n        return \"\".join(ans)\n    return build(S) == build(T)\n",
         "asserts":
         [
             "assert backspaceCompare(\"ab##\", \"c#d#\")==True"
@@ -503,7 +503,7 @@
         [
             "Stack"
         ],
-        "code": "def isValid(s):\n    stack = []\n    mapping = {\")\": \"(\", \"}\": \"{\", \"]\": \"[\"}\n    for char in s:\n        if char in mapping:\n            top_element = stack.pop() if stack else '#'\n            if mapping[char] != top_element:\n                return False\n        else:\n            stack.append(char)\n    return not stack",
+        "code": "def isValid(s: str) -> bool:\n    stack = []\n    mapping = {\")\": \"(\", \"}\": \"{\", \"]\": \"[\"}\n    for char in s:\n        if char in mapping:\n            top_element = stack.pop() if stack else '#'\n            if mapping[char] != top_element:\n                return False\n        else:\n            stack.append(char)\n    return not stack\n",
         "asserts":
         [
             "assert isValid(\"(]\")==False"
@@ -537,7 +537,7 @@
         [
             "Stack"
         ],
-        "code": "def trap(bars):\n    if not bars or len(bars) < 3:\n        return 0\n    volume = 0\n    left, right = 0, len(bars) - 1\n    l_max, r_max = bars[left], bars[right]\n    while left < right:\n        l_max, r_max = max(bars[left], l_max), max(bars[right], r_max)\n        if l_max <= r_max:\n            volume += l_max - bars[left]\n            left += 1\n        else:\n            volume += r_max - bars[right]\n            right -= 1\n    return volume",
+        "code": "def trap(bars: list) -> int:\n    if not bars or len(bars) < 3:\n        return 0\n    volume = 0\n    left, right = 0, len(bars) - 1\n    l_max, r_max = bars[left], bars[right]\n    while left < right:\n        l_max, r_max = max(bars[left], l_max), max(bars[right], r_max)\n        if l_max <= r_max:\n            volume += l_max - bars[left]\n            left += 1\n        else:\n            volume += r_max - bars[right]\n            right -= 1\n    return volume\n",
         "asserts":
         [
             "assert trap([4,2,0,3,2,5])==9"
@@ -554,7 +554,7 @@
         [
             "Divide and Conquer"
         ],
-        "code": "def majorityElement(nums, lo=0, hi=None):\n    def majority_element_rec(lo, hi):\n        if lo == hi:\n            return nums[lo]\n        mid = (hi-lo)//2 + lo\n        left = majority_element_rec(lo, mid)\n        right = majority_element_rec(mid+1, hi)\n        if left == right:\n            return left\n        left_count = sum(1 for i in range(lo, hi+1) if nums[i] == left)\n        right_count = sum(1 for i in range(lo, hi+1) if nums[i] == right)\n\n        return left if left_count > right_count else right\n\n    return majority_element_rec(0, len(nums)-1)\n",
+        "code": "def majorityElement(nums: list, lo: int = 0, hi: NoneType = None) -> int:\n    def majority_element_rec(lo, hi):\n        if lo == hi:\n            return nums[lo]\n        mid = (hi-lo)//2 + lo\n        left = majority_element_rec(lo, mid)\n        right = majority_element_rec(mid+1, hi)\n        if left == right:\n            return left\n        left_count = sum(1 for i in range(lo, hi+1) if nums[i] == left)\n        right_count = sum(1 for i in range(lo, hi+1) if nums[i] == right)\n\n        return left if left_count > right_count else right\n\n    return majority_element_rec(0, len(nums)-1)\n",
         "asserts":
         [
             "assert majorityElement([2,2,1,1,1,2,2])==2"
@@ -656,7 +656,7 @@
         [
             "Geometry"
         ],
-        "code": "def projectionArea(grid):\n    N = len(grid)\n    ans = 0\n    for i in range(N):\n        best_row = 0\n        best_col = 0 \n        for j in range(N):\n            if grid[i][j]: ans += 1\n            best_row = max(best_row, grid[i][j])\n            best_col = max(best_col, grid[j][i])\n\n        ans += best_row + best_col\n\n    return ans",
+        "code": "def projectionArea(grid: list) -> int:\n    N = len(grid)\n    ans = 0\n    for i in range(N):\n        best_row = 0\n        best_col = 0 \n        for j in range(N):\n            if grid[i][j]: ans += 1\n            best_row = max(best_row, grid[i][j])\n            best_col = max(best_col, grid[j][i])\n\n        ans += best_row + best_col\n\n    return ans\n",
         "asserts":
         [
             "assert projectionArea([[2]])==5"
@@ -724,7 +724,7 @@
         [
             "Pattern"
         ],
-        "code": "def findAndReplacePattern(words, pattern):\n        def match(word):\n            m1, m2 = {}, {}\n            for w, p in zip(word, pattern):\n                if w not in m1: m1[w] = p\n                if p not in m2: m2[p] = w\n                if (m1[w], m2[p]) != (p, w):\n                    return False\n            return True\n\n        return list(filter(match, words))",
+        "code": "def findAndReplacePattern(words: list, pattern: str) -> list:\n        def match(word):\n            m1, m2 = {}, {}\n            for w, p in zip(word, pattern):\n                if w not in m1: m1[w] = p\n                if p not in m2: m2[p] = w\n                if (m1[w], m2[p]) != (p, w):\n                    return False\n            return True\n\n        return list(filter(match, words))\n",
         "asserts":
         [
             "assert findAndReplacePattern([\"a\",\"b\",\"c\"], \"a\")==[\"a\",\"b\",\"c\"]"
@@ -757,7 +757,7 @@
         [
             "'array', 'sorting'"
         ],
-        "code": "def even_odd_reorder(arr: list):\n  nextEven = 0\n  nextOdd = len(arr) - 1\n  while nextEven < nextOdd:\n    if arr[nextEven] % 2 == 0:\n      nextEven += 1\n    else:\n      temp = arr[nextEven]\n      arr[nextEven] = arr[nextOdd]\n      arr[nextOdd] = temp\n      nextOdd -= 1\n  return arr",
+        "code": "def even_odd_reorder(arr: list) -> list:\n  nextEven = 0\n  nextOdd = len(arr) - 1\n  while nextEven < nextOdd:\n    if arr[nextEven] % 2 == 0:\n      nextEven += 1\n    else:\n      temp = arr[nextEven]\n      arr[nextEven] = arr[nextOdd]\n      arr[nextOdd] = temp\n      nextOdd -= 1\n  return arr\n",
         "asserts":
         [
             "assert even_odd_reorder([1,2,3,4,5,6,7,8,9]) == [8, 2, 6, 4, 5, 7, 3, 9, 1]"
@@ -773,7 +773,7 @@
         [
             "'array'"
         ],
-        "code": "def array_intersection(arr1: list, arr2: list):\n  set1 = set(arr1)\n  ret = set([x for x in arr2 if x in set1])\n  return list(ret)",
+        "code": "def array_intersection(arr1: list, arr2: list) -> set:\n  set1 = set(arr1)\n  ret = set([x for x in arr2 if x in set1])\n  return list(ret)\n",
         "asserts":
         [
             "assert set(array_intersection([1,0,2,0,2,0,2,1,1,1], [2,1,0,2,0,2,2,2,1,0])) == {0,1,2}"
@@ -789,7 +789,7 @@
         [
             "'array'"
         ],
-        "code": "def findThePrefixCommonArray(arr1: list, arr2: list):\n  max = len(arr1) if len(arr1) > len(arr2) else len(arr2)\n  seen = set()\n  curCount = 0\n  ret = []\n  for i in range(max):\n    cur1 = arr1[i]\n    cur2 = arr2[i]\n    if cur1 in seen:\n      curCount += 1\n    else:\n      seen.add(cur1)\n    if cur2 in seen:\n      curCount += 1\n    else:\n      seen.add(cur2)\n    ret.append(curCount)\n  return ret",
+        "code": "def findThePrefixCommonArray(arr1: list, arr2: list) -> list:\n  max = len(arr1) if len(arr1) > len(arr2) else len(arr2)\n  seen = set()\n  curCount = 0\n  ret = []\n  for i in range(max):\n    cur1 = arr1[i]\n    cur2 = arr2[i]\n    if cur1 in seen:\n      curCount += 1\n    else:\n      seen.add(cur1)\n    if cur2 in seen:\n      curCount += 1\n    else:\n      seen.add(cur2)\n    ret.append(curCount)\n  return ret\n",
         "asserts":
         [
             "assert findThePrefixCommonArray([1,3,2,4], [3,1,2,4]) == [0,2,3,4]"
@@ -805,7 +805,7 @@
         [
             "'backtracking', 'recursion'"
         ],
-        "code": "def subsetsum(fullset: list, target_sum: int):\n    def subsetSum_helper(cur_idx: int, fullset: list, target_sum: int, subset: list):\n        if target_sum == 0:\n            return subset\n        if (cur_idx == len(fullset)):\n            return None\n        excluding = subsetSum_helper(cur_idx + 1, fullset, target_sum, subset)\n          \n        if excluding is not None:\n            return excluding\n        elif fullset[cur_idx] <= target_sum:\n            subset.append(fullset[cur_idx])\n            including = subsetSum_helper(cur_idx + 1, fullset, target_sum - fullset[cur_idx], subset)\n            if including!=None:\n                return including\n            else:\n                subset.pop()\n            return None\n    return subsetSum_helper(0, fullset, target_sum, [])",
+        "code": "def subsetsum(fullset: list, target_sum: int) -> set:\n    def subsetSum_helper(cur_idx: int, fullset: list, target_sum: int, subset: list):\n        if target_sum == 0:\n            return subset\n        if (cur_idx == len(fullset)):\n            return None\n        excluding = subsetSum_helper(cur_idx + 1, fullset, target_sum, subset)\n          \n        if excluding is not None:\n            return excluding\n        elif fullset[cur_idx] <= target_sum:\n            subset.append(fullset[cur_idx])\n            including = subsetSum_helper(cur_idx + 1, fullset, target_sum - fullset[cur_idx], subset)\n            if including!=None:\n                return including\n            else:\n                subset.pop()\n            return None\n    return subsetSum_helper(0, fullset, target_sum, [])\n",
         "asserts":
         [
             "assert set(subsetsum([3, 34, 4, 12, 5, 2], 9)) == {4,5}"
@@ -821,7 +821,7 @@
         [
             "'greedy', 'array'"
         ],
-        "code": "\ndef reconstructQueue(people):\n    output=[] \n    people.sort(key=lambda x: (-x[0], x[1]))                \n    for a in people:\n        output.insert(a[1], a)\n    \n    return output\n",
+        "code": "\ndef reconstructQueue(people: list) -> list:\n    output=[] \n    people.sort(key=lambda x: (-x[0], x[1]))                \n    for a in people:\n        output.insert(a[1], a)\n    \n    return output\n",
         "asserts":
         [
             "assert reconstructQueue([[8,1],[5,0],[6,1],[5,2],[4,4],[7,1]]) == [[5, 0], [8, 1], [5, 2], [6, 1], [4, 4], [7, 1]]"
@@ -837,7 +837,7 @@
         [
             "'greedy', 'array', 'sorting'"
         ],
-        "code": "def assignHole(mices, holes):\n    for i,j in zip(mices,holes):\n        if i<0 or j<0:\n            return -1\n    if (len(mices) != len(holes)):\n        return -1\n    mices.sort()\n    holes.sort()\n    Max = 0\n     \n    for i in range(len(holes)):\n        if (Max < abs(mices[i] - holes[i])):\n            Max = abs(mices[i] - holes[i])\n     \n    return Max",
+        "code": "def assignHole(mices: list, holes: list) -> int:\n    for i,j in zip(mices,holes):\n        if i<0 or j<0:\n            return -1\n    if (len(mices) != len(holes)):\n        return -1\n    mices.sort()\n    holes.sort()\n    Max = 0\n     \n    for i in range(len(holes)):\n        if (Max < abs(mices[i] - holes[i])):\n            Max = abs(mices[i] - holes[i])\n     \n    return Max\n",
         "asserts":
         [
             "assert assignHole([1, 2, 3, 4], [4, 3, 2, 1]) == 0"
@@ -853,7 +853,7 @@
         [
             "'greedy'"
         ],
-        "code": "import numpy as np\ndef MaxActivities(s, f):\n    indices = np.argsort(f)\n    [s[i] for i in indices]\n    [f[i] for i in indices]\n    result = []\n    n = len(f)\n    i = 0\n    result.append(i)\n    for j in range(1, n):\n        if s[j] >= f[i]:\n            result.append(j)\n            i = j\n    return result\n",
+        "code": "import numpy as np\ndef MaxActivities(s: list, f: list) -> list:\n    indices = np.argsort(f)\n    [s[i] for i in indices]\n    [f[i] for i in indices]\n    result = []\n    n = len(f)\n    i = 0\n    result.append(i)\n    for j in range(1, n):\n        if s[j] >= f[i]:\n            result.append(j)\n            i = j\n    return result\n",
         "asserts":
         [
             "assert MaxActivities([2, 4, 5, 6, 7, 8], [3, 5, 6, 7, 9, 10]) == [0, 1, 2, 3, 4]"
@@ -885,7 +885,7 @@
         [
             "'recursion', 'mathematical'"
         ],
-        "code": "def fibonacci(n):\n    a = 0\n    b = 1\n    if n < 0:\n        print(\"Incorrect input\")\n    elif n == 0:\n        return a\n    elif n == 1:\n        return b\n    else:\n        for i in range(2, n+1):\n            c = a + b\n            a = b\n            b = c\n        return b\n    b = c\n    return fib(n-1, a, b)",
+        "code": "def fibonacci(n: int) -> int:\n    a = 0\n    b = 1\n    if n < 0:\n        print(\"Incorrect input\")\n    elif n == 0:\n        return a\n    elif n == 1:\n        return b\n    else:\n        for i in range(2, n+1):\n            c = a + b\n            a = b\n            b = c\n        return b\n    b = c\n    return fib(n-1, a, b)\n",
         "asserts":
         [
             "assert fibonacci(9) == 34"
@@ -901,7 +901,7 @@
         [
             "'recursion', 'mathematical'"
         ],
-        "code": "\ndef fact(n):\n  if n <= 1:\n    return 1\n  return n*fact(n-1)\n",
+        "code": "\ndef fact(n: int) -> int:\n  if n <= 1:\n    return 1\n  return n*fact(n-1)\n",
         "asserts":
         [
             "assert fact(5) == 120"
@@ -917,7 +917,7 @@
         [
             "'string'"
         ],
-        "code": "def reverse_string(s: list):\n  l = 0\n  r = len(s) - 1\n  while l < r:\n    tmp = s[l]\n    s[l] = s[r]\n    s[r] = tmp\n    l += 1\n    r -= 1\n  return s",
+        "code": "def reverse_string(s: list) -> list:\n  l = 0\n  r = len(s) - 1\n  while l < r:\n    tmp = s[l]\n    s[l] = s[r]\n    s[r] = tmp\n    l += 1\n    r -= 1\n  return s\n",
         "asserts":
         [
             "assert reverse_string([\"a\",\"b\",\"c\",\"d\"]) == [\"d\", \"c\", \"b\", \"a\"]"
@@ -933,7 +933,7 @@
         [
             "'string', 'pattern searching'"
         ],
-        "code": "\ndef permutation_in_string(s1: str, s2: str):\n  window = len(s1)\n  if window > len(s2):\n    return False\n  freq1 = [0]*26\n  freq2 = [0]*26\n  for i in range(window):\n    freq1[ord(s1[i])-ord('a')] += 1\n    freq2[ord(s2[i])-ord('a')] += 1\n\n  matches = 0\n  for i in range(26):\n    if freq1[i] == freq2[i]:\n      matches += 1\n  \n  for l in range(len(s2) - window):\n    if matches == 26:\n      return True\n\n    added = ord(s2[l + window]) - ord('a')\n    freq2[added] += 1\n    if freq1[added] == freq2[added]:\n      matches += 1\n    elif freq1[added] + 1 == freq2[added]:\n      matches -= 1\n\n    removed = ord(s2[l]) - ord('a')\n    freq2[removed] -= 1\n    if freq1[removed] == freq2[removed]:\n      matches += 1\n    elif freq1[removed] == freq2[removed] + 1:\n      matches -= 1\n    \n  return matches == 26\n",
+        "code": "\ndef permutation_in_string(s1: str, s2: str) -> bool:\n  window = len(s1)\n  if window > len(s2):\n    return False\n  freq1 = [0]*26\n  freq2 = [0]*26\n  for i in range(window):\n    freq1[ord(s1[i])-ord('a')] += 1\n    freq2[ord(s2[i])-ord('a')] += 1\n\n  matches = 0\n  for i in range(26):\n    if freq1[i] == freq2[i]:\n      matches += 1\n  \n  for l in range(len(s2) - window):\n    if matches == 26:\n      return True\n\n    added = ord(s2[l + window]) - ord('a')\n    freq2[added] += 1\n    if freq1[added] == freq2[added]:\n      matches += 1\n    elif freq1[added] + 1 == freq2[added]:\n      matches -= 1\n\n    removed = ord(s2[l]) - ord('a')\n    freq2[removed] -= 1\n    if freq1[removed] == freq2[removed]:\n      matches += 1\n    elif freq1[removed] == freq2[removed] + 1:\n      matches -= 1\n    \n  return matches == 26\n",
         "asserts":
         [
             "assert permutation_in_string(\"hello\", \"ooollehhhhh\") == True"
@@ -949,7 +949,7 @@
         [
             "'string'"
         ],
-        "code": "from typing import List\ndef shuffle_string(s: str, indices: List[int]):\n    def partitionString(s):\n      substrings = 1\n      cur_str = set()\n      for i in range(len(s)):\n        if s[i] in cur_str:\n          substrings += 1\n          cur_str = {s[i]}\n        else:\n          cur_str.add(s[i])\n      return substrings\n    ret = ['_']*len(s)\n    for idx, i in enumerate(indices):\n        ret[i] = s[idx]\n    return \"\".join(ret)",
+        "code": "from typing import List\ndef shuffle_string(s: str, indices: List[int]) -> str:\n    def partitionString(s):\n      substrings = 1\n      cur_str = set()\n      for i in range(len(s)):\n        if s[i] in cur_str:\n          substrings += 1\n          cur_str = {s[i]}\n        else:\n          cur_str.add(s[i])\n      return substrings\n    ret = ['_']*len(s)\n    for idx, i in enumerate(indices):\n        ret[i] = s[idx]\n    return \"\".join(ret)\n",
         "asserts":
         [
             "assert shuffle_string(\"reoc\", [2, 0, 1, 3]) == \"eorc\""
@@ -965,7 +965,7 @@
         [
             "'string'"
         ],
-        "code": "def helper(n, letter_idx):\n  letters = [\"a\",\"e\",\"i\",\"o\",\"u\"]\n  dynamic = {\n      'a1' : 5,\n      'e1' : 4,\n      'i1' : 3,\n      'o1' : 2,\n      'u1' : 1\n  }\n  ret = 0\n  key = letters[letter_idx] + str(n)\n  if key in dynamic.keys():\n    return dynamic[key]\n  else:\n    for i in range(letter_idx, len(letters)):\n      ret += helper(n-1, i)\n    dynamic[key] = ret\n  return ret\n  \n\ndef countVowelStrings(n):\n  return helper(n, 0)",
+        "code": "def helper(n, letter_idx):\n  letters = [\"a\",\"e\",\"i\",\"o\",\"u\"]\n  dynamic = {\n      'a1' : 5,\n      'e1' : 4,\n      'i1' : 3,\n      'o1' : 2,\n      'u1' : 1\n  }\n  ret = 0\n  key = letters[letter_idx] + str(n)\n  if key in dynamic.keys():\n    return dynamic[key]\n  else:\n    for i in range(letter_idx, len(letters)):\n      ret += helper(n-1, i)\n    dynamic[key] = ret\n  return ret\n  \n\ndef countVowelStrings(n: int) -> int:\n  return helper(n, 0)\n",
         "asserts":
         [
             "assert countVowelStrings(3) == 35"

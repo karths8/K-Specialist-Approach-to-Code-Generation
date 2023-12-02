@@ -1,0 +1,33 @@
+0 - array
+1 - stack
+2 - math
+3 - array
+4 - math, array
+5 - array
+6 - stack
+7 - string, array
+8 - math, array
+9 - array
+10 - string
+11 - bitwise
+12 - string
+13 - math
+14 - string
+15 - string
+16 - string
+17 - array
+18 - string
+19 - string, sorting
+20 - array, sorting
+21 - math, array
+22 - array
+23 - string
+24 - math
+25 - math
+26 - array
+27 - string
+28 - string
+29 - string
+30 - array
+31 - math
+32 - 

@@ -38,7 +38,7 @@ class StoppingCriteriaSub(StoppingCriteria):
             return True
         return False
 
-def inference(data_path='./../Data_Files/human_eval.json', model_dir = 'CodeLlama-7b-Python-hf', lora_path = 'results/checkpoint-120/', res_path = './../Data_files/human_eval_completions.json'):
+def inference(data_path='./../Data_files/human_eval.json', model_dir = './../CodeLlama-7b-Python-hf', lora_path = 'results/checkpoint-120/', res_path = './../Data_files/human_eval_completions.json'):
     human_eval_data = {}
     with open(data_path, 'r') as file:
         human_eval_data = json.load(file)
@@ -66,7 +66,7 @@ def inference(data_path='./../Data_Files/human_eval.json', model_dir = 'CodeLlam
         print('Prediction String:\n')
         print(predict_str)
         print('Answer:\n')
-        print(i['answer'])
+        print(data['canonical_solution'])
         result.append({
             'task_id' : data['task_id'],
             'completion' : predict_str

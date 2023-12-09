@@ -28,18 +28,23 @@ pip install -U git+https://github.com/huggingface/accelerate.git
 # git-lfs install
 # git lfs pull
 
-# git clone https://huggingface.co/codellama/CodeLlama-7b-Python-hf
-# cd CodeLlama-7b-Python-hf
-# git-lfs install
-# git lfs pull
-
-git clone https://huggingface.co/codellama/CodeLlama-34b-Python-hf
-cd CodeLlama-34b-Python-hf
+git clone https://huggingface.co/codellama/CodeLlama-7b-Python-hf
+cd CodeLlama-7b-Python-hf
 git-lfs install
 git lfs pull
 
+# git clone https://huggingface.co/codellama/CodeLlama-34b-Python-hf
+# cd CodeLlama-34b-Python-hf
+# git-lfs install
+# git lfs pull
+
 git clone https://huggingface.co/intfloat/e5-base-v2
 cd e5-base-v2
+git-lfs install
+git lfs pull
+
+git clone https://huggingface.co/intfloat/e5-large-v2
+cd e5-large-v2
 git-lfs install
 git lfs pull
 

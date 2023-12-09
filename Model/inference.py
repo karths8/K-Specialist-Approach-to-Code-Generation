@@ -1,4 +1,4 @@
-from datasets import Dataset, DatasetDict
+from datasets import Dataset
 import torch
 from peft import PeftModel
 import transformers
@@ -38,23 +38,26 @@ class StoppingCriteriaSub(StoppingCriteria):
             return True
         return False
 
-def inference(data_path='generated_data', model_dir = 'CodeLlama-7b-Python-hf', lora_path = 'results/checkpoint-120/'):
-    dataset = DatasetDict.load_from_disk(data_path)
+def inference(data_path='./../Data_Files/human_eval.json', model_dir = 'CodeLlama-7b-Python-hf', lora_path = 'results/checkpoint-120/', res_path = './../Data_files/human_eval_completions.json'):
+    human_eval_data = {}
+    with open(data_path, 'r') as file:
+        human_eval_data = json.load(file)
     checkpoint = model_dir
     device = "cuda"
     print('Loading model for inference')
     model = AutoModelForCausalLM.from_pretrained(checkpoint, torch_dtype=torch.float16, device_map='auto')
     print('Loading Lora Weights')
-    model = PeftModel.from_pretrained(model, lora_path)
-    model = model.merge_and_unload()
+    # model = PeftModel.from_pretrained(model, lora_path)
+    # model = model.merge_and_unload()
     tokenizer = AutoTokenizer.from_pretrained(checkpoint)
     print('started')
     stop_words_ids = ["[/STOP]"]
     stopping_criteria = StoppingCriteriaList([StoppingCriteriaSub(stops=stop_words_ids, encounters=1,tokenizer=tokenizer)])
     start_time = time.time()
-    for idx,i in enumerate(dataset['test']):
-        print(idx)
-        input_str1 = tokenizer(i['prompt'])
+    result = []
+    for data in human_eval_data:
+        print(data['task_id'])
+        input_str1 = tokenizer(data['prompt'])
         print('generate started!')
         predict = model.generate(inputs=torch.tensor([input_str1['input_ids']]).to('cuda'), max_new_tokens=1200, stopping_criteria = stopping_criteria)
         print('generate ended')
@@ -64,5 +67,12 @@ def inference(data_path='generated_data', model_dir = 'CodeLlama-7b-Python-hf', 
         print(predict_str)
         print('Answer:\n')
         print(i['answer'])
+        result.append({
+            'task_id' : data['task_id'],
+            'completion' : predict_str
+        })
+    with open(res_path, 'w') as res_file:
+        json.dump(result, res_file, indent = 4)
+    
 
 inference()

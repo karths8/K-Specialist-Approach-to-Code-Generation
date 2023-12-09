@@ -38,5 +38,11 @@ cd CodeLlama-34b-Python-hf
 git-lfs install
 git lfs pull
 
+git clone https://huggingface.co/intfloat/e5-base-v2
+cd e5-base-v2
+git-lfs install
+git lfs pull
+
+
 # git config --global user.email "karthiksuresh324@gmail.com"
 # git config --global user.name "Karthik Suresh"

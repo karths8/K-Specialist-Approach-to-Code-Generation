@@ -11,6 +11,7 @@ pip install evaluate
 pip3 install -U click
 pip3 install scipy
 pip3 install datasets
+pip install sentence-transformers
 pip install trl
 pip install -U git+https://github.com/huggingface/transformers.git 
 pip install -U git+https://github.com/huggingface/peft.git
@@ -28,10 +29,10 @@ pip install -U git+https://github.com/huggingface/accelerate.git
 # git-lfs install
 # git lfs pull
 
-git clone https://huggingface.co/codellama/CodeLlama-7b-Python-hf
-cd CodeLlama-7b-Python-hf
-git-lfs install
-git lfs pull
+# git clone https://huggingface.co/codellama/CodeLlama-7b-Python-hf
+# cd CodeLlama-7b-Python-hf
+# git-lfs install
+# git lfs pull
 
 # git clone https://huggingface.co/codellama/CodeLlama-34b-Python-hf
 # cd CodeLlama-34b-Python-hf

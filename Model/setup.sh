@@ -1,7 +1,6 @@
 apt-get update
 apt-get install sudo
 sudo apt-get install git-lfs
-sudo apt-get install pybind11-dev
 sudo apt-get install unzip
 pip install peft
 pip install bitsandbytes loralib --upgrade

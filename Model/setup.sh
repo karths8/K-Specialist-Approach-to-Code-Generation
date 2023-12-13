@@ -1,5 +1,4 @@
-# for openai
-# sudo apt install python3.12 
+
 pip install peft
 pip install openai
 pip install bitsandbytes loralib --upgrade
@@ -19,7 +18,8 @@ apt-get update
 apt-get install sudo
 sudo apt-get install git-lfs
 sudo apt-get install unzip
-
+# for openai
+sudo apt install python3.12 
 # git clone https://huggingface.co/meta-llama/Llama-2-13b-hf
 # cd Llama-2-13b-hf
 # rm *.safetensors

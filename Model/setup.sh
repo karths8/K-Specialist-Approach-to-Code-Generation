@@ -1,4 +1,4 @@
-
+pip install vllm
 pip install peft
 pip install openai
 pip install bitsandbytes loralib --upgrade

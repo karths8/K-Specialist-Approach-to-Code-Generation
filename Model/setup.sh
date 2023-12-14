@@ -27,6 +27,14 @@ sudo apt install python3.12
 # git-lfs install
 # git lfs pull
 
+
+cd /workspace/CS762_Project
+git clone https://huggingface.co/microsoft/phi-2
+cd phi-2
+git-lfs install
+git lfs pull
+cd /workspace/CS762_Project
+
 # git clone https://huggingface.co/meta-llama/Llama-2-13b-hf
 # cd Llama-2-13b-hf
 # git-lfs install

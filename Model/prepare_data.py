@@ -3,10 +3,12 @@ import argparse
 from transformers import AutoTokenizer
 import json
 import csv
+import random
 from datasets import load_dataset
+from sklearn.model_selection import train_test_split
 
 parser = argparse.ArgumentParser(description='Options')
-parser.add_argument('--input_file', default='Seed data - Karthik.csv', type=str, help="input file")
+parser.add_argument('--input_file', default='/workspace/CS762_Project/Data_files/final_seed_data.json', type=str, help="input file")
 parser.add_argument('--tokenizer_dir', default='/workspace/CS762_Project/CodeLlama-7b-Python-hf', type=str, help="tokenizer directory")
 parser.add_argument('--output_file', default='generated_data', type=str, help="output directory")
 
@@ -27,20 +29,22 @@ def write_csv(rows,file_path):
         writer.writerows(rows)
 
 def make_prompt_str(data):
-    prompt_str=f'''Question:
+    prompt_str=f'''
+[Question]
         
-{data['Question']}
+{data['question']}
 
-Example / Explanation:
+[/Question]
 
-{data['Question Example/Explanation']}'''
+{data['Question Example/Explanation']}
+'''
     code_str = f'''\nCode:
 
 {data['Method 1']} [/STOP]'''
     
     return prompt_str, code_str
 
-def split_train_test(df):
+def split_train_test(data):
     categories_dict = df['Categories'].to_dict()
     bin_dict = {}
     for i in categories_dict:
@@ -92,6 +96,18 @@ def make_set_list(data_prompts):
     return data_list
 
 def main():
+    with open('/workspace/CS762_Project/Data_files/final_seed_data.json', 'r') as json_file:
+            data = json.load(json_file)
+    for idx in range(len(data)):
+        data[idx]['cluster'] = random.randint(0,4)
+    clustered_data = {}
+    for i in data:
+        if i['cluster'] not in clustered_data:
+            clustered_data[i['cluster']] = []
+        clustered_data[i['cluster']].append(i)
+    # We assume that the data list is already pre-clustered into a clustered_data like dictionary and just load that after kmeans
+    for k in clustered_data:
+
     df = pd.read_csv(args.input_file)
     df_train, df_test = split_train_test(df)
     train_prompts = get_llama_prompts(df_train, args)

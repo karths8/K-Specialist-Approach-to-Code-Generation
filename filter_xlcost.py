@@ -97,8 +97,11 @@ def to_import_statements_func_sig(json_file: str):
   for row in data:
     #func_names =  _parse_asserts(row['asserts'])
     #out.append(_parse_code(,func_names))
-    out.append(_parse_code2(row['code'], row['asserts']))
+    d = _parse_code2(row['code'], row['asserts'])
+    d['code'] = row['code']
+    d['asserts'] = row['asserts']
+    out.append(d)
   return out
 
 if __name__=="__main__":
-  ret = to_import_statements_func_sig('Notebooks/xlcost_filtered_results_Dec12.json')
+  ret = to_import_statements_func_sig('/workspace/CS762_Project/Notebooks/xlcost_filtered_results_Dec12.json')

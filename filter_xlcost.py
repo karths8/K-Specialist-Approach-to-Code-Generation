@@ -54,7 +54,6 @@ def _parse_code2(code: str, asserts: str):
         close_par = find_closing_parenthesis(code, func_name_end_.start()+ last_idx)
         func_sig_end = code.find(':', close_par)
         func_sig = code[code.find('def',func_sig_start):func_sig_end+1]
-        print(func_sig)
         func_signatures.append(func_sig)
     cur_match = re.search(r'\s*def\s+', code[last_idx:])
 

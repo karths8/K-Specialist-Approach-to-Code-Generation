@@ -37,6 +37,13 @@ cd /workspace/CS762_Project
 
 
 cd /workspace/CS762_Project
+git clone https://huggingface.co/deepseek-ai/deepseek-coder-6.7b-base
+cd deepseek-coder-6.7b-base
+git-lfs install
+git lfs pull
+cd /workspace/CS762_Project
+
+cd /workspace/CS762_Project
 git clone https://huggingface.co/microsoft/phi-2
 cd phi-2
 git-lfs install

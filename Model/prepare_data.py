@@ -17,7 +17,7 @@ parser.add_argument('--kmeans_data_path', default='/workspace/CS762_Project/Kmea
 
 args = parser.parse_args()
 
-system_prompt = '''You are an assistant tasked with generating code given a question and some Examples / Explanations along with the question. The question will be given under the heading "Question:" and the examples or explanations will be given under "Example / Explanation:". Your job is to generate the code and complete the content under the heading title "Code:". '''
+system_prompt = '''You are an assistant tasked with generating code given a question and some Examples and/or Explanations along with the question. The question as well as some examples with input and expected outputs will be between [Question] and [/Question]. You must answer the programming question with python code within the [Code] and [/Code] blocks'''
 
 def make_chat_template(chat_type,data):
     if chat_type=='system':
@@ -45,7 +45,7 @@ def make_prompt_str(data):
 [/Question]
 '''
     code_str = f'''
-[Code]
+\n[Code]
 
 {data['code']} 
 
@@ -54,7 +54,7 @@ def make_prompt_str(data):
     
     return prompt_str, code_str
 
-def split_train_test(data, split_ratio=0.8):
+def split_train_test(data, split_ratio=0.9):
     random.seed(42)
     train_split = int(len(data) * split_ratio)
     data_train = random.sample(data, train_split)
@@ -91,41 +91,35 @@ def make_set_list(data_prompts):
     return data_list
 
 def main():
-    model_list = ['']
     folders = os.listdir(args.kmeans_data_path)
+    model_name = args.tokenizer_dir.split('/')[-1]
+    base_path = f'/workspace/CS762_Project/Prepared_data/{model_name}'
     for folder in folders:
         total = int(folder[2:])
-        data_path = os.path.join(folders, folder, 'clustered_data.json')
+        data_path = os.path.join(args.kmeans_data_path, folder, 'clustered_data.json')
         with open(data_path, 'r') as json_file:
             clustered_data = json.load(json_file)
-    # for idx in range(len(data)):
-    #     data[idx]['cluster'] = random.randint(0,total-1)
-    # clustered_data = {}
-    # for i in data:
-    #     if i['cluster'] not in clustered_data:
-    #         clustered_data[i['cluster']] = []
-    #     clustered_data[i['cluster']].append(i)
-    # We assume that the data list is already pre-clustered into a clustered_data like dictionary and just load that after kmeans
-    for k in clustered_data:
-        data_k = clustered_data[k]
-        train_data, test_data = split_train_test(data_k)
-        train_prompts = get_llama_prompts(train_data, args)
-        test_prompts = get_llama_prompts(test_data, args, test=True)
-        # print(train_prompts[0])
-        train_list = make_set_list(train_prompts)
-        test_list = make_set_list(test_prompts)
-        # print(test_prompts[0])
-        dir_path = f'k_{total}'
-        os.makedirs(dir_path, exist_ok=True)
-        train_op_path = os.path.join(dir_path,f'k_{total}_train_{k}.csv')
-        val_op_path = os.path.join(dir_path,f'k_{total}_val_{k}.csv')
-        write_csv(train_list,train_op_path)
-        write_csv(test_list,val_op_path)
-        dataset = load_dataset("csv", data_files={'train':train_op_path, 'val':val_op_path})
-        print('Dataset Loaded: ')
-        print(dataset)
-        dataset_op_path = os.path.join(dir_path,args.output_file+f'_k_{total}_cluster_{k}')
-        dataset.save_to_disk(dataset_op_path)
+
+        for k in clustered_data:
+            data_k = clustered_data[k]
+            train_data, test_data = split_train_test(data_k)
+            train_prompts = get_llama_prompts(train_data, args)
+            test_prompts = get_llama_prompts(test_data, args, test=True)
+            # print(train_prompts[0])
+            train_list = make_set_list(train_prompts)
+            test_list = make_set_list(test_prompts)
+            # print(test_prompts[0])
+            dir_path = os.path.join(base_path, f'k_{total}')
+            os.makedirs(dir_path, exist_ok=True)
+            train_op_path = os.path.join(dir_path,f'k_{total}_train_{k}.csv')
+            val_op_path = os.path.join(dir_path,f'k_{total}_val_{k}.csv')
+            write_csv(train_list,train_op_path)
+            write_csv(test_list,val_op_path)
+            dataset = load_dataset("csv", data_files={'train':train_op_path, 'val':val_op_path})
+            print('Dataset Loaded: ')
+            print(dataset)
+            dataset_op_path = os.path.join(dir_path,args.output_file+f'_k_{total}_cluster_{k}')
+            dataset.save_to_disk(dataset_op_path)
 
 
 if __name__=='__main__':

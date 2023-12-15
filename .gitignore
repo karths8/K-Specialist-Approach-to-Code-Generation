@@ -5,3 +5,4 @@ phi-2/
 CodeLlama*/
 __pycache__
 cosine_scores_scalar*.pkl
+deepseek*/

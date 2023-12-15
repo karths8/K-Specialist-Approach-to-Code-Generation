@@ -27,6 +27,13 @@ sudo apt install python3.12
 # git-lfs install
 # git lfs pull
 
+cd /workspace/CS762_Project
+git clone https://huggingface.co/WhereIsAI/UAE-Large-V1
+cd UAE-Large-V1
+git-lfs install
+git lfs pull
+cd /workspace/CS762_Project
+
 
 cd /workspace/CS762_Project
 git clone https://huggingface.co/microsoft/phi-2

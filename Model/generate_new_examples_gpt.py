@@ -2,7 +2,7 @@ import json
 from openai import OpenAI
 import random
 import argparse
-
+import sys
 
 parser = argparse.ArgumentParser(description='Options')
 parser.add_argument('--part', default=1, type=int, help="which part")
@@ -75,6 +75,15 @@ def main():
         data = json.load(json_file)
     data = split_list(data, total_parts)[part-1]
     print(f'Lenght of data is {len(data)}')
+
+    # Define the name of the log file
+    log_file_name = f"xlcost-diverse-instruct_same_keyword_list_Dec14_part_{part}.log"
+    
+    # # Redirect standard output and standard error to the log file
+    # with open(log_file_name, "w") as log_file:
+    #     sys.stdout = log_file
+    #     sys.stderr = log_file
+
     client = OpenAI(
         api_key='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'
     )
@@ -127,6 +136,9 @@ def main():
         results.append({'few_shot_keywords':fs_keywords,'test_keywords':test_keywords,'prompt_tokens':response.usage.prompt_tokens,'total_tokens':response.usage.total_tokens,'completion_tokens':response.usage.completion_tokens,'completion':response.choices[0].message.content,'model_name':model_name,'source':src, 'temperature': sampled_temp})
         with open(f'xlcost-diverse-instruct_same_keyword_list_Dec14_part_{part}.json', 'w') as json_file:
             json.dump(results, json_file)
+
+    # sys.stdout = sys.__stdout__
+    # sys.stderr = sys.__stderr__
 
 if __name__=='__main__':
     main()

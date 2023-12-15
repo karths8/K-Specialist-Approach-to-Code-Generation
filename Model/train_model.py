@@ -55,14 +55,14 @@ class ScriptArguments:
     save_total_limit: Optional[int] = field(default=5)
     per_device_train_batch_size: Optional[int] = field(default=4)
     per_device_eval_batch_size: Optional[int] = field(default=1)
-    gradient_accumulation_steps: Optional[int] = field(default=4)
+    gradient_accumulation_steps: Optional[int] = field(default=2)
     learning_rate: Optional[float] = field(default=2e-4)
     max_grad_norm: Optional[float] = field(default=0.3)
     weight_decay: Optional[int] = field(default=0.001)
-    lora_alpha: Optional[int] = field(default=16)
+    lora_alpha: Optional[int] = field(default=512)
     lora_dropout: Optional[float] = field(default=0.1)
-    lora_r: Optional[int] = field(default=64)
-    max_seq_length: Optional[int] = field(default=512)
+    lora_r: Optional[int] = field(default=256)
+    max_seq_length: Optional[int] = field(default=1024)
     # num_train_epochs: Optional[int] = field(default=1)
     model_name: Optional[str] = field(
         default="/workspace/CS762_Project/CodeLlama-7b-Python-hf",
@@ -92,7 +92,7 @@ class ScriptArguments:
         metadata={"help": "Quantization type fp4 or nf4"},
     )
     num_train_epochs: Optional[int] = field(
-        default=1,
+        default=2,
         metadata={"help": "The number of training epochs for the reward model."},
     )
     fp16: Optional[bool] = field(
@@ -116,18 +116,18 @@ class ScriptArguments:
         metadata={"help": "The optimizer to use."},
     )
     lr_scheduler_type: str = field(
-        default="constant",
+        default="cosine",
         metadata={"help": "Learning rate schedule. Constant a bit better than cosine, and has advantage for analysis"},
     )
     max_steps: int = field(default=10000, metadata={"help": "How many optimizer update steps to take"})
-    warmup_ratio: float = field(default=0.03, metadata={"help": "Fraction of steps to do a warmup for"})
+    warmup_ratio: float = field(default=0.05, metadata={"help": "Fraction of steps to do a warmup for"})
     group_by_length: bool = field(
         default=True,
         metadata={
             "help": "Group sequences into batches with same length. Saves memory and speeds up training considerably."
         },
     )
-    save_steps: int = field(default=10, metadata={"help": "Save checkpoint every X updates steps."})
+    save_steps: int = field(default=200, metadata={"help": "Save checkpoint every X updates steps."})
     logging_steps: int = field(default=10, metadata={"help": "Log every X updates steps."})
     merge_and_push: Optional[bool] = field(
         default=False,
@@ -147,16 +147,16 @@ print(script_args)
 
 def create_and_prepare_model(script_args):
     model_name = script_args.model_name
-    compute_dtype = getattr(torch, args.bnb_4bit_compute_dtype)
+    compute_dtype = getattr(torch, script_args.bnb_4bit_compute_dtype)
 
     bnb_config = BitsAndBytesConfig(
-        load_in_4bit=args.use_4bit,
-        bnb_4bit_quant_type=args.bnb_4bit_quant_type,
+        load_in_4bit=script_args.use_4bit,
+        bnb_4bit_quant_type=script_args.bnb_4bit_quant_type,
         bnb_4bit_compute_dtype=compute_dtype,
-        bnb_4bit_use_double_quant=args.use_nested_quant,
+        bnb_4bit_use_double_quant=script_args.use_nested_quant,
     )
 
-    if compute_dtype == torch.float16 and args.use_4bit:
+    if compute_dtype == torch.float16 and script_args.use_4bit:
         major, _ = torch.cuda.get_device_capability()
         if major >= 8:
             print("=" * 80)
@@ -180,7 +180,7 @@ def create_and_prepare_model(script_args):
     model_d = model_name.split('/')[-1]
     if model_d=='phi-2':
         target_modules = ['Wqkv','out_proj','fc1','fc2']
-    elif model_d.startswith('Code'):
+    else:
         target_modules = ['gate_proj', 'down_proj', 'up_proj', 'q_proj', 'v_proj', 'k_proj', 'o_proj']
     peft_config = LoraConfig(
         lora_alpha=script_args.lora_alpha,
@@ -203,17 +203,21 @@ def train_model(script_args):
     model_name = script_args.model_name
     model_dir = model_name.split('/')[-1]
     for k in range(total):
+        save_steps = script_args.save_steps//total
         output_dir = f'/workspace/CS762_Project/Results/{model_dir}/total_clusters_{total}/k_{k}'
-        dataset_name = f'/workspace/CS762_Project/Model/k_{total}/generated_data_k_{total}_cluster_{k}'
+        dataset_name = f'/workspace/CS762_Project/Prepared_data/{model_dir}/k_{total}/generated_data_k_{total}_cluster_{k}'
+        # dataset_name = f'/workspace/CS762_Project/Model/k_{total}/generated_data_k_{total}_cluster_{k}'
         training_arguments = TrainingArguments(
+            report_to='tensorboard',
             output_dir=output_dir,
             per_device_train_batch_size=script_args.per_device_train_batch_size,
             per_device_eval_batch_size=script_args.per_device_eval_batch_size,
             gradient_accumulation_steps=script_args.gradient_accumulation_steps,
             evaluation_strategy='steps',
-            eval_steps=script_args.save_steps,
+            eval_steps=save_steps,
             optim=script_args.optim,
-            save_steps=script_args.save_steps,
+            save_strategy='steps',
+            save_steps=save_steps,
             logging_steps=script_args.logging_steps,
             learning_rate=script_args.learning_rate,
             fp16=script_args.fp16,
@@ -225,12 +229,11 @@ def train_model(script_args):
             lr_scheduler_type=script_args.lr_scheduler_type,
             num_train_epochs = script_args.num_train_epochs,
             save_total_limit=script_args.save_total_limit,
-            metric_for_best_model='eval_loss',
-            # save_steps=script_args.save_steps,
-            save_strategy='steps'
+            metric_for_best_model='eval_loss'
+            
         )
         
-        model, peft_config, tokenizer = create_and_prepare_model(script_args, model_name)
+        model, peft_config, tokenizer = create_and_prepare_model(script_args)
         model.config.use_cache = False
         # dataset = load_dataset(script_args.dataset_name, split="train")
         full_dataset = DatasetDict.load_from_disk(dataset_name)
@@ -257,7 +260,7 @@ def main():
     # k_list = [1, 5, 10]
     # for model_name in model_list:
     #     for total in k_list:
-    train_model(args)
+    train_model(script_args)
 
 if __name__=='__main__':
     main()

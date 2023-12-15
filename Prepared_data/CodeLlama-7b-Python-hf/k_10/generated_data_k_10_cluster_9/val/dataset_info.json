@@ -1,0 +1,60 @@
+{
+  "builder_name": "csv",
+  "citation": "",
+  "config_name": "default",
+  "dataset_name": "csv",
+  "dataset_size": 4303525,
+  "description": "",
+  "download_checksums": {
+    "/workspace/CS762_Project/Prepared_data/CodeLlama-7b-Python-hf/k_10/k_10_train_9.csv": {
+      "num_bytes": 3954059,
+      "checksum": null
+    },
+    "/workspace/CS762_Project/Prepared_data/CodeLlama-7b-Python-hf/k_10/k_10_val_9.csv": {
+      "num_bytes": 348851,
+      "checksum": null
+    }
+  },
+  "download_size": 4302910,
+  "features": {
+    "question": {
+      "dtype": "string",
+      "_type": "Value"
+    },
+    "prompt": {
+      "dtype": "string",
+      "_type": "Value"
+    },
+    "code": {
+      "dtype": "string",
+      "_type": "Value"
+    },
+    "asserts": {
+      "dtype": "string",
+      "_type": "Value"
+    }
+  },
+  "homepage": "",
+  "license": "",
+  "size_in_bytes": 8606435,
+  "splits": {
+    "train": {
+      "name": "train",
+      "num_bytes": 3954793,
+      "num_examples": 1822,
+      "dataset_name": "csv"
+    },
+    "val": {
+      "name": "val",
+      "num_bytes": 348732,
+      "num_examples": 203,
+      "dataset_name": "csv"
+    }
+  },
+  "version": {
+    "version_str": "0.0.0",
+    "major": 0,
+    "minor": 0,
+    "patch": 0
+  }
+}

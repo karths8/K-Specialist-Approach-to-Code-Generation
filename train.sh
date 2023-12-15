@@ -1,0 +1,1 @@
+python Model/train_model.py --model_name /workspace/CS762_Project/CodeLlama-7b-Python-hf --num_clusters 1 --lora_r=256 --lora_alpha=512 --per_device_train_batch_size 2 --save_steps 10 2>&1 | tee /workspace/CS762_Project/logs/CodeLlama-7b-Python-hf_k_1.log

@@ -1,8 +1,8 @@
 .ipynb_checkpoints
 UAE-Large-V1/
 e5-*/
-phi-2/
-CodeLlama*/
+CS762_Project/phi-2/
+CS762_Project/CodeLlama*/
 __pycache__
 cosine_scores_scalar*.pkl
-deepseek*/
+CS762_Project/deepseek*/

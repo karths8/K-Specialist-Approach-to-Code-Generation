@@ -11,6 +11,7 @@ pip3 install datasets
 pip install sentence-transformers
 pip install matplotlib
 pip install trl
+pip install einops
 pip install -U git+https://github.com/huggingface/transformers.git 
 pip install -U git+https://github.com/huggingface/peft.git
 pip install -U git+https://github.com/huggingface/accelerate.git
@@ -19,6 +20,7 @@ apt-get install sudo
 sudo apt-get install git-lfs
 sudo apt-get install unzip
 sudo apt-get install htop
+sudo apt-get install nano
 # for openai
 sudo apt install python3.12 
 # git clone https://huggingface.co/meta-llama/Llama-2-13b-hf
@@ -28,13 +30,12 @@ sudo apt install python3.12
 # git-lfs install
 # git lfs pull
 
-cd /workspace/CS762_Project
-git clone https://huggingface.co/WhereIsAI/UAE-Large-V1
-cd UAE-Large-V1
-git-lfs install
-git lfs pull
-cd /workspace/CS762_Project
-
+# cd /workspace/CS762_Project
+# git clone https://huggingface.co/WhereIsAI/UAE-Large-V1
+# cd UAE-Large-V1
+# git-lfs install
+# git lfs pull
+# cd /workspace/CS762_Project
 
 cd /workspace/CS762_Project
 git clone https://huggingface.co/deepseek-ai/deepseek-coder-6.7b-base

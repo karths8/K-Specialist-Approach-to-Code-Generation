@@ -1,0 +1,119 @@
+question,prompt,code,asserts
+"Word Pattern II: Given a pattern and a string s, return true if s matches the pattern.
+
+A string s matches a pattern if there is some bijective mapping of single characters to non-empty strings such that if each character in pattern is replaced by the string it maps to, then the resulting string is s. A bijective mapping means that no two characters map to the same string, and no character maps to two different strings.","<s>[INST] <<SYS>>
+You are an assistant tasked with generating code given a question and some Examples / Explanations along with the question. The question will be given under the heading ""Question:"" and the examples or explanations will be given under ""Example / Explanation:"". Your job is to generate the code and complete the content under the heading title ""Code:"". 
+<</SYS>>
+
+
+[Question]
+        
+Word Pattern II: Given a pattern and a string s, return true if s matches the pattern.
+
+A string s matches a pattern if there is some bijective mapping of single characters to non-empty strings such that if each character in pattern is replaced by the string it maps to, then the resulting string is s. A bijective mapping means that no two characters map to the same string, and no character maps to two different strings.
+
+
+
+[/Question] [/INST] [Code]
+
+def wordPatternMatch(pattern: str, s: str) -> bool:
+    def backtrack(cur: str, pattern: str, mappings: dict):
+        if not pattern:
+            return not cur
+        if pattern[0] in mappings:
+            if cur[:len(mappings[pattern[0]])] != mappings[pattern[0]]:
+                return False
+            return backtrack(cur[len(mappings[pattern[0]]):], pattern[1:], mappings)
+        for i in range(len(cur)):
+            if cur[:i+1] in mappings.values():
+                continue
+            mappings[pattern[0]] = cur[:i+1]
+            if backtrack(cur[i+1:], pattern[1:], mappings):
+                return True
+            del mappings[pattern[0]]
+        return False
+    return backtrack(s, pattern, {}) 
+
+[/Code]
+[/STOP] </s>","def wordPatternMatch(pattern: str, s: str) -> bool:
+    def backtrack(cur: str, pattern: str, mappings: dict):
+        if not pattern:
+            return not cur
+        if pattern[0] in mappings:
+            if cur[:len(mappings[pattern[0]])] != mappings[pattern[0]]:
+                return False
+            return backtrack(cur[len(mappings[pattern[0]]):], pattern[1:], mappings)
+        for i in range(len(cur)):
+            if cur[:i+1] in mappings.values():
+                continue
+            mappings[pattern[0]] = cur[:i+1]
+            if backtrack(cur[i+1:], pattern[1:], mappings):
+                return True
+            del mappings[pattern[0]]
+        return False
+    return backtrack(s, pattern, {})","assert wordPatternMatch(""aaaa"", ""asdasdasdasd"")==True
+assert wordPatternMatch(""abba"", ""dogcatcatdog"") == True
+assert wordPatternMatch(""ab"", ""aa"") == False # since 'a' and 'b' cannot map to the same string ""a""
+assert wordPatternMatch(""xyz"", ""abcdefghi"") == True # 'x' -> ""a"", 'y' -> ""bc"", 'z' -> ""defghi""
+assert wordPatternMatch(""aba"", ""eggegg"") == False # 'a' maps to ""egg"", but 'b' cannot be mapped uniquely
+assert wordPatternMatch(""zzz"", ""aaa"") == True # all 'z' map to ""a""
+assert wordPatternMatch(""aba"", ""catdogcat"") == True # 'a' -> ""cat"", 'b' -> ""dog""
+assert wordPatternMatch(""abab"", ""xyzxyzabcabc"") == False # cannot match 'a' and 'b' with two different strings each consistent with the pattern
+assert wordPatternMatch(""abac"", ""xyzxyzxya"") == True # 'a' -> ""xyz"", 'b' -> ""xyz"", 'c' -> ""a""
+assert wordPatternMatch(""abcd"", ""xyzy"") == False # pattern too long for the string
+assert wordPatternMatch(""aaaaa"", ""oneonetwo"") == False # not enough unique strings to map 'a' five times"
+"Given an array containing only 0s and 1s, find the length of the largest subarray which contains equal no of 0s and 1s. The expected time complexity is O(n). If no such array, return -1","<s>[INST] <<SYS>>
+You are an assistant tasked with generating code given a question and some Examples / Explanations along with the question. The question will be given under the heading ""Question:"" and the examples or explanations will be given under ""Example / Explanation:"". Your job is to generate the code and complete the content under the heading title ""Code:"". 
+<</SYS>>
+
+
+[Question]
+        
+Given an array containing only 0s and 1s, find the length of the largest subarray which contains equal no of 0s and 1s. The expected time complexity is O(n). If no such array, return -1
+
+assert findSubArray([0, 0, 0, 0, 0, 0, 0, 0, 0, 0]) == -1
+assert findSubArray([0, 1, 0, 1, 0, 1, 0, 1]) == 8
+
+[/Question] [/INST] [Code]
+
+def findSubArray(arr: list) -> int:
+        n = len(arr)
+        sum = 0
+        maxsize = -1
+        for i in range(0, n-1):
+        
+                sum = -1 if(arr[i] == 0) else 1
+                for j in range(i + 1, n):
+                        sum = sum + (-1) if (arr[j] == 0) else sum + 1
+
+                        if (sum == 0 and maxsize < j-i + 1):
+                                
+                                maxsize = j - i + 1
+                                startindex = i
+        return maxsize
+ 
+
+[/Code]
+[/STOP] </s>","def findSubArray(arr: list) -> int:
+        n = len(arr)
+        sum = 0
+        maxsize = -1
+        for i in range(0, n-1):
+        
+                sum = -1 if(arr[i] == 0) else 1
+                for j in range(i + 1, n):
+                        sum = sum + (-1) if (arr[j] == 0) else sum + 1
+
+                        if (sum == 0 and maxsize < j-i + 1):
+                                
+                                maxsize = j - i + 1
+                                startindex = i
+        return maxsize
+","assert findSubArray([1, 0, 0, 1, 0, 1, 1]) == 6
+assert findSubArray([0, 1, 0, 1, 0, 1, 0, 1]) == 8
+assert findSubArray([1, 1, 1, 0, 0, 1, 0, 0, 1]) == 8
+assert findSubArray([0, 0, 0, 0, 0, 0, 0, 0, 0, 0]) == -1
+assert findSubArray([1, 0, 1, 1, 0, 1, 0, 1, 0]) == 8
+assert findSubArray([]) == -1
+assert findSubArray([1, 0]) == 2
+assert findSubArray([1, 0, 1]) == 2"

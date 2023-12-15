@@ -1,0 +1,439 @@
+question,prompt,code,asserts
+Jump Search is a searching algorithm for sorted arrays. The basic idea is to check fewer elements (than linear search) by jumping ahead by fixed steps or skipping some elements in place of searching all elements. Write the algorithm to perform Jump Search in Python,"<s>[INST] <<SYS>>
+You are an assistant tasked with generating code given a question and some Examples / Explanations along with the question. The question will be given under the heading ""Question:"" and the examples or explanations will be given under ""Example / Explanation:"". Your job is to generate the code and complete the content under the heading title ""Code:"". 
+<</SYS>>
+
+
+[Question]
+        
+Jump Search is a searching algorithm for sorted arrays. The basic idea is to check fewer elements (than linear search) by jumping ahead by fixed steps or skipping some elements in place of searching all elements. Write the algorithm to perform Jump Search in Python
+
+assert jumpSearch([100, 200, 300, 400, 500, 600, 700, 800, 900], 100) == 0
+assert jumpSearch([0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, 233, 377, 610], 233) == 13
+assert jumpSearch([100, 200, 300, 400, 500, 600, 700, 800, 900], 450) == -1
+
+[/Question] [/INST]","
+import math
+
+def jumpSearch( arr : list, x: int) -> int:
+        n = len(arr)
+        step = math.sqrt(n)
+        prev = 0
+        while arr[int(min(step, n)-1)] < x:
+                prev = step
+                step += math.sqrt(n)
+                if prev >= n:
+                        return -1
+        while arr[int(prev)] < x:
+                prev += 1
+                if prev == min(step, n):
+                        return -1
+        if arr[int(prev)] == x:
+                return prev
+        
+        return -1
+","assert jumpSearch([0,1,1,2,3,5,8,13,21,34,55,89,144,233,377,610], 55) == 10
+assert jumpSearch([0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, 233, 377, 610], 233) == 13
+assert jumpSearch([0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, 233, 377, 610], 0) == 0
+assert jumpSearch([0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, 233, 377, 610], 610) == 15
+assert jumpSearch([0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, 233, 377, 610], 299) == -1
+assert jumpSearch([1, 2, 4, 5, 6, 7, 9, 11, 12, 13, 15, 17, 19, 21, 23, 25], 21) == 13
+assert jumpSearch([1, 2, 4, 5, 6, 7, 9, 11, 12, 13, 15, 17, 19, 21, 23, 25], 1) == 0
+assert jumpSearch([1, 2, 4, 5, 6, 7, 9, 11, 12, 13, 15, 17, 19, 21, 23, 25], 26) == -1
+assert jumpSearch([10, 20, 30, 40, 50, 60, 70, 80, 90, 100], 95) == -1
+assert jumpSearch([3], 3) == 0
+assert jumpSearch([3, 6, 9, 12, 15, 18, 21], 7) == -1
+assert jumpSearch([-5, 0, 5, 10, 15, 20, 25, 30, 35], 20) == 5
+assert jumpSearch([100, 200, 300, 400, 500, 600, 700, 800, 900], 450) == -1
+assert jumpSearch([100, 200, 300, 400, 500, 600, 700, 800, 900], 100) == 0
+assert jumpSearch([100, 200, 300, 400, 500, 600, 700, 800, 900], 900) == 8"
+You are given an array of n-element. You have to make subsets from the array such that no subset contain duplicate elements. Find out minimum number of subset possible.,"<s>[INST] <<SYS>>
+You are an assistant tasked with generating code given a question and some Examples / Explanations along with the question. The question will be given under the heading ""Question:"" and the examples or explanations will be given under ""Example / Explanation:"". Your job is to generate the code and complete the content under the heading title ""Code:"". 
+<</SYS>>
+
+
+[Question]
+        
+You are given an array of n-element. You have to make subsets from the array such that no subset contain duplicate elements. Find out minimum number of subset possible.
+
+assert subset([1, 1, 1, 1, 1]) == 5
+assert subset([9, 9, 8, 8, 7, 7, 6, 6, 5, 5, 5, 5, 5]) == 5
+assert subset([10]) == 1
+assert subset([2, 2, 3, 3, 4, 4, 5, 5]) == 2
+
+[/Question] [/INST]","def subset(ar: list) -> int:
+    n = len(ar)
+    res = 0
+ 
+    ar.sort()
+    for i in range(0, n) :
+        count = 1
+ 
+        for i in range(n - 1):
+            if ar[i] == ar[i + 1]:
+                count+=1
+            else:
+                break
+             
+        res = max(res, count)
+     
+    return res
+","assert subset([5, 6, 9, 3, 4, 3, 4]) == 2
+assert subset([1, 1, 1, 1, 1]) == 5
+assert subset([2, 2, 3, 3, 4, 4, 5, 5]) == 2
+assert subset([10]) == 1
+assert subset([]) == 0
+assert subset([9, 9, 8, 8, 7, 7, 6, 6, 5, 5, 5, 5, 5]) == 5"
+"A rotation (or circular shift) is an operation similar to shift except that the bits that fall off at one end are put back to the other end. In left rotation, the bits that fall off at left end are put back at right end. Write a program to left rotate the bits of a number by d places","<s>[INST] <<SYS>>
+You are an assistant tasked with generating code given a question and some Examples / Explanations along with the question. The question will be given under the heading ""Question:"" and the examples or explanations will be given under ""Example / Explanation:"". Your job is to generate the code and complete the content under the heading title ""Code:"". 
+<</SYS>>
+
+
+[Question]
+        
+A rotation (or circular shift) is an operation similar to shift except that the bits that fall off at one end are put back to the other end. In left rotation, the bits that fall off at left end are put back at right end. Write a program to left rotate the bits of a number by d places
+
+assert leftRotate(19, 4) == 304
+
+[/Question] [/INST]","INT_BITS = 32
+def leftRotate(n: int, d: int) -> int:
+        return (n << d)|(n >> (INT_BITS - d))
+","assert leftRotate(16, 2) == 64
+assert leftRotate(29, 3) == 232
+assert leftRotate(0, 1) == 0
+assert leftRotate(1, 5) == 32
+assert leftRotate(19, 4) == 304
+assert leftRotate(345, 8) == 88320
+assert leftRotate(256, 8) == 65536
+assert leftRotate(2, 1) == 4"
+Given an array of integers. The task is to find the maximum subarray XOR value in the given array.,"<s>[INST] <<SYS>>
+You are an assistant tasked with generating code given a question and some Examples / Explanations along with the question. The question will be given under the heading ""Question:"" and the examples or explanations will be given under ""Example / Explanation:"". Your job is to generate the code and complete the content under the heading title ""Code:"". 
+<</SYS>>
+
+
+[Question]
+        
+Given an array of integers. The task is to find the maximum subarray XOR value in the given array.
+
+assert maxSubarrayXOR([4, 17]) == 21
+assert maxSubarrayXOR([0]) == 0
+assert maxSubarrayXOR([0, 0, 0, 0]) == 0
+assert maxSubarrayXOR([14, 70, 53, 83, 49, 91, 36, 80, 92, 51, 66, 70]) == 127
+
+[/Question] [/INST]","def maxSubarrayXOR(arr: list) -> int:
+        n = len(arr)
+        ans = -2147483648
+
+        for i in range(n):
+                curr_xor = 0
+                for j in range(i,n):
+                
+                        curr_xor = curr_xor ^ arr[j]
+                        ans = max(ans, curr_xor)
+        return ans
+","assert maxSubarrayXOR([1, 2, 3, 4]) == 7
+assert maxSubarrayXOR([0]) == 0
+assert maxSubarrayXOR([4, 2, 1, 6, 5]) == 7
+assert maxSubarrayXOR([9, 8, 5]) == 13
+assert maxSubarrayXOR([0, 0, 0, 0]) == 0
+assert maxSubarrayXOR([1, 2, 3, 4, 5, 6, 7, 8]) == 15
+assert maxSubarrayXOR([4, 17]) == 21
+assert maxSubarrayXOR([14, 70, 53, 83, 49, 91, 36, 80, 92, 51, 66, 70]) == 127"
+Write a function to to convert a floating point number to binary,"<s>[INST] <<SYS>>
+You are an assistant tasked with generating code given a question and some Examples / Explanations along with the question. The question will be given under the heading ""Question:"" and the examples or explanations will be given under ""Example / Explanation:"". Your job is to generate the code and complete the content under the heading title ""Code:"". 
+<</SYS>>
+
+
+[Question]
+        
+Write a function to to convert a floating point number to binary
+
+assert float_bin(255.255, 4) == '11111111.0100'
+assert float_bin(3.14159, 5) == '11.00100'
+
+[/Question] [/INST]","def float_bin(number: float, places : int =  3) -> str:
+    def decimal_converter(num): 
+        while num > 1:
+                num /= 10
+        return num
+    whole, dec = str(number).split(""."")
+    whole = int(whole)
+    dec = int (dec)
+    res = bin(whole).lstrip(""0b"") + "".""
+    for x in range(places):
+            whole, dec = str((decimal_converter(dec)) * 2).split(""."")
+            dec = int(dec)
+            res += whole
+    return res
+","assert float_bin(11.234, 4) == '1011.0011'
+assert float_bin(100.101, 6) == '1100100.000110'
+assert float_bin(3.14159, 5) == '11.00100'
+assert float_bin(255.255, 4) == '11111111.0100'
+assert float_bin(2.625, 3) == '10.101'     # Additional test case with exact binary representation"
+"Given a two strings S and T, find the count of distinct occurrences of T in S as a subsequence.","<s>[INST] <<SYS>>
+You are an assistant tasked with generating code given a question and some Examples / Explanations along with the question. The question will be given under the heading ""Question:"" and the examples or explanations will be given under ""Example / Explanation:"". Your job is to generate the code and complete the content under the heading title ""Code:"". 
+<</SYS>>
+
+
+[Question]
+        
+Given a two strings S and T, find the count of distinct occurrences of T in S as a subsequence.
+
+assert findSubsequenceCount(""abc"", ""abc"") == 1
+assert findSubsequenceCount(""nonempty"", """") == 1
+assert findSubsequenceCount(""banana"", ""ban"") == 3
+
+[/Question] [/INST]","def findSubsequenceCount(s: str, t: str) -> int:
+    def f(i, j, s, t):
+        if(j >= len(t)):
+                return 1
+        
+        if(i >= len(s)):
+                return 0
+        
+        if(s[i] == t[j]):
+                return f(i + 1, j + 1, s, t) + f(i + 1, j, s, t)
+        
+        return f(i + 1, j, s, t)
+    return f(0, 0, s, t)
+","assert findSubsequenceCount(""banana"", ""ban"") == 3
+assert findSubsequenceCount(""aabba"", ""ab"") == 4
+assert findSubsequenceCount(""testtest"", ""tt"") == 6
+assert findSubsequenceCount(""aaaaaa"", ""aaa"") == 20
+assert findSubsequenceCount(""abcdefg"", ""xyz"") == 0
+assert findSubsequenceCount(""aabaa"", ""aa"") == 6
+assert findSubsequenceCount("""", ""nonempty"") == 0
+assert findSubsequenceCount(""nonempty"", """") == 1
+assert findSubsequenceCount(""abc"", ""abc"") == 1"
+"Excel Sheet Column Number: Given a string columnTitle that represents the column title as appears in an Excel sheet, return its corresponding column number.
+
+For example:
+
+A -> 1
+B -> 2
+C -> 3
+...
+Z -> 26
+AA -> 27
+AB -> 28 
+...
+","<s>[INST] <<SYS>>
+You are an assistant tasked with generating code given a question and some Examples / Explanations along with the question. The question will be given under the heading ""Question:"" and the examples or explanations will be given under ""Example / Explanation:"". Your job is to generate the code and complete the content under the heading title ""Code:"". 
+<</SYS>>
+
+
+[Question]
+        
+Excel Sheet Column Number: Given a string columnTitle that represents the column title as appears in an Excel sheet, return its corresponding column number.
+
+For example:
+
+A -> 1
+B -> 2
+C -> 3
+...
+Z -> 26
+AA -> 27
+AB -> 28 
+...
+
+
+assert titleToNumber(""AAA"") == 703
+
+[/Question] [/INST]","def titleToNumber(s: str) -> int:
+    result = 0
+    alpha_map = {chr(i + 65): i + 1 for i in range(26)}
+    n = len(s)
+    for i in range(n):
+        cur_char = s[n - 1 - i]
+        result += (alpha_map[cur_char] * (26 ** i))
+    return result","assert titleToNumber(""AB"")==28
+assert titleToNumber(""AAA"") == 703
+assert titleToNumber(""ZZZ"") == 18278
+assert titleToNumber(""BZ"") == 78
+assert titleToNumber(""CV"") == 100
+assert titleToNumber(""XFD"") == 16384
+assert titleToNumber(""Q"") == 17"
+Given an array reorder it so that even numbers appear first,"<s>[INST] <<SYS>>
+You are an assistant tasked with generating code given a question and some Examples / Explanations along with the question. The question will be given under the heading ""Question:"" and the examples or explanations will be given under ""Example / Explanation:"". Your job is to generate the code and complete the content under the heading title ""Code:"". 
+<</SYS>>
+
+
+[Question]
+        
+Given an array reorder it so that even numbers appear first
+
+
+
+[/Question] [/INST]","def even_odd_reorder(arr: list) -> list:
+  nextEven = 0
+  nextOdd = len(arr) - 1
+  while nextEven < nextOdd:
+    if arr[nextEven] % 2 == 0:
+      nextEven += 1
+    else:
+      temp = arr[nextEven]
+      arr[nextEven] = arr[nextOdd]
+      arr[nextOdd] = temp
+      nextOdd -= 1
+  return arr
+","assert even_odd_reorder([1,2,3,4,5,6,7,8,9]) == [8, 2, 6, 4, 5, 7, 3, 9, 1]
+assert even_odd_reorder([]) == []
+assert even_odd_reorder([2, 4, 6, 8]) == [2, 4, 6, 8]
+assert even_odd_reorder([7, 9, 2]) == [2, 9, 7]
+assert even_odd_reorder([10, 13, 17, 16, 15, 12]) == [10, 12, 16, 15, 17, 13]"
+"You are given two 0-indexed integer permutations A and B of length n.
+
+A prefix common array of A and B is an array C such that C[i] is equal to the count of numbers that are present at or before the index i in both A and B.
+
+Return the prefix common array of A and B.
+
+A sequence of n integers is called a permutation if it contains all integers from 1 to n exactly once.","<s>[INST] <<SYS>>
+You are an assistant tasked with generating code given a question and some Examples / Explanations along with the question. The question will be given under the heading ""Question:"" and the examples or explanations will be given under ""Example / Explanation:"". Your job is to generate the code and complete the content under the heading title ""Code:"". 
+<</SYS>>
+
+
+[Question]
+        
+You are given two 0-indexed integer permutations A and B of length n.
+
+A prefix common array of A and B is an array C such that C[i] is equal to the count of numbers that are present at or before the index i in both A and B.
+
+Return the prefix common array of A and B.
+
+A sequence of n integers is called a permutation if it contains all integers from 1 to n exactly once.
+
+assert findThePrefixCommonArray([1,3,2,4], [3,1,2,4]) == [0,2,3,4]
+assert findThePrefixCommonArray([2,3,1], [3,1,2]) == [0,1,3]
+
+[/Question] [/INST]","def findThePrefixCommonArray(arr1: list, arr2: list) -> list:
+  max = len(arr1) if len(arr1) > len(arr2) else len(arr2)
+  seen = set()
+  curCount = 0
+  ret = []
+  for i in range(max):
+    cur1 = arr1[i]
+    cur2 = arr2[i]
+    if cur1 in seen:
+      curCount += 1
+    else:
+      seen.add(cur1)
+    if cur2 in seen:
+      curCount += 1
+    else:
+      seen.add(cur2)
+    ret.append(curCount)
+  return ret
+","assert findThePrefixCommonArray([1,3,2,4], [3,1,2,4]) == [0,2,3,4]
+assert findThePrefixCommonArray([1], [1]) == [1]
+assert findThePrefixCommonArray([2,3,1], [3,1,2]) == [0,1,3]"
+Return nth number in the fibonacci sequence,"<s>[INST] <<SYS>>
+You are an assistant tasked with generating code given a question and some Examples / Explanations along with the question. The question will be given under the heading ""Question:"" and the examples or explanations will be given under ""Example / Explanation:"". Your job is to generate the code and complete the content under the heading title ""Code:"". 
+<</SYS>>
+
+
+[Question]
+        
+Return nth number in the fibonacci sequence
+
+assert fibonacci(2) == 1
+assert fibonacci(9) == 34
+assert fibonacci(10) == 55
+assert fibonacci(6) == 8
+
+[/Question] [/INST]","def fibonacci(n: int) -> int:
+    a = 0
+    b = 1
+    if n < 0:
+        print(""Incorrect input"")
+    elif n == 0:
+        return a
+    elif n == 1:
+        return b
+    else:
+        for i in range(2, n+1):
+            c = a + b
+            a = b
+            b = c
+        return b
+    b = c
+    return fib(n-1, a, b)
+","assert fibonacci(9) == 34
+assert fibonacci(10) == 55
+assert fibonacci(5) == 5
+assert fibonacci(2) == 1
+assert fibonacci(0) == 0
+assert fibonacci(11) == 89
+assert fibonacci(15) == 610
+assert fibonacci(20) == 6765
+assert fibonacci(25) == 75025
+assert fibonacci(3) == 2
+assert fibonacci(1) == 1
+assert fibonacci(6) == 8
+assert fibonacci(30) == 832040
+assert fibonacci(35) == 9227465
+assert fibonacci(40) == 102334155"
+Return the factorial of a given number n,"<s>[INST] <<SYS>>
+You are an assistant tasked with generating code given a question and some Examples / Explanations along with the question. The question will be given under the heading ""Question:"" and the examples or explanations will be given under ""Example / Explanation:"". Your job is to generate the code and complete the content under the heading title ""Code:"". 
+<</SYS>>
+
+
+[Question]
+        
+Return the factorial of a given number n
+
+
+
+[/Question] [/INST]","
+def fact(n: int) -> int:
+  if n <= 1:
+    return 1
+  return n*fact(n-1)
+","assert fact(5) == 120
+assert fact(0) == 1
+assert fact(1) == 1
+assert fact(3) == 6
+assert fact(7) == 5040
+assert fact(10) == 3628800
+assert fact(4) == 24
+assert fact(8) == 40320
+assert fact(2) == 2
+assert fact(11) == 39916800"
+"You are given a string s and an integer array indices of the same length. The string s will be shuffled such that the character at the ith position moves to indices[i] in the shuffled string.
+
+Return the shuffled string.","<s>[INST] <<SYS>>
+You are an assistant tasked with generating code given a question and some Examples / Explanations along with the question. The question will be given under the heading ""Question:"" and the examples or explanations will be given under ""Example / Explanation:"". Your job is to generate the code and complete the content under the heading title ""Code:"". 
+<</SYS>>
+
+
+[Question]
+        
+You are given a string s and an integer array indices of the same length. The string s will be shuffled such that the character at the ith position moves to indices[i] in the shuffled string.
+
+Return the shuffled string.
+
+assert shuffle_string(""reoc"", [2, 0, 1, 3]) == ""eorc""
+
+[/Question] [/INST]","from typing import List
+def shuffle_string(s: str, indices: List[int]) -> str:
+    def partitionString(s):
+      substrings = 1
+      cur_str = set()
+      for i in range(len(s)):
+        if s[i] in cur_str:
+          substrings += 1
+          cur_str = {s[i]}
+        else:
+          cur_str.add(s[i])
+      return substrings
+    ret = ['_']*len(s)
+    for idx, i in enumerate(indices):
+        ret[i] = s[idx]
+    return """".join(ret)
+","assert shuffle_string(""reoc"", [2, 0, 1, 3]) == ""eorc""
+assert shuffle_string(""aiohn"", [3,1,4,2,0]) == ""nihao""
+assert shuffle_string(""aax"", [0,2,1]) == ""axa""
+assert shuffle_string(""gh"", [1,0]) == ""hg""
+assert shuffle_string("""", []) == """"  # Edge case: empty string
+assert shuffle_string(""xy"", [0,1]) == ""xy""  # No shuffle required
+assert shuffle_string(""pqrstuvwxyzabcdefghijklmno"", list(range(25, -1, -1))) == ""onmlkjihgfedcbazyxwvutsrqp""  # Reverse shuffle"

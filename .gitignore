@@ -3,3 +3,5 @@ UAE-Large-V1/
 e5-*/
 phi-2/
 CodeLlama*/
+__pycache__
+cosine_scores_scalar*.pkl

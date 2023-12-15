@@ -1,0 +1,415 @@
+question,prompt,code,asserts
+"Get Maximum in Generated Array: You are given an integer n. A 0-indexed integer array nums of length n + 1 is generated in the following way:
+
+nums[0] = 0
+nums[1] = 1
+nums[2 * i] = nums[i] when 2 <= 2 * i <= n
+nums[2 * i + 1] = nums[i] + nums[i + 1] when 2 <= 2 * i + 1 <= n
+Return the maximum integer in the array nums​​​.","<s>[INST] <<SYS>>
+You are an assistant tasked with generating code given a question and some Examples / Explanations along with the question. The question will be given under the heading ""Question:"" and the examples or explanations will be given under ""Example / Explanation:"". Your job is to generate the code and complete the content under the heading title ""Code:"". 
+<</SYS>>
+
+
+[Question]
+        
+Get Maximum in Generated Array: You are given an integer n. A 0-indexed integer array nums of length n + 1 is generated in the following way:
+
+nums[0] = 0
+nums[1] = 1
+nums[2 * i] = nums[i] when 2 <= 2 * i <= n
+nums[2 * i + 1] = nums[i] + nums[i + 1] when 2 <= 2 * i + 1 <= n
+Return the maximum integer in the array nums​​​.
+
+assert getMaximumGenerated(2)==1
+assert getMaximumGenerated(15) == 5
+assert getMaximumGenerated(8) == 3
+assert getMaximumGenerated(1) == 1
+
+[/Question] [/INST] [Code]
+
+def getMaximumGenerated(n: int) -> int:
+    if n<2:
+        return n
+    nums=[0]*(n+1)
+    nums[0]=0
+    nums[1]=1
+    for i in range(2,n+1):
+        if i%2==0:
+            nums[i]=nums[i//2]
+        else:
+            nums[i]=nums[i//2]+nums[i//2+1]
+    return max(nums) 
+
+[/Code]
+[/STOP] </s>","def getMaximumGenerated(n: int) -> int:
+    if n<2:
+        return n
+    nums=[0]*(n+1)
+    nums[0]=0
+    nums[1]=1
+    for i in range(2,n+1):
+        if i%2==0:
+            nums[i]=nums[i//2]
+        else:
+            nums[i]=nums[i//2]+nums[i//2+1]
+    return max(nums)","assert getMaximumGenerated(2)==1
+assert getMaximumGenerated(4) == 2
+assert getMaximumGenerated(5) == 3
+assert getMaximumGenerated(8) == 3
+assert getMaximumGenerated(15) == 5
+assert getMaximumGenerated(0) == 0
+assert getMaximumGenerated(1) == 1"
+"Given a N x N binary matrix (elements in matrix can be either 1 or 0) where each row and column of the matrix is sorted in ascending order, count number of 0s present in it.","<s>[INST] <<SYS>>
+You are an assistant tasked with generating code given a question and some Examples / Explanations along with the question. The question will be given under the heading ""Question:"" and the examples or explanations will be given under ""Example / Explanation:"". Your job is to generate the code and complete the content under the heading title ""Code:"". 
+<</SYS>>
+
+
+[Question]
+        
+Given a N x N binary matrix (elements in matrix can be either 1 or 0) where each row and column of the matrix is sorted in ascending order, count number of 0s present in it.
+
+
+
+[/Question] [/INST] [Code]
+
+
+def countZeroes(mat: list) -> int:
+        
+        N = 5;
+        row = N - 1;
+        col = 0;
+        count = 0;
+
+        while (col < N):
+                while (mat[row][col]):
+                        if (row < 0):
+                                return count;
+                        row = row - 1;
+                count = count + (row + 1);
+                col = col + 1;
+
+        return count
+ 
+
+[/Code]
+[/STOP] </s>","
+def countZeroes(mat: list) -> int:
+        
+        N = 5;
+        row = N - 1;
+        col = 0;
+        count = 0;
+
+        while (col < N):
+                while (mat[row][col]):
+                        if (row < 0):
+                                return count;
+                        row = row - 1;
+                count = count + (row + 1);
+                col = col + 1;
+
+        return count
+","assert countZeroes([[0, 0, 0, 0, 1],[0, 0, 0, 1, 1],[0, 1, 1, 1, 1],[1, 1, 1, 1, 1],[1, 1, 1, 1, 1]]) == 8
+assert countZeroes([[0, 1, 1, 1, 1], [1, 1, 1, 1, 1], [1, 1, 1, 1, 1], [1, 1, 1, 1, 1], [1, 1, 1, 1, 1]]) == 1
+assert countZeroes([[0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0]]) == 25
+assert countZeroes([[0, 0, 1, 1, 1], [0, 1, 1, 1, 1], [0, 1, 1, 1, 1], [1, 1, 1, 1, 1], [1, 1, 1, 1, 1]]) == 4"
+Given an array reorder it so that even numbers appear first,"<s>[INST] <<SYS>>
+You are an assistant tasked with generating code given a question and some Examples / Explanations along with the question. The question will be given under the heading ""Question:"" and the examples or explanations will be given under ""Example / Explanation:"". Your job is to generate the code and complete the content under the heading title ""Code:"". 
+<</SYS>>
+
+
+[Question]
+        
+Given an array reorder it so that even numbers appear first
+
+
+
+[/Question] [/INST] [Code]
+
+def even_odd_reorder(arr: list) -> list:
+  nextEven = 0
+  nextOdd = len(arr) - 1
+  while nextEven < nextOdd:
+    if arr[nextEven] % 2 == 0:
+      nextEven += 1
+    else:
+      temp = arr[nextEven]
+      arr[nextEven] = arr[nextOdd]
+      arr[nextOdd] = temp
+      nextOdd -= 1
+  return arr
+ 
+
+[/Code]
+[/STOP] </s>","def even_odd_reorder(arr: list) -> list:
+  nextEven = 0
+  nextOdd = len(arr) - 1
+  while nextEven < nextOdd:
+    if arr[nextEven] % 2 == 0:
+      nextEven += 1
+    else:
+      temp = arr[nextEven]
+      arr[nextEven] = arr[nextOdd]
+      arr[nextOdd] = temp
+      nextOdd -= 1
+  return arr
+","assert even_odd_reorder([1,2,3,4,5,6,7,8,9]) == [8, 2, 6, 4, 5, 7, 3, 9, 1]
+assert even_odd_reorder([]) == []
+assert even_odd_reorder([2, 4, 6, 8]) == [2, 4, 6, 8]
+assert even_odd_reorder([7, 9, 2]) == [2, 9, 7]
+assert even_odd_reorder([10, 13, 17, 16, 15, 12]) == [10, 12, 16, 15, 17, 13]"
+"Given an integer n, return the number of strings of length n that consist only of vowels (a, e, i, o, u) and are lexicographically sorted.
+
+A string s is lexicographically sorted if for all valid i, s[i] is the same as or comes before s[i+1] in the alphabet.","<s>[INST] <<SYS>>
+You are an assistant tasked with generating code given a question and some Examples / Explanations along with the question. The question will be given under the heading ""Question:"" and the examples or explanations will be given under ""Example / Explanation:"". Your job is to generate the code and complete the content under the heading title ""Code:"". 
+<</SYS>>
+
+
+[Question]
+        
+Given an integer n, return the number of strings of length n that consist only of vowels (a, e, i, o, u) and are lexicographically sorted.
+
+A string s is lexicographically sorted if for all valid i, s[i] is the same as or comes before s[i+1] in the alphabet.
+
+assert countVowelStrings(4) == 70
+
+[/Question] [/INST] [Code]
+
+def helper(n, letter_idx):
+  letters = [""a"",""e"",""i"",""o"",""u""]
+  dynamic = {
+      'a1' : 5,
+      'e1' : 4,
+      'i1' : 3,
+      'o1' : 2,
+      'u1' : 1
+  }
+  ret = 0
+  key = letters[letter_idx] + str(n)
+  if key in dynamic.keys():
+    return dynamic[key]
+  else:
+    for i in range(letter_idx, len(letters)):
+      ret += helper(n-1, i)
+    dynamic[key] = ret
+  return ret
+  
+
+def countVowelStrings(n: int) -> int:
+  return helper(n, 0)
+ 
+
+[/Code]
+[/STOP] </s>","def helper(n, letter_idx):
+  letters = [""a"",""e"",""i"",""o"",""u""]
+  dynamic = {
+      'a1' : 5,
+      'e1' : 4,
+      'i1' : 3,
+      'o1' : 2,
+      'u1' : 1
+  }
+  ret = 0
+  key = letters[letter_idx] + str(n)
+  if key in dynamic.keys():
+    return dynamic[key]
+  else:
+    for i in range(letter_idx, len(letters)):
+      ret += helper(n-1, i)
+    dynamic[key] = ret
+  return ret
+  
+
+def countVowelStrings(n: int) -> int:
+  return helper(n, 0)
+","assert countVowelStrings(3) == 35
+assert countVowelStrings(4) == 70
+assert countVowelStrings(5) == 126
+assert countVowelStrings(6) == 210
+assert countVowelStrings(7) == 330
+assert countVowelStrings(10) == 1001
+assert countVowelStrings(15) == 3876"
+"You are given an array of people, people, which are the attributes of some people in a queue (not necessarily in order). Each people[i] = [hi, ki] represents the ith person of height hi with exactly ki other people in front who have a height greater than or equal to hi.
+
+Reconstruct and return the queue that is represented by the input array people. The returned queue should be formatted as an array queue, where queue[j] = [hj, kj] is the attributes of the jth person in the queue (queue[0] is the person at the front of the queue).
+","<s>[INST] <<SYS>>
+You are an assistant tasked with generating code given a question and some Examples / Explanations along with the question. The question will be given under the heading ""Question:"" and the examples or explanations will be given under ""Example / Explanation:"". Your job is to generate the code and complete the content under the heading title ""Code:"". 
+<</SYS>>
+
+
+[Question]
+        
+You are given an array of people, people, which are the attributes of some people in a queue (not necessarily in order). Each people[i] = [hi, ki] represents the ith person of height hi with exactly ki other people in front who have a height greater than or equal to hi.
+
+Reconstruct and return the queue that is represented by the input array people. The returned queue should be formatted as an array queue, where queue[j] = [hj, kj] is the attributes of the jth person in the queue (queue[0] is the person at the front of the queue).
+
+
+assert reconstructQueue([[8,1],[5,0],[6,1],[5,2],[4,4],[7,1]]) == [[5, 0], [8, 1], [5, 2], [6, 1], [4, 4], [7, 1]]
+assert reconstructQueue([[2,0], [1,1]]) == [[2, 0], [1, 1]]
+assert reconstructQueue([[3,0], [3,2], [3,1]]) == [[3, 0], [3, 1], [3, 2]]
+assert reconstructQueue([[12,0], [6,3], [4,4], [9,2], [7,1]]) == [[12, 0], [7, 1], [9, 2], [6, 3], [4, 4]]
+
+[/Question] [/INST] [Code]
+
+
+def reconstructQueue(people: list) -> list:
+    output=[] 
+    people.sort(key=lambda x: (-x[0], x[1]))                
+    for a in people:
+        output.insert(a[1], a)
+    
+    return output
+ 
+
+[/Code]
+[/STOP] </s>","
+def reconstructQueue(people: list) -> list:
+    output=[] 
+    people.sort(key=lambda x: (-x[0], x[1]))                
+    for a in people:
+        output.insert(a[1], a)
+    
+    return output
+","assert reconstructQueue([[8,1],[5,0],[6,1],[5,2],[4,4],[7,1]]) == [[5, 0], [8, 1], [5, 2], [6, 1], [4, 4], [7, 1]]
+assert reconstructQueue([[12,0], [6,3], [4,4], [9,2], [7,1]]) == [[12, 0], [7, 1], [9, 2], [6, 3], [4, 4]]
+assert reconstructQueue([[2,0], [1,1]]) == [[2, 0], [1, 1]]
+assert reconstructQueue([[3,0], [3,2], [3,1]]) == [[3, 0], [3, 1], [3, 2]]"
+Given two arrays return an array with the set intersection of their common elements,"<s>[INST] <<SYS>>
+You are an assistant tasked with generating code given a question and some Examples / Explanations along with the question. The question will be given under the heading ""Question:"" and the examples or explanations will be given under ""Example / Explanation:"". Your job is to generate the code and complete the content under the heading title ""Code:"". 
+<</SYS>>
+
+
+[Question]
+        
+Given two arrays return an array with the set intersection of their common elements
+
+assert set(array_intersection(['apple', 'banana'], ['banana', 'cherry'])) == {'banana'}
+
+[/Question] [/INST] [Code]
+
+def array_intersection(arr1: list, arr2: list) -> set:
+  set1 = set(arr1)
+  ret = set([x for x in arr2 if x in set1])
+  return list(ret)
+ 
+
+[/Code]
+[/STOP] </s>","def array_intersection(arr1: list, arr2: list) -> set:
+  set1 = set(arr1)
+  ret = set([x for x in arr2 if x in set1])
+  return list(ret)
+","assert set(array_intersection([1,0,2,0,2,0,2,1,1,1], [2,1,0,2,0,2,2,2,1,0])) == {0,1,2}
+assert set(array_intersection([5, 6, 7, 8], [8, 9, 10, 11])) == {8}
+assert set(array_intersection([10, 20, 30], [40, 50, 60])) == set()
+assert set(array_intersection([], [1, 2, 3])) == set()
+assert set(array_intersection([-1, -2, -3], [-3, -4, -5, -6])) == {-3}
+assert set(array_intersection([9, 8, 7], [7, 8, 9, 10, 11, 12])) == {7, 8, 9}
+assert set(array_intersection(['a', 'b', 'c'], ['a', 'd', 'e', 'c'])) == {'a', 'c'}
+assert set(array_intersection(['apple', 'banana'], ['banana', 'cherry'])) == {'banana'}
+assert set(array_intersection([1.1, 2.2, 3.3], [2.2, 4.4])) == {2.2}
+assert set(array_intersection([False, True, False], [True, False, True])) == {True, False}
+assert set(array_intersection([(1, 2), (3, 4)], [(3, 4), (5, 6)])) == {(3, 4)}"
+"Write a function that reverses a string. The input string is given as an array of characters s.
+
+You must do this by modifying the input array in-place with O(1) extra memory.","<s>[INST] <<SYS>>
+You are an assistant tasked with generating code given a question and some Examples / Explanations along with the question. The question will be given under the heading ""Question:"" and the examples or explanations will be given under ""Example / Explanation:"". Your job is to generate the code and complete the content under the heading title ""Code:"". 
+<</SYS>>
+
+
+[Question]
+        
+Write a function that reverses a string. The input string is given as an array of characters s.
+
+You must do this by modifying the input array in-place with O(1) extra memory.
+
+assert reverse_string([""A""]) == [""A""]
+assert reverse_string([""a"",""b"",""c"",""d""]) == [""d"", ""c"", ""b"", ""a""]
+assert reverse_string([""B"", ""o"", ""b""]) == [""b"", ""o"", ""B""]
+assert reverse_string([""p"", ""y"", ""t"", ""h"", ""o"", ""n""]) == [""n"", ""o"", ""h"", ""t"", ""y"", ""p""]
+
+[/Question] [/INST] [Code]
+
+def reverse_string(s: list) -> list:
+  l = 0
+  r = len(s) - 1
+  while l < r:
+    tmp = s[l]
+    s[l] = s[r]
+    s[r] = tmp
+    l += 1
+    r -= 1
+  return s
+ 
+
+[/Code]
+[/STOP] </s>","def reverse_string(s: list) -> list:
+  l = 0
+  r = len(s) - 1
+  while l < r:
+    tmp = s[l]
+    s[l] = s[r]
+    s[r] = tmp
+    l += 1
+    r -= 1
+  return s
+","assert reverse_string([""a"",""b"",""c"",""d""]) == [""d"", ""c"", ""b"", ""a""]
+assert reverse_string([""p"", ""y"", ""t"", ""h"", ""o"", ""n""]) == [""n"", ""o"", ""h"", ""t"", ""y"", ""p""]
+assert reverse_string([]) == []
+assert reverse_string([""s"", ""i"", ""n"", ""g"", ""l"", ""e""]) == [""e"", ""l"", ""g"", ""n"", ""i"", ""s""]
+assert reverse_string([""A""]) == [""A""]
+assert reverse_string([""9"", ""8"", ""7"", ""6"", ""5"", ""4"", ""3"", ""2"", ""1""]) == [""1"", ""2"", ""3"", ""4"", ""5"", ""6"", ""7"", ""8"", ""9""]
+assert reverse_string([""B"", ""o"", ""b""]) == [""b"", ""o"", ""B""]
+assert reverse_string([""r"", ""e"", ""v"", ""e"", ""r"", ""s"", ""e""]) == [""e"", ""s"", ""r"", ""e"", ""v"", ""e"", ""r""]
+assert reverse_string([""1"", ""*"", ""2"", ""*"", ""3""]) == [""3"", ""*"", ""2"", ""*"", ""1""]"
+"N-th Tribonacci Number: The Tribonacci sequence Tn is defined as follows: 
+
+T0 = 0, T1 = 1, T2 = 1, and Tn+3 = Tn + Tn+1 + Tn+2 for n >= 0.
+
+Given n, return the value of Tn.","<s>[INST] <<SYS>>
+You are an assistant tasked with generating code given a question and some Examples / Explanations along with the question. The question will be given under the heading ""Question:"" and the examples or explanations will be given under ""Example / Explanation:"". Your job is to generate the code and complete the content under the heading title ""Code:"". 
+<</SYS>>
+
+
+[Question]
+        
+N-th Tribonacci Number: The Tribonacci sequence Tn is defined as follows: 
+
+T0 = 0, T1 = 1, T2 = 1, and Tn+3 = Tn + Tn+1 + Tn+2 for n >= 0.
+
+Given n, return the value of Tn.
+
+assert tribonacci(5) == 7
+assert tribonacci(3) == 2
+assert tribonacci(1) == 1
+
+[/Question] [/INST] [Code]
+
+def tribonacci(n: int) -> int:
+    dp = {0: 0, 1: 1, 2: 1}
+    def dfs(i):
+        if i in dp:
+            return dp[i]
+        dp[i] = dfs(i - 1) + dfs(i - 2) + dfs(i - 3)
+        return dp[i]
+    
+    return dfs(n) 
+
+[/Code]
+[/STOP] </s>","def tribonacci(n: int) -> int:
+    dp = {0: 0, 1: 1, 2: 1}
+    def dfs(i):
+        if i in dp:
+            return dp[i]
+        dp[i] = dfs(i - 1) + dfs(i - 2) + dfs(i - 3)
+        return dp[i]
+    
+    return dfs(n)","assert tribonacci(25)==1389537
+assert tribonacci(0) == 0
+assert tribonacci(1) == 1
+assert tribonacci(2) == 1
+assert tribonacci(3) == 2
+assert tribonacci(5) == 7
+assert tribonacci(7) == 24
+assert tribonacci(10) == 149
+assert tribonacci(15) == 3136
+assert tribonacci(30) == 29249425"

@@ -1,0 +1,72 @@
+question,prompt,code,asserts
+"Majority Element: Given an array nums of size n, return the majority element.
+
+The majority element is the element that appears more than ⌊n / 2⌋ times. You may assume that the majority element always exists in the array.","<s>[INST] <<SYS>>
+You are an assistant tasked with generating code given a question and some Examples / Explanations along with the question. The question will be given under the heading ""Question:"" and the examples or explanations will be given under ""Example / Explanation:"". Your job is to generate the code and complete the content under the heading title ""Code:"". 
+<</SYS>>
+
+
+[Question]
+        
+Majority Element: Given an array nums of size n, return the majority element.
+
+The majority element is the element that appears more than ⌊n / 2⌋ times. You may assume that the majority element always exists in the array.
+
+
+
+[/Question] [/INST]","def majorityElement(nums: list, lo: int = 0, hi: NoneType = None) -> int:
+    def majority_element_rec(lo, hi):
+        if lo == hi:
+            return nums[lo]
+        mid = (hi-lo)//2 + lo
+        left = majority_element_rec(lo, mid)
+        right = majority_element_rec(mid+1, hi)
+        if left == right:
+            return left
+        left_count = sum(1 for i in range(lo, hi+1) if nums[i] == left)
+        right_count = sum(1 for i in range(lo, hi+1) if nums[i] == right)
+
+        return left if left_count > right_count else right
+
+    return majority_element_rec(0, len(nums)-1)
+",
+"There are N Mice and N holes are placed in a straight line. Each hole can accommodate only 1 mouse. A mouse can stay at his position, move one step right from x to x + 1, or move one step left from x to x -1. Any of these moves consumes 1 minute. Assign mice to holes so that the time when the last mouse gets inside a hole is minimized.
+You are given a list of mice and hole positions as integer scalers.
+","<s>[INST] <<SYS>>
+You are an assistant tasked with generating code given a question and some Examples / Explanations along with the question. The question will be given under the heading ""Question:"" and the examples or explanations will be given under ""Example / Explanation:"". Your job is to generate the code and complete the content under the heading title ""Code:"". 
+<</SYS>>
+
+
+[Question]
+        
+There are N Mice and N holes are placed in a straight line. Each hole can accommodate only 1 mouse. A mouse can stay at his position, move one step right from x to x + 1, or move one step left from x to x -1. Any of these moves consumes 1 minute. Assign mice to holes so that the time when the last mouse gets inside a hole is minimized.
+You are given a list of mice and hole positions as integer scalers.
+
+
+assert assignHole([10, 20, 30, 40], [15, 25, 35, 45]) == 5
+assert assignHole([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10], [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]) == 1 # Edge case with incremental positions
+
+[/Question] [/INST]","def assignHole(mices: list, holes: list) -> int:
+    for i,j in zip(mices,holes):
+        if i<0 or j<0:
+            return -1
+    if (len(mices) != len(holes)):
+        return -1
+    mices.sort()
+    holes.sort()
+    Max = 0
+     
+    for i in range(len(holes)):
+        if (Max < abs(mices[i] - holes[i])):
+            Max = abs(mices[i] - holes[i])
+     
+    return Max
+","assert assignHole([1, 2, 3, 4], [4, 3, 2, 1]) == 0
+assert assignHole([10, 20, 30, 40], [15, 25, 35, 45]) == 5
+assert assignHole([1, 4, 9, 15], [10, 13, 7, 20]) == 6
+assert assignHole([0], [0]) == 0
+assert assignHole([1, 2], [3]) == -1  # Edge case with non-equal amount of mice and holes
+assert assignHole([5, 5, 5], [5, 5, 5]) == 0  # Edge case with all mice and holes at the same position
+assert assignHole([10, 10, 10, 10], [10, 9, 8, 7]) == 3  # Edge case with multiple mice starting at the same position
+assert assignHole([1,1 ,1, 1, 1, 1, 1, 1, 1, 1], [2,2,2,2,2,2 ,2, 2, 2, 2]) == 1 # Edge case with multiple mice and holes at the same positions
+assert assignHole([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10], [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]) == 1 # Edge case with incremental positions"

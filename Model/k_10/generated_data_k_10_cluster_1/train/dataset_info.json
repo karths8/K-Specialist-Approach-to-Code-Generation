@@ -1,0 +1,60 @@
+{
+  "builder_name": "csv",
+  "citation": "",
+  "config_name": "default",
+  "dataset_name": "csv",
+  "dataset_size": 20920,
+  "description": "",
+  "download_checksums": {
+    "/workspace/CS762_Project/Model/k_10/k_10_train_1.csv": {
+      "num_bytes": 16527,
+      "checksum": null
+    },
+    "/workspace/CS762_Project/Model/k_10/k_10_val_1.csv": {
+      "num_bytes": 4648,
+      "checksum": null
+    }
+  },
+  "download_size": 21175,
+  "features": {
+    "question": {
+      "dtype": "string",
+      "_type": "Value"
+    },
+    "prompt": {
+      "dtype": "string",
+      "_type": "Value"
+    },
+    "code": {
+      "dtype": "string",
+      "_type": "Value"
+    },
+    "asserts": {
+      "dtype": "string",
+      "_type": "Value"
+    }
+  },
+  "homepage": "",
+  "license": "",
+  "size_in_bytes": 42095,
+  "splits": {
+    "train": {
+      "name": "train",
+      "num_bytes": 16306,
+      "num_examples": 7,
+      "dataset_name": "csv"
+    },
+    "val": {
+      "name": "val",
+      "num_bytes": 4614,
+      "num_examples": 2,
+      "dataset_name": "csv"
+    }
+  },
+  "version": {
+    "version_str": "0.0.0",
+    "major": 0,
+    "minor": 0,
+    "patch": 0
+  }
+}

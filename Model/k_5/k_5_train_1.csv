@@ -1,0 +1,297 @@
+question,prompt,code,asserts
+"Linear Search is defined as a sequential search algorithm that starts at one end and goes through each element of a list until the desired element is found, otherwise the search continues till the end of the data set. Implement the Linear searching algorithm in python","<s>[INST] <<SYS>>
+You are an assistant tasked with generating code given a question and some Examples / Explanations along with the question. The question will be given under the heading ""Question:"" and the examples or explanations will be given under ""Example / Explanation:"". Your job is to generate the code and complete the content under the heading title ""Code:"". 
+<</SYS>>
+
+
+[Question]
+        
+Linear Search is defined as a sequential search algorithm that starts at one end and goes through each element of a list until the desired element is found, otherwise the search continues till the end of the data set. Implement the Linear searching algorithm in python
+
+assert search([1, 8, 9, 10, 15], 15) == 4
+
+[/Question] [/INST] [Code]
+
+def search(arr: list, x: int) -> int:
+        for i in range(0, len(arr)): 
+                if (arr[i] == x): 
+                        return i 
+        return -1
+ 
+
+[/Code]
+[/STOP] </s>","def search(arr: list, x: int) -> int:
+        for i in range(0, len(arr)): 
+                if (arr[i] == x): 
+                        return i 
+        return -1
+","assert search([2, 3, 4, 10, 40], 10) == 3
+assert search([1, 8, 9, 10, 15], 15) == 4
+assert search([4, 5, 6, 7, 0], 3) == -1
+assert search([], 10) == -1
+assert search([42], 42) == 0
+assert search([10, 22, 35, 49, 53, 67, 83], 67) == 5
+assert search([3, 1, 3, 7, 5], 3) == 0
+assert search([1, 2, 3, 4, 5, 6, 7, 8, 9], 1) == 0
+assert search([9, 8, 7, 6, 5, 4, 3, 2, 1], 1) == 8
+assert search([5, 17, 22, 30, 45, 50, 62], 31) == -1"
+"Given a matrix of n*n size, the task is to find whether all rows are circular rotations of each other or not. ","<s>[INST] <<SYS>>
+You are an assistant tasked with generating code given a question and some Examples / Explanations along with the question. The question will be given under the heading ""Question:"" and the examples or explanations will be given under ""Example / Explanation:"". Your job is to generate the code and complete the content under the heading title ""Code:"". 
+<</SYS>>
+
+
+[Question]
+        
+Given a matrix of n*n size, the task is to find whether all rows are circular rotations of each other or not. 
+
+assert isPermutedMatrix([[1, 2, 3, 4], [4, 1, 2, 3], [3, 4, 1, 2], [2, 3, 4, 1]]) == True
+assert isPermutedMatrix([[3, 8], [8, 3]]) == True
+assert isPermutedMatrix([[13, 5, 7, 9], [5, 7, 9, 13], [7, 9, 13, 5], [9, 13, 5, 7]]) == True
+assert isPermutedMatrix([[2, 4, 6, 8], [4, 6, 8, 2], [8, 2, 4, 6], [6, 8, 2, 4]]) == True
+
+[/Question] [/INST] [Code]
+
+
+MAX = 1000
+
+def isPermutedMatrix(mat: list) -> bool:
+        
+        n = len(mat)
+        str_cat = """"
+        for i in range(n) :
+                str_cat = str_cat + ""-"" + str(mat[0][i])
+
+        str_cat = str_cat + str_cat
+
+        for i in range(1, n) :
+                curr_str = """"
+                
+                for j in range(n) :
+                        curr_str = curr_str + ""-"" + str(mat[i][j])
+
+                if (str_cat.find(curr_str)) : 
+                        return True
+                        
+        return False
+ 
+
+[/Code]
+[/STOP] </s>","
+MAX = 1000
+
+def isPermutedMatrix(mat: list) -> bool:
+        
+        n = len(mat)
+        str_cat = """"
+        for i in range(n) :
+                str_cat = str_cat + ""-"" + str(mat[0][i])
+
+        str_cat = str_cat + str_cat
+
+        for i in range(1, n) :
+                curr_str = """"
+                
+                for j in range(n) :
+                        curr_str = curr_str + ""-"" + str(mat[i][j])
+
+                if (str_cat.find(curr_str)) : 
+                        return True
+                        
+        return False
+","assert isPermutedMatrix([[1, 2, 3, 4], [4, 1, 2, 3], [3, 4, 1, 2], [2, 3, 4, 1]]) == True
+assert isPermutedMatrix([[1, 2, 3], [2, 3, 1], [3, 1, 2]]) == True
+assert isPermutedMatrix([[5, 6], [6, 5]]) == True
+assert isPermutedMatrix([[13, 5, 7, 9], [5, 7, 9, 13], [7, 9, 13, 5], [9, 13, 5, 7]]) == True
+assert isPermutedMatrix([[3, 8], [8, 3]]) == True
+assert isPermutedMatrix([[2, 4, 6, 8], [4, 6, 8, 2], [8, 2, 4, 6], [6, 8, 2, 4]]) == True"
+"Squirrel Simulation: You are given two integers height and width representing a garden of size height x width. You are also given:
+
+an array tree where tree = [treer, treec] is the position of the tree in the garden,
+an array squirrel where squirrel = [squirrelr, squirrelc] is the position of the squirrel in the garden,
+and an array nuts where nuts[i] = [nutir, nutic] is the position of the ith nut in the garden.
+The squirrel can only take at most one nut at one time and can move in four directions: up, down, left, and right, to the adjacent cell.
+
+Return the minimal distance for the squirrel to collect all the nuts and put them under the tree one by one.
+
+The distance is the number of moves.","<s>[INST] <<SYS>>
+You are an assistant tasked with generating code given a question and some Examples / Explanations along with the question. The question will be given under the heading ""Question:"" and the examples or explanations will be given under ""Example / Explanation:"". Your job is to generate the code and complete the content under the heading title ""Code:"". 
+<</SYS>>
+
+
+[Question]
+        
+Squirrel Simulation: You are given two integers height and width representing a garden of size height x width. You are also given:
+
+an array tree where tree = [treer, treec] is the position of the tree in the garden,
+an array squirrel where squirrel = [squirrelr, squirrelc] is the position of the squirrel in the garden,
+and an array nuts where nuts[i] = [nutir, nutic] is the position of the ith nut in the garden.
+The squirrel can only take at most one nut at one time and can move in four directions: up, down, left, and right, to the adjacent cell.
+
+Return the minimal distance for the squirrel to collect all the nuts and put them under the tree one by one.
+
+The distance is the number of moves.
+
+
+
+[/Question] [/INST] [Code]
+
+from typing import List
+def minDistance(height: int, width: int, tree: List[int], squirrel: List[int], nuts: List[List[int]]) -> int:
+        firstPath = float('-inf')
+        total_dist = 0
+        for nut in nuts:
+            dist_to_Sq = abs(squirrel[0]-nut[0])+abs(squirrel[1]-nut[1])
+            dist_to_Tr = abs(tree[0]-nut[0])+abs(tree[1]-nut[1])
+            if (dist_to_Tr-dist_to_Sq)>firstPath:
+                firstPath = dist_to_Tr-dist_to_Sq
+            total_dist+=2*dist_to_Tr
+        total_dist = total_dist - firstPath
+        return total_dist 
+
+[/Code]
+[/STOP] </s>","from typing import List
+def minDistance(height: int, width: int, tree: List[int], squirrel: List[int], nuts: List[List[int]]) -> int:
+        firstPath = float('-inf')
+        total_dist = 0
+        for nut in nuts:
+            dist_to_Sq = abs(squirrel[0]-nut[0])+abs(squirrel[1]-nut[1])
+            dist_to_Tr = abs(tree[0]-nut[0])+abs(tree[1]-nut[1])
+            if (dist_to_Tr-dist_to_Sq)>firstPath:
+                firstPath = dist_to_Tr-dist_to_Sq
+            total_dist+=2*dist_to_Tr
+        total_dist = total_dist - firstPath
+        return total_dist","assert minDistance(1,3, [0,1], [0,0], [[0,2]])==3
+assert minDistance(5, 5, [2, 2], [0, 0], [[0, 1], [1, 3], [3, 4], [4, 2]]) == 18
+assert minDistance(6, 6, [1, 1], [5, 5], [[1, 2], [2, 2], [3, 3]]) == 14
+assert minDistance(2, 2, [0, 0], [1, 1], [[0, 1]]) == 2
+assert minDistance(3, 3, [0, 0], [2, 2], [[1, 1], [2, 0]]) == 8"
+Given an arr[] containing n integers and a positive integer k. The problem is to find the longest subarray’s length with the sum of the elements divisible by the given value k.,"<s>[INST] <<SYS>>
+You are an assistant tasked with generating code given a question and some Examples / Explanations along with the question. The question will be given under the heading ""Question:"" and the examples or explanations will be given under ""Example / Explanation:"". Your job is to generate the code and complete the content under the heading title ""Code:"". 
+<</SYS>>
+
+
+[Question]
+        
+Given an arr[] containing n integers and a positive integer k. The problem is to find the longest subarray’s length with the sum of the elements divisible by the given value k.
+
+
+
+[/Question] [/INST] [Code]
+
+def longestSubarrWthSumDivByK(arr: list, k: int) -> int:
+        N = len(arr)
+        maxl = 0
+        for i in range(N):
+                sum1 = 0
+                for j in range(i, N):
+                        sum1 += arr[j]
+                        if sum1 % k == 0:
+                                maxl = max(maxl, j - i + 1)
+        return maxl
+ 
+
+[/Code]
+[/STOP] </s>","def longestSubarrWthSumDivByK(arr: list, k: int) -> int:
+        N = len(arr)
+        maxl = 0
+        for i in range(N):
+                sum1 = 0
+                for j in range(i, N):
+                        sum1 += arr[j]
+                        if sum1 % k == 0:
+                                maxl = max(maxl, j - i + 1)
+        return maxl
+","assert longestSubarrWthSumDivByK([2, 7, 6, 1, 4, 5], 3) == 4
+assert longestSubarrWthSumDivByK([5, 10, 15, 20, 25], 5) == 5
+assert longestSubarrWthSumDivByK([1, -1, 1, -1, 1, -1, 1], 2) == 6
+assert longestSubarrWthSumDivByK([0, 0, 0, 0, 0], 1) == 5
+assert longestSubarrWthSumDivByK([], 5) == 0
+assert longestSubarrWthSumDivByK([7, 14, 21, 28, 35], 7) == 5"
+"You are given a string s and an integer k. You can choose one of the first k letters of s and append it at the end of the string.
+
+Return the lexicographically smallest string you could have after applying the mentioned step any number of moves.
+","<s>[INST] <<SYS>>
+You are an assistant tasked with generating code given a question and some Examples / Explanations along with the question. The question will be given under the heading ""Question:"" and the examples or explanations will be given under ""Example / Explanation:"". Your job is to generate the code and complete the content under the heading title ""Code:"". 
+<</SYS>>
+
+
+[Question]
+        
+You are given a string s and an integer k. You can choose one of the first k letters of s and append it at the end of the string.
+
+Return the lexicographically smallest string you could have after applying the mentioned step any number of moves.
+
+
+assert orderlyQueue(""hello"", 2) == ""ehllo""
+
+[/Question] [/INST] [Code]
+
+
+def orderlyQueue(s: str, k: int) -> str:
+    if k == 1:
+        n = len(s)
+        ss = s + s
+        lex_min_str = s
+        for i in range(n):
+            lex_min_str = min(lex_min_str, ss[i:i + n])
+        return lex_min_str
+    
+    return """".join(sorted(s))
+ 
+
+[/Code]
+[/STOP] </s>","
+def orderlyQueue(s: str, k: int) -> str:
+    if k == 1:
+        n = len(s)
+        ss = s + s
+        lex_min_str = s
+        for i in range(n):
+            lex_min_str = min(lex_min_str, ss[i:i + n])
+        return lex_min_str
+    
+    return """".join(sorted(s))
+","assert orderlyQueue(""abcd"", 1) == ""abcd""
+assert orderlyQueue(""hello"", 2) == ""ehllo""
+assert orderlyQueue(""programming"", 1) == ""ammingprogr""
+assert orderlyQueue(""rotator"", 1) == ""atorrot""
+assert orderlyQueue(""zxyabc"", 5) == ""abcxyz""
+assert orderlyQueue(""xy"", 2) == ""xy"""
+Given two arrays return an array with the set intersection of their common elements,"<s>[INST] <<SYS>>
+You are an assistant tasked with generating code given a question and some Examples / Explanations along with the question. The question will be given under the heading ""Question:"" and the examples or explanations will be given under ""Example / Explanation:"". Your job is to generate the code and complete the content under the heading title ""Code:"". 
+<</SYS>>
+
+
+[Question]
+        
+Given two arrays return an array with the set intersection of their common elements
+
+assert set(array_intersection([False, True, False], [True, False, True])) == {True, False}
+assert set(array_intersection([1,0,2,0,2,0,2,1,1,1], [2,1,0,2,0,2,2,2,1,0])) == {0,1,2}
+assert set(array_intersection([1.1, 2.2, 3.3], [2.2, 4.4])) == {2.2}
+assert set(array_intersection([], [1, 2, 3])) == set()
+
+[/Question] [/INST] [Code]
+
+def array_intersection(arr1: list, arr2: list) -> set:
+  set1 = set(arr1)
+  ret = set([x for x in arr2 if x in set1])
+  return list(ret)
+ 
+
+[/Code]
+[/STOP] </s>","def array_intersection(arr1: list, arr2: list) -> set:
+  set1 = set(arr1)
+  ret = set([x for x in arr2 if x in set1])
+  return list(ret)
+","assert set(array_intersection([1,0,2,0,2,0,2,1,1,1], [2,1,0,2,0,2,2,2,1,0])) == {0,1,2}
+assert set(array_intersection([5, 6, 7, 8], [8, 9, 10, 11])) == {8}
+assert set(array_intersection([10, 20, 30], [40, 50, 60])) == set()
+assert set(array_intersection([], [1, 2, 3])) == set()
+assert set(array_intersection([-1, -2, -3], [-3, -4, -5, -6])) == {-3}
+assert set(array_intersection([9, 8, 7], [7, 8, 9, 10, 11, 12])) == {7, 8, 9}
+assert set(array_intersection(['a', 'b', 'c'], ['a', 'd', 'e', 'c'])) == {'a', 'c'}
+assert set(array_intersection(['apple', 'banana'], ['banana', 'cherry'])) == {'banana'}
+assert set(array_intersection([1.1, 2.2, 3.3], [2.2, 4.4])) == {2.2}
+assert set(array_intersection([False, True, False], [True, False, True])) == {True, False}
+assert set(array_intersection([(1, 2), (3, 4)], [(3, 4), (5, 6)])) == {(3, 4)}"

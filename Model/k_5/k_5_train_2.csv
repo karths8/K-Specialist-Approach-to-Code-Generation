@@ -1,0 +1,733 @@
+question,prompt,code,asserts
+"Repeated Substring Pattern: Given a string s, check if it can be constructed by taking a substring of it and appending multiple copies of the substring together.","<s>[INST] <<SYS>>
+You are an assistant tasked with generating code given a question and some Examples / Explanations along with the question. The question will be given under the heading ""Question:"" and the examples or explanations will be given under ""Example / Explanation:"". Your job is to generate the code and complete the content under the heading title ""Code:"". 
+<</SYS>>
+
+
+[Question]
+        
+Repeated Substring Pattern: Given a string s, check if it can be constructed by taking a substring of it and appending multiple copies of the substring together.
+
+assert repeatedSubstringPattern(""abababab"") == True
+assert repeatedSubstringPattern(""abab"")==True
+assert repeatedSubstringPattern(""a"") == False
+assert repeatedSubstringPattern(""aaaa"") == True
+
+[/Question] [/INST] [Code]
+
+def repeatedSubstringPattern(s: str) -> bool:
+    n = len(s)
+    for i in range(1, n // 2 + 1):
+        if n % i == 0:
+            pattern = s[:i] * (n // i)
+            if s == pattern:
+                return True
+    return False 
+
+[/Code]
+[/STOP] </s>","def repeatedSubstringPattern(s: str) -> bool:
+    n = len(s)
+    for i in range(1, n // 2 + 1):
+        if n % i == 0:
+            pattern = s[:i] * (n // i)
+            if s == pattern:
+                return True
+    return False","assert repeatedSubstringPattern(""abab"")==True
+assert repeatedSubstringPattern(""aaaa"") == True
+assert repeatedSubstringPattern(""abac"") == False
+assert repeatedSubstringPattern(""ababab"") == True
+assert repeatedSubstringPattern(""xyzxyzxyz"") == True
+assert repeatedSubstringPattern(""aaabaaa"") == False
+assert repeatedSubstringPattern(""abababab"") == True
+assert repeatedSubstringPattern(""abcabcab"") == False
+assert repeatedSubstringPattern(""abbaabba"") == True
+assert repeatedSubstringPattern("""") == False
+assert repeatedSubstringPattern(""a"") == False
+assert repeatedSubstringPattern(""abacababacab"") == True"
+Jump Search is a searching algorithm for sorted arrays. The basic idea is to check fewer elements (than linear search) by jumping ahead by fixed steps or skipping some elements in place of searching all elements. Write the algorithm to perform Jump Search in Python,"<s>[INST] <<SYS>>
+You are an assistant tasked with generating code given a question and some Examples / Explanations along with the question. The question will be given under the heading ""Question:"" and the examples or explanations will be given under ""Example / Explanation:"". Your job is to generate the code and complete the content under the heading title ""Code:"". 
+<</SYS>>
+
+
+[Question]
+        
+Jump Search is a searching algorithm for sorted arrays. The basic idea is to check fewer elements (than linear search) by jumping ahead by fixed steps or skipping some elements in place of searching all elements. Write the algorithm to perform Jump Search in Python
+
+assert jumpSearch([0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, 233, 377, 610], 610) == 15
+
+[/Question] [/INST] [Code]
+
+
+import math
+
+def jumpSearch( arr : list, x: int) -> int:
+        n = len(arr)
+        step = math.sqrt(n)
+        prev = 0
+        while arr[int(min(step, n)-1)] < x:
+                prev = step
+                step += math.sqrt(n)
+                if prev >= n:
+                        return -1
+        while arr[int(prev)] < x:
+                prev += 1
+                if prev == min(step, n):
+                        return -1
+        if arr[int(prev)] == x:
+                return prev
+        
+        return -1
+ 
+
+[/Code]
+[/STOP] </s>","
+import math
+
+def jumpSearch( arr : list, x: int) -> int:
+        n = len(arr)
+        step = math.sqrt(n)
+        prev = 0
+        while arr[int(min(step, n)-1)] < x:
+                prev = step
+                step += math.sqrt(n)
+                if prev >= n:
+                        return -1
+        while arr[int(prev)] < x:
+                prev += 1
+                if prev == min(step, n):
+                        return -1
+        if arr[int(prev)] == x:
+                return prev
+        
+        return -1
+","assert jumpSearch([0,1,1,2,3,5,8,13,21,34,55,89,144,233,377,610], 55) == 10
+assert jumpSearch([0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, 233, 377, 610], 233) == 13
+assert jumpSearch([0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, 233, 377, 610], 0) == 0
+assert jumpSearch([0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, 233, 377, 610], 610) == 15
+assert jumpSearch([0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, 233, 377, 610], 299) == -1
+assert jumpSearch([1, 2, 4, 5, 6, 7, 9, 11, 12, 13, 15, 17, 19, 21, 23, 25], 21) == 13
+assert jumpSearch([1, 2, 4, 5, 6, 7, 9, 11, 12, 13, 15, 17, 19, 21, 23, 25], 1) == 0
+assert jumpSearch([1, 2, 4, 5, 6, 7, 9, 11, 12, 13, 15, 17, 19, 21, 23, 25], 26) == -1
+assert jumpSearch([10, 20, 30, 40, 50, 60, 70, 80, 90, 100], 95) == -1
+assert jumpSearch([3], 3) == 0
+assert jumpSearch([3, 6, 9, 12, 15, 18, 21], 7) == -1
+assert jumpSearch([-5, 0, 5, 10, 15, 20, 25, 30, 35], 20) == 5
+assert jumpSearch([100, 200, 300, 400, 500, 600, 700, 800, 900], 450) == -1
+assert jumpSearch([100, 200, 300, 400, 500, 600, 700, 800, 900], 100) == 0
+assert jumpSearch([100, 200, 300, 400, 500, 600, 700, 800, 900], 900) == 8"
+Given an array of integers. Write a program to find the K-th largest sum of contiguous subarray within the array of numbers that has both negative and positive numbers.,"<s>[INST] <<SYS>>
+You are an assistant tasked with generating code given a question and some Examples / Explanations along with the question. The question will be given under the heading ""Question:"" and the examples or explanations will be given under ""Example / Explanation:"". Your job is to generate the code and complete the content under the heading title ""Code:"". 
+<</SYS>>
+
+
+[Question]
+        
+Given an array of integers. Write a program to find the K-th largest sum of contiguous subarray within the array of numbers that has both negative and positive numbers.
+
+assert kthLargestSum([20, -5, -1], 3) == 14
+assert kthLargestSum([0, 0, 0, 0, 0], 1) == 0
+assert kthLargestSum([2, 3, -2, -1, 10], 9) == 2
+assert kthLargestSum([10, -10, 20, -40], 6) == -10
+
+[/Question] [/INST] [Code]
+
+def kthLargestSum(arr: list, K: int) -> int:
+    N = len(arr)
+    result = []
+    for i in range(N):
+        sum = 0
+        for j in range(i, N):
+                sum += arr[j]
+                result.append(sum)
+
+    result.sort(reverse=True)
+
+    return result[K - 1]
+ 
+
+[/Code]
+[/STOP] </s>","def kthLargestSum(arr: list, K: int) -> int:
+    N = len(arr)
+    result = []
+    for i in range(N):
+        sum = 0
+        for j in range(i, N):
+                sum += arr[j]
+                result.append(sum)
+
+    result.sort(reverse=True)
+
+    return result[K - 1]
+","assert kthLargestSum([20, -5, -1], 3) == 14
+assert kthLargestSum([10, -10, 20, -40], 6) == -10
+assert kthLargestSum([0, 0, 0, 0, 0], 1) == 0
+assert kthLargestSum([2, 3, -2, -1, 10], 9) == 2"
+"Detect Pattern of Length M Repeated K or More Times: Given an array of positive integers arr, find a pattern of length m that is repeated k or more times.
+
+A pattern is a subarray (consecutive sub-sequence) that consists of one or more values, repeated multiple times consecutively without overlapping. A pattern is defined by its length and the number of repetitions.
+
+Return true if there exists a pattern of length m that is repeated k or more times, otherwise return false.","<s>[INST] <<SYS>>
+You are an assistant tasked with generating code given a question and some Examples / Explanations along with the question. The question will be given under the heading ""Question:"" and the examples or explanations will be given under ""Example / Explanation:"". Your job is to generate the code and complete the content under the heading title ""Code:"". 
+<</SYS>>
+
+
+[Question]
+        
+Detect Pattern of Length M Repeated K or More Times: Given an array of positive integers arr, find a pattern of length m that is repeated k or more times.
+
+A pattern is a subarray (consecutive sub-sequence) that consists of one or more values, repeated multiple times consecutively without overlapping. A pattern is defined by its length and the number of repetitions.
+
+Return true if there exists a pattern of length m that is repeated k or more times, otherwise return false.
+
+assert containsPattern([5,5,5,5,5,5,5], 1, 6) == True
+
+[/Question] [/INST] [Code]
+
+from typing import List
+def containsPattern(arr: List[int], m: int, k: int) -> bool:
+    i = 0
+    while i <= len(arr)-1:
+            p = arr[i:i+m]
+            if p * k == arr[i:i+m*k]:
+                    return True
+            i += 1
+    return False 
+
+[/Code]
+[/STOP] </s>","from typing import List
+def containsPattern(arr: List[int], m: int, k: int) -> bool:
+    i = 0
+    while i <= len(arr)-1:
+            p = arr[i:i+m]
+            if p * k == arr[i:i+m*k]:
+                    return True
+            i += 1
+    return False","assert containsPattern([1,2,4,4,4,4],1,3)==True
+assert containsPattern([1,2,3,1,2,3,1,2,3], 3, 3) == True
+assert containsPattern([1,1,1,2,2,2,3,3], 2, 2) == False
+assert containsPattern([5,5,5,5,5,5,5], 1, 6) == True
+assert containsPattern([1,2,1,2,1,2,1,2,1,2,1,2,1,2,1,2], 2, 5) == True
+assert containsPattern([10,100,10,100,10,100,10,10,10,100], 2, 4) == False
+assert containsPattern([3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3], 4, 3) == True"
+Given an array of integers. The task is to find the maximum subarray XOR value in the given array.,"<s>[INST] <<SYS>>
+You are an assistant tasked with generating code given a question and some Examples / Explanations along with the question. The question will be given under the heading ""Question:"" and the examples or explanations will be given under ""Example / Explanation:"". Your job is to generate the code and complete the content under the heading title ""Code:"". 
+<</SYS>>
+
+
+[Question]
+        
+Given an array of integers. The task is to find the maximum subarray XOR value in the given array.
+
+assert maxSubarrayXOR([0, 0, 0, 0]) == 0
+assert maxSubarrayXOR([4, 17]) == 21
+assert maxSubarrayXOR([1, 2, 3, 4]) == 7
+assert maxSubarrayXOR([0]) == 0
+
+[/Question] [/INST] [Code]
+
+def maxSubarrayXOR(arr: list) -> int:
+        n = len(arr)
+        ans = -2147483648
+
+        for i in range(n):
+                curr_xor = 0
+                for j in range(i,n):
+                
+                        curr_xor = curr_xor ^ arr[j]
+                        ans = max(ans, curr_xor)
+        return ans
+ 
+
+[/Code]
+[/STOP] </s>","def maxSubarrayXOR(arr: list) -> int:
+        n = len(arr)
+        ans = -2147483648
+
+        for i in range(n):
+                curr_xor = 0
+                for j in range(i,n):
+                
+                        curr_xor = curr_xor ^ arr[j]
+                        ans = max(ans, curr_xor)
+        return ans
+","assert maxSubarrayXOR([1, 2, 3, 4]) == 7
+assert maxSubarrayXOR([0]) == 0
+assert maxSubarrayXOR([4, 2, 1, 6, 5]) == 7
+assert maxSubarrayXOR([9, 8, 5]) == 13
+assert maxSubarrayXOR([0, 0, 0, 0]) == 0
+assert maxSubarrayXOR([1, 2, 3, 4, 5, 6, 7, 8]) == 15
+assert maxSubarrayXOR([4, 17]) == 21
+assert maxSubarrayXOR([14, 70, 53, 83, 49, 91, 36, 80, 92, 51, 66, 70]) == 127"
+"Given an array of size N and an integer K, return the count of distinct numbers in all windows of size K. ","<s>[INST] <<SYS>>
+You are an assistant tasked with generating code given a question and some Examples / Explanations along with the question. The question will be given under the heading ""Question:"" and the examples or explanations will be given under ""Example / Explanation:"". Your job is to generate the code and complete the content under the heading title ""Code:"". 
+<</SYS>>
+
+
+[Question]
+        
+Given an array of size N and an integer K, return the count of distinct numbers in all windows of size K. 
+
+assert countDistinct([1], 1) == [1]
+assert countDistinct([1, 2, 3, 4, 5, 6, 7, 8, 9, 10], 10) == [10]
+assert countDistinct([10, 10, 10, 10], 1) == [1, 1, 1, 1]
+
+[/Question] [/INST] [Code]
+
+def countDistinct(arr: list, K: int) -> list:
+        def countWindowDistinct(win, K):
+                dist_count = 0
+                for i in range(K):
+                        j = 0
+                        while j < i:
+                                if (win[i] == win[j]):
+                                        break
+                                else:
+                                        j += 1
+                        if (j == i):
+                                dist_count += 1
+
+                return dist_count
+        N = len(arr)
+        result = []
+        for i in range(N - K + 1):
+                result.append(countWindowDistinct(arr[i:K + i], K))
+        return result
+ 
+
+[/Code]
+[/STOP] </s>","def countDistinct(arr: list, K: int) -> list:
+        def countWindowDistinct(win, K):
+                dist_count = 0
+                for i in range(K):
+                        j = 0
+                        while j < i:
+                                if (win[i] == win[j]):
+                                        break
+                                else:
+                                        j += 1
+                        if (j == i):
+                                dist_count += 1
+
+                return dist_count
+        N = len(arr)
+        result = []
+        for i in range(N - K + 1):
+                result.append(countWindowDistinct(arr[i:K + i], K))
+        return result
+","assert countDistinct([1, 2, 1, 3, 4, 2, 3], 4) == [3,4,4,3]
+assert countDistinct([10, 10, 10, 10], 1) == [1, 1, 1, 1]
+assert countDistinct([1], 1) == [1]
+assert countDistinct([4, 4, 4, 4, 4, 4, 4], 4) == [1, 1, 1, 1]
+assert countDistinct([9, 8, 7, 8, 7, 6, 5], 3) == [3, 2, 2, 3, 3]
+assert countDistinct([1, 2, 3, 4, 5, 6, 7, 8, 9, 10], 10) == [10]"
+"Projection Area of 3D Shapes: You are given an n x n grid where we place some 1 x 1 x 1 cubes that are axis-aligned with the x, y, and z axes.
+
+Each value v = grid[i][j] represents a tower of v cubes placed on top of the cell (i, j).
+
+We view the projection of these cubes onto the xy, yz, and zx planes.
+
+A projection is like a shadow, that maps our 3-dimensional figure to a 2-dimensional plane. We are viewing the ""shadow"" when looking at the cubes from the top, the front, and the side.
+
+Return the total area of all three projections.","<s>[INST] <<SYS>>
+You are an assistant tasked with generating code given a question and some Examples / Explanations along with the question. The question will be given under the heading ""Question:"" and the examples or explanations will be given under ""Example / Explanation:"". Your job is to generate the code and complete the content under the heading title ""Code:"". 
+<</SYS>>
+
+
+[Question]
+        
+Projection Area of 3D Shapes: You are given an n x n grid where we place some 1 x 1 x 1 cubes that are axis-aligned with the x, y, and z axes.
+
+Each value v = grid[i][j] represents a tower of v cubes placed on top of the cell (i, j).
+
+We view the projection of these cubes onto the xy, yz, and zx planes.
+
+A projection is like a shadow, that maps our 3-dimensional figure to a 2-dimensional plane. We are viewing the ""shadow"" when looking at the cubes from the top, the front, and the side.
+
+Return the total area of all three projections.
+
+assert projectionArea([[2, 3], [2, 4]]) == 17
+
+[/Question] [/INST] [Code]
+
+def projectionArea(grid: list) -> int:
+    N = len(grid)
+    ans = 0
+    for i in range(N):
+        best_row = 0
+        best_col = 0 
+        for j in range(N):
+            if grid[i][j]: ans += 1
+            best_row = max(best_row, grid[i][j])
+            best_col = max(best_col, grid[j][i])
+
+        ans += best_row + best_col
+
+    return ans
+ 
+
+[/Code]
+[/STOP] </s>","def projectionArea(grid: list) -> int:
+    N = len(grid)
+    ans = 0
+    for i in range(N):
+        best_row = 0
+        best_col = 0 
+        for j in range(N):
+            if grid[i][j]: ans += 1
+            best_row = max(best_row, grid[i][j])
+            best_col = max(best_col, grid[j][i])
+
+        ans += best_row + best_col
+
+    return ans
+","assert projectionArea([[2]])==5
+assert projectionArea([[1, 1, 1], [1, 0, 1], [1, 1, 1]]) == 14
+assert projectionArea([[2, 3], [2, 4]]) == 17
+assert projectionArea([[0, 0, 0], [0, 0, 0], [0, 0, 0]]) == 0"
+"Given an array with repeated elements, the task is to find the maximum distance between two occurrences of an element.","<s>[INST] <<SYS>>
+You are an assistant tasked with generating code given a question and some Examples / Explanations along with the question. The question will be given under the heading ""Question:"" and the examples or explanations will be given under ""Example / Explanation:"". Your job is to generate the code and complete the content under the heading title ""Code:"". 
+<</SYS>>
+
+
+[Question]
+        
+Given an array with repeated elements, the task is to find the maximum distance between two occurrences of an element.
+
+
+
+[/Question] [/INST] [Code]
+
+def max_distance(arr: list) -> int:
+        n = len(arr) 
+        max_d = -1
+        for i in range(n - 1): 
+                for j in range(i + 1, n): 
+                        if arr[i] == arr[j]: 
+                                temp = abs(j - i) 
+                                max_d = max(max_d, temp) 
+        return max_d 
+ 
+
+[/Code]
+[/STOP] </s>","def max_distance(arr: list) -> int:
+        n = len(arr) 
+        max_d = -1
+        for i in range(n - 1): 
+                for j in range(i + 1, n): 
+                        if arr[i] == arr[j]: 
+                                temp = abs(j - i) 
+                                max_d = max(max_d, temp) 
+        return max_d 
+","assert max_distance([1, 2, 4, 1, 3, 4, 2, 5, 6, 5]) == 5
+assert max_distance([1, 1, 1, 1, 1]) == 4
+assert max_distance([8, 8, 7, 8, 7]) == 3
+assert max_distance([5, 6, 3, 4, 3, 6, 5]) == 6
+assert max_distance([10, 20, 10, 10, 30, 20, 10]) == 6
+assert max_distance([99]) == -1
+assert max_distance([15, 22, 15, 18, 22, 19, 18, 22, 15]) == 8"
+"Get Maximum in Generated Array: You are given an integer n. A 0-indexed integer array nums of length n + 1 is generated in the following way:
+
+nums[0] = 0
+nums[1] = 1
+nums[2 * i] = nums[i] when 2 <= 2 * i <= n
+nums[2 * i + 1] = nums[i] + nums[i + 1] when 2 <= 2 * i + 1 <= n
+Return the maximum integer in the array nums​​​.","<s>[INST] <<SYS>>
+You are an assistant tasked with generating code given a question and some Examples / Explanations along with the question. The question will be given under the heading ""Question:"" and the examples or explanations will be given under ""Example / Explanation:"". Your job is to generate the code and complete the content under the heading title ""Code:"". 
+<</SYS>>
+
+
+[Question]
+        
+Get Maximum in Generated Array: You are given an integer n. A 0-indexed integer array nums of length n + 1 is generated in the following way:
+
+nums[0] = 0
+nums[1] = 1
+nums[2 * i] = nums[i] when 2 <= 2 * i <= n
+nums[2 * i + 1] = nums[i] + nums[i + 1] when 2 <= 2 * i + 1 <= n
+Return the maximum integer in the array nums​​​.
+
+
+
+[/Question] [/INST] [Code]
+
+def getMaximumGenerated(n: int) -> int:
+    if n<2:
+        return n
+    nums=[0]*(n+1)
+    nums[0]=0
+    nums[1]=1
+    for i in range(2,n+1):
+        if i%2==0:
+            nums[i]=nums[i//2]
+        else:
+            nums[i]=nums[i//2]+nums[i//2+1]
+    return max(nums) 
+
+[/Code]
+[/STOP] </s>","def getMaximumGenerated(n: int) -> int:
+    if n<2:
+        return n
+    nums=[0]*(n+1)
+    nums[0]=0
+    nums[1]=1
+    for i in range(2,n+1):
+        if i%2==0:
+            nums[i]=nums[i//2]
+        else:
+            nums[i]=nums[i//2]+nums[i//2+1]
+    return max(nums)","assert getMaximumGenerated(2)==1
+assert getMaximumGenerated(4) == 2
+assert getMaximumGenerated(5) == 3
+assert getMaximumGenerated(8) == 3
+assert getMaximumGenerated(15) == 5
+assert getMaximumGenerated(0) == 0
+assert getMaximumGenerated(1) == 1"
+"Word Pattern II: Given a pattern and a string s, return true if s matches the pattern.
+
+A string s matches a pattern if there is some bijective mapping of single characters to non-empty strings such that if each character in pattern is replaced by the string it maps to, then the resulting string is s. A bijective mapping means that no two characters map to the same string, and no character maps to two different strings.","<s>[INST] <<SYS>>
+You are an assistant tasked with generating code given a question and some Examples / Explanations along with the question. The question will be given under the heading ""Question:"" and the examples or explanations will be given under ""Example / Explanation:"". Your job is to generate the code and complete the content under the heading title ""Code:"". 
+<</SYS>>
+
+
+[Question]
+        
+Word Pattern II: Given a pattern and a string s, return true if s matches the pattern.
+
+A string s matches a pattern if there is some bijective mapping of single characters to non-empty strings such that if each character in pattern is replaced by the string it maps to, then the resulting string is s. A bijective mapping means that no two characters map to the same string, and no character maps to two different strings.
+
+assert wordPatternMatch(""abba"", ""dogcatcatdog"") == True
+assert wordPatternMatch(""zzz"", ""aaa"") == True # all 'z' map to ""a""
+assert wordPatternMatch(""abcd"", ""xyzy"") == False # pattern too long for the string
+
+[/Question] [/INST] [Code]
+
+def wordPatternMatch(pattern: str, s: str) -> bool:
+    def backtrack(cur: str, pattern: str, mappings: dict):
+        if not pattern:
+            return not cur
+        if pattern[0] in mappings:
+            if cur[:len(mappings[pattern[0]])] != mappings[pattern[0]]:
+                return False
+            return backtrack(cur[len(mappings[pattern[0]]):], pattern[1:], mappings)
+        for i in range(len(cur)):
+            if cur[:i+1] in mappings.values():
+                continue
+            mappings[pattern[0]] = cur[:i+1]
+            if backtrack(cur[i+1:], pattern[1:], mappings):
+                return True
+            del mappings[pattern[0]]
+        return False
+    return backtrack(s, pattern, {}) 
+
+[/Code]
+[/STOP] </s>","def wordPatternMatch(pattern: str, s: str) -> bool:
+    def backtrack(cur: str, pattern: str, mappings: dict):
+        if not pattern:
+            return not cur
+        if pattern[0] in mappings:
+            if cur[:len(mappings[pattern[0]])] != mappings[pattern[0]]:
+                return False
+            return backtrack(cur[len(mappings[pattern[0]]):], pattern[1:], mappings)
+        for i in range(len(cur)):
+            if cur[:i+1] in mappings.values():
+                continue
+            mappings[pattern[0]] = cur[:i+1]
+            if backtrack(cur[i+1:], pattern[1:], mappings):
+                return True
+            del mappings[pattern[0]]
+        return False
+    return backtrack(s, pattern, {})","assert wordPatternMatch(""aaaa"", ""asdasdasdasd"")==True
+assert wordPatternMatch(""abba"", ""dogcatcatdog"") == True
+assert wordPatternMatch(""ab"", ""aa"") == False # since 'a' and 'b' cannot map to the same string ""a""
+assert wordPatternMatch(""xyz"", ""abcdefghi"") == True # 'x' -> ""a"", 'y' -> ""bc"", 'z' -> ""defghi""
+assert wordPatternMatch(""aba"", ""eggegg"") == False # 'a' maps to ""egg"", but 'b' cannot be mapped uniquely
+assert wordPatternMatch(""zzz"", ""aaa"") == True # all 'z' map to ""a""
+assert wordPatternMatch(""aba"", ""catdogcat"") == True # 'a' -> ""cat"", 'b' -> ""dog""
+assert wordPatternMatch(""abab"", ""xyzxyzabcabc"") == False # cannot match 'a' and 'b' with two different strings each consistent with the pattern
+assert wordPatternMatch(""abac"", ""xyzxyzxya"") == True # 'a' -> ""xyz"", 'b' -> ""xyz"", 'c' -> ""a""
+assert wordPatternMatch(""abcd"", ""xyzy"") == False # pattern too long for the string
+assert wordPatternMatch(""aaaaa"", ""oneonetwo"") == False # not enough unique strings to map 'a' five times"
+"Given two strings s1 and s2, return true if s2 contains a permutation of s1, or false otherwise.
+
+In other words, return true if one of s1's permutations is the substring of s2.","<s>[INST] <<SYS>>
+You are an assistant tasked with generating code given a question and some Examples / Explanations along with the question. The question will be given under the heading ""Question:"" and the examples or explanations will be given under ""Example / Explanation:"". Your job is to generate the code and complete the content under the heading title ""Code:"". 
+<</SYS>>
+
+
+[Question]
+        
+Given two strings s1 and s2, return true if s2 contains a permutation of s1, or false otherwise.
+
+In other words, return true if one of s1's permutations is the substring of s2.
+
+assert permutation_in_string(""pq"", ""pqpqr"") == True
+assert permutation_in_string(""abc"", ""ccccbbbbaaaa"") == False
+assert permutation_in_string(""ab"", ""a"") == False  # s2 is shorter than s1
+assert permutation_in_string(""xyz"", ""xzygxzyzxyzk"") == True
+
+[/Question] [/INST] [Code]
+
+
+def permutation_in_string(s1: str, s2: str) -> bool:
+  window = len(s1)
+  if window > len(s2):
+    return False
+  freq1 = [0]*26
+  freq2 = [0]*26
+  for i in range(window):
+    freq1[ord(s1[i])-ord('a')] += 1
+    freq2[ord(s2[i])-ord('a')] += 1
+
+  matches = 0
+  for i in range(26):
+    if freq1[i] == freq2[i]:
+      matches += 1
+  
+  for l in range(len(s2) - window):
+    if matches == 26:
+      return True
+
+    added = ord(s2[l + window]) - ord('a')
+    freq2[added] += 1
+    if freq1[added] == freq2[added]:
+      matches += 1
+    elif freq1[added] + 1 == freq2[added]:
+      matches -= 1
+
+    removed = ord(s2[l]) - ord('a')
+    freq2[removed] -= 1
+    if freq1[removed] == freq2[removed]:
+      matches += 1
+    elif freq1[removed] == freq2[removed] + 1:
+      matches -= 1
+    
+  return matches == 26
+ 
+
+[/Code]
+[/STOP] </s>","
+def permutation_in_string(s1: str, s2: str) -> bool:
+  window = len(s1)
+  if window > len(s2):
+    return False
+  freq1 = [0]*26
+  freq2 = [0]*26
+  for i in range(window):
+    freq1[ord(s1[i])-ord('a')] += 1
+    freq2[ord(s2[i])-ord('a')] += 1
+
+  matches = 0
+  for i in range(26):
+    if freq1[i] == freq2[i]:
+      matches += 1
+  
+  for l in range(len(s2) - window):
+    if matches == 26:
+      return True
+
+    added = ord(s2[l + window]) - ord('a')
+    freq2[added] += 1
+    if freq1[added] == freq2[added]:
+      matches += 1
+    elif freq1[added] + 1 == freq2[added]:
+      matches -= 1
+
+    removed = ord(s2[l]) - ord('a')
+    freq2[removed] -= 1
+    if freq1[removed] == freq2[removed]:
+      matches += 1
+    elif freq1[removed] == freq2[removed] + 1:
+      matches -= 1
+    
+  return matches == 26
+","assert permutation_in_string(""hello"", ""ooollehhhhh"") == True
+assert permutation_in_string(""abc"", ""ccccbbbbaaaa"") == False
+assert permutation_in_string(""xyz"", ""zxyopqrstuv"") == True
+assert permutation_in_string(""xyz"", ""xzygxzyzxyzk"") == True
+assert permutation_in_string(""a"", ""a"") == True
+assert permutation_in_string(""adc"", ""dcda"") == True
+assert permutation_in_string(""pq"", ""qpqqp"") == True
+assert permutation_in_string(""kitten"", ""sittingkite"") == False
+assert permutation_in_string(""pq"", ""pqpqr"") == True
+assert permutation_in_string(""aba"", ""aabaabaa"") == True
+assert permutation_in_string("""", """") == True  # Edge case: both strings are empty
+assert permutation_in_string(""longerstring"", ""short"") == False  # s1 is longer than s2
+assert permutation_in_string(""a"", ""b"") == False  # Single character, no match
+assert permutation_in_string(""aab"", ""baa"") == True  # s1 is a permutation of s2
+assert permutation_in_string(""ab"", ""a"") == False  # s2 is shorter than s1
+assert permutation_in_string(""ba"", ""eidbaooo"") == True  # Same characters as Example 1 but different permutation
+assert permutation_in_string(""eid"", ""eidbaooo"") == True  # s1 is a prefix of s2
+assert permutation_in_string(""ooo"", ""eidbaooo"") == True  # s1 is a suffix of s2
+assert permutation_in_string(""db"", ""eidbaooo"") == True  # s1 is a permutation within s2
+assert permutation_in_string(""eidoo"", ""eidbaooo"") == False  # s1 is longer than any permutation within s2"
+"Coin Change II: You are given an integer array coins representing coins of different denominations and an integer amount representing a total amount of money.
+
+Return the number of combinations that make up that amount. If that amount of money cannot be made up by any combination of the coins, return 0.
+
+You may assume that you have an infinite number of each kind of coin.
+
+The answer is guaranteed to fit into a signed 32-bit integer.","<s>[INST] <<SYS>>
+You are an assistant tasked with generating code given a question and some Examples / Explanations along with the question. The question will be given under the heading ""Question:"" and the examples or explanations will be given under ""Example / Explanation:"". Your job is to generate the code and complete the content under the heading title ""Code:"". 
+<</SYS>>
+
+
+[Question]
+        
+Coin Change II: You are given an integer array coins representing coins of different denominations and an integer amount representing a total amount of money.
+
+Return the number of combinations that make up that amount. If that amount of money cannot be made up by any combination of the coins, return 0.
+
+You may assume that you have an infinite number of each kind of coin.
+
+The answer is guaranteed to fit into a signed 32-bit integer.
+
+assert change(10,[10])==1
+assert change(11, [5]) == 0  # Amount cannot be made up with given coins
+assert change(0, []) == 1  # Edge case: trying to make 0 without any coins, should return 1 as there's one way of making 0 with no coins
+
+[/Question] [/INST] [Code]
+
+from typing import List
+def change(amount: int, coins: List[int]) -> int:
+    def numberOfWays(i: int, amount: int) -> int:
+        if amount == 0:
+            return 1
+        if i == len(coins):
+            return 0
+        if memo[i][amount] != -1:
+            return memo[i][amount]
+
+        if coins[i] > amount:
+            memo[i][amount] = numberOfWays(i + 1, amount)
+        else:
+            memo[i][amount] = numberOfWays(i, amount - coins[i]) + numberOfWays(i + 1, amount)
+        
+        return memo[i][amount]
+
+    memo = [[-1] * (amount + 1) for _ in range(len(coins))]
+    return numberOfWays(0, amount) 
+
+[/Code]
+[/STOP] </s>","from typing import List
+def change(amount: int, coins: List[int]) -> int:
+    def numberOfWays(i: int, amount: int) -> int:
+        if amount == 0:
+            return 1
+        if i == len(coins):
+            return 0
+        if memo[i][amount] != -1:
+            return memo[i][amount]
+
+        if coins[i] > amount:
+            memo[i][amount] = numberOfWays(i + 1, amount)
+        else:
+            memo[i][amount] = numberOfWays(i, amount - coins[i]) + numberOfWays(i + 1, amount)
+        
+        return memo[i][amount]
+
+    memo = [[-1] * (amount + 1) for _ in range(len(coins))]
+    return numberOfWays(0, amount)","assert change(10,[10])==1
+assert change(0, [1, 2, 5]) == 1  # Edge case: trying to make 0 with any coins should always return 1
+assert change(11, [5]) == 0  # Amount cannot be made up with given coins
+assert change(0, []) == 1  # Edge case: trying to make 0 without any coins, should return 1 as there's one way of making 0 with no coins
+assert change(5, [5, 1]) == 2  # Amount can be made with given coins: [5], [1, 1, 1, 1, 1]"

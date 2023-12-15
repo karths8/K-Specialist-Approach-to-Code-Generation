@@ -3,6 +3,7 @@ import argparse
 from transformers import AutoTokenizer
 import json
 import csv
+import os
 import random
 from datasets import load_dataset
 from sklearn.model_selection import train_test_split
@@ -11,6 +12,8 @@ parser = argparse.ArgumentParser(description='Options')
 parser.add_argument('--input_file', default='/workspace/CS762_Project/Data_files/final_seed_data.json', type=str, help="input file")
 parser.add_argument('--tokenizer_dir', default='/workspace/CS762_Project/CodeLlama-7b-Python-hf', type=str, help="tokenizer directory")
 parser.add_argument('--output_file', default='generated_data', type=str, help="output directory")
+parser.add_argument('--kmeans_data_path', default='/workspace/CS762_Project/Kmeans_data', type=str, help="kmeans data path")
+# parser.add_argument('--total', default=5, type=int, help="total clusters")
 
 args = parser.parse_args()
 
@@ -29,50 +32,46 @@ def write_csv(rows,file_path):
         writer.writerows(rows)
 
 def make_prompt_str(data):
+    assert_num = min(random.randint(0,4), len(data['asserts']))
+    
+    assert_str = '\n'.join(random.sample(data['asserts'], assert_num))
     prompt_str=f'''
 [Question]
         
 {data['question']}
 
+{assert_str}
+
 [/Question]
-
-{data['Question Example/Explanation']}
 '''
-    code_str = f'''\nCode:
+    code_str = f'''
+[Code]
 
-{data['Method 1']} [/STOP]'''
+{data['code']} 
+
+[/Code]
+[/STOP]'''
     
     return prompt_str, code_str
 
-def split_train_test(data):
-    categories_dict = df['Categories'].to_dict()
-    bin_dict = {}
-    for i in categories_dict:
-        key_str = categories_dict[i].replace('[','').replace(']','')
-        if key_str in bin_dict.keys():
-            bin_dict[key_str].append(i)
-        else:
-            bin_dict[key_str] = [i]
-    test_idxs = [bin_dict[i][len(bin_dict[i])//2] for i in bin_dict]
-    train_idxs = [j for i in bin_dict for j in bin_dict[i] if j not in test_idxs]
-    df_test = df.loc[test_idxs]
-    df_train = df.loc[train_idxs]
-    return df_train, df_test
+def split_train_test(data, split_ratio=0.8):
+    random.seed(42)
+    train_split = int(len(data) * split_ratio)
+    data_train = random.sample(data, train_split)
+    data_test = [x for x in data if x not in data_train]
+    return data_train, data_test
 
-def get_data_list(seed_samples):
+def get_data_list(data):
     data_list = []
-    for i in seed_samples:
+    for i in data:
         prompt_str, code_str = make_prompt_str(i)
         data_list.append({'input':prompt_str,'output':code_str})
     return data_list
 
-def get_llama_prompts(df, args, test=False):
+def get_llama_prompts(data, args, test=False):
     prompt_list = []
-    seed_samples = []
-    for index, row in df.iterrows():
-        seed_samples.append(row.to_dict())
     tokenizer = AutoTokenizer.from_pretrained(args.tokenizer_dir)
-    data_list = get_data_list(seed_samples)
+    data_list = get_data_list(data)
     for i in data_list:
         prompt = make_chat_template('system',{'input':system_prompt})
         sample = make_chat_template('sample',i)
@@ -82,46 +81,51 @@ def get_llama_prompts(df, args, test=False):
     # print(prompt_list[0])
     for idx,i in enumerate(prompt_list):
         chat_content = i[:-1] if test else i
-        # print(chat_content)
-        # print(tokenizer.apply_chat_template(chat_content, tokenize=False))
-        # print(idx)
-        # print(seed_samples[idx])
-        llama_prompts.append({'question':seed_samples[idx]['Question'],'prompt':tokenizer.apply_chat_template(chat_content, tokenize=False),'category':seed_samples[idx]['Categories'].replace('[','').replace(']',''), 'answer':seed_samples[idx]['Method 1']})
+        llama_prompts.append({'question':data[idx]['question'],'prompt':tokenizer.apply_chat_template(chat_content, tokenize=False), 'code':data[idx]['code'], 'asserts':str('\n'.join(data[idx]['asserts']))})
     return llama_prompts
 
 def make_set_list(data_prompts):
-    data_list = [['question','prompt', 'category', 'answer']]
+    data_list = [['question','prompt', 'code', 'asserts']]
     for i in data_prompts:
-        data_list.append([i['question'], i['prompt'], i['category'], i['answer']])
+        data_list.append([i['question'], i['prompt'], i['code'], i['asserts']])
     return data_list
 
 def main():
-    with open('/workspace/CS762_Project/Data_files/final_seed_data.json', 'r') as json_file:
-            data = json.load(json_file)
-    for idx in range(len(data)):
-        data[idx]['cluster'] = random.randint(0,4)
-    clustered_data = {}
-    for i in data:
-        if i['cluster'] not in clustered_data:
-            clustered_data[i['cluster']] = []
-        clustered_data[i['cluster']].append(i)
+    model_list = ['']
+    folders = os.listdir(args.kmeans_data_path)
+    for folder in folders:
+        total = int(folder[2:])
+        data_path = os.path.join(folders, folder, 'clustered_data.json')
+        with open(data_path, 'r') as json_file:
+            clustered_data = json.load(json_file)
+    # for idx in range(len(data)):
+    #     data[idx]['cluster'] = random.randint(0,total-1)
+    # clustered_data = {}
+    # for i in data:
+    #     if i['cluster'] not in clustered_data:
+    #         clustered_data[i['cluster']] = []
+    #     clustered_data[i['cluster']].append(i)
     # We assume that the data list is already pre-clustered into a clustered_data like dictionary and just load that after kmeans
     for k in clustered_data:
-
-    df = pd.read_csv(args.input_file)
-    df_train, df_test = split_train_test(df)
-    train_prompts = get_llama_prompts(df_train, args)
-    test_prompts = get_llama_prompts(df_test, args, test=True)
-    # print(train_prompts[0])
-    train_list = make_set_list(train_prompts)
-    test_list = make_set_list(test_prompts)
-    # print(test_prompts[0])
-    write_csv(train_list,'train.csv')
-    write_csv(test_list,'test.csv')
-    dataset = load_dataset("csv", data_files={'train':'train.csv', 'test':'test.csv'})
-    print('Dataset Loaded: ')
-    print(dataset)
-    dataset.save_to_disk(args.output_file)
+        data_k = clustered_data[k]
+        train_data, test_data = split_train_test(data_k)
+        train_prompts = get_llama_prompts(train_data, args)
+        test_prompts = get_llama_prompts(test_data, args, test=True)
+        # print(train_prompts[0])
+        train_list = make_set_list(train_prompts)
+        test_list = make_set_list(test_prompts)
+        # print(test_prompts[0])
+        dir_path = f'k_{total}'
+        os.makedirs(dir_path, exist_ok=True)
+        train_op_path = os.path.join(dir_path,f'k_{total}_train_{k}.csv')
+        val_op_path = os.path.join(dir_path,f'k_{total}_val_{k}.csv')
+        write_csv(train_list,train_op_path)
+        write_csv(test_list,val_op_path)
+        dataset = load_dataset("csv", data_files={'train':train_op_path, 'val':val_op_path})
+        print('Dataset Loaded: ')
+        print(dataset)
+        dataset_op_path = os.path.join(dir_path,args.output_file+f'_k_{total}_cluster_{k}')
+        dataset.save_to_disk(dataset_op_path)
 
 
 if __name__=='__main__':

@@ -1,0 +1,32 @@
+question,prompt,code,asserts
+"Majority Element: Given an array nums of size n, return the majority element.
+
+The majority element is the element that appears more than ⌊n / 2⌋ times. You may assume that the majority element always exists in the array.","<s>[INST] <<SYS>>
+You are an assistant tasked with generating code given a question and some Examples / Explanations along with the question. The question will be given under the heading ""Question:"" and the examples or explanations will be given under ""Example / Explanation:"". Your job is to generate the code and complete the content under the heading title ""Code:"". 
+<</SYS>>
+
+
+[Question]
+        
+Majority Element: Given an array nums of size n, return the majority element.
+
+The majority element is the element that appears more than ⌊n / 2⌋ times. You may assume that the majority element always exists in the array.
+
+
+
+[/Question] [/INST]","def majorityElement(nums: list, lo: int = 0, hi: NoneType = None) -> int:
+    def majority_element_rec(lo, hi):
+        if lo == hi:
+            return nums[lo]
+        mid = (hi-lo)//2 + lo
+        left = majority_element_rec(lo, mid)
+        right = majority_element_rec(mid+1, hi)
+        if left == right:
+            return left
+        left_count = sum(1 for i in range(lo, hi+1) if nums[i] == left)
+        right_count = sum(1 for i in range(lo, hi+1) if nums[i] == right)
+
+        return left if left_count > right_count else right
+
+    return majority_element_rec(0, len(nums)-1)
+",

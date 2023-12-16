@@ -3,19 +3,19 @@
   "citation": "",
   "config_name": "default",
   "dataset_name": "csv",
-  "dataset_size": 44383726,
+  "dataset_size": 43967351,
   "description": "",
   "download_checksums": {
     "/workspace/CS762_Project/Prepared_data/deepseek-coder-6.7b-base/k_1/k_1_train_0.csv": {
-      "num_bytes": 40796239,
+      "num_bytes": 39587095,
       "checksum": null
     },
     "/workspace/CS762_Project/Prepared_data/deepseek-coder-6.7b-base/k_1/k_1_val_0.csv": {
-      "num_bytes": 3641949,
+      "num_bytes": 4434254,
       "checksum": null
     }
   },
-  "download_size": 44438188,
+  "download_size": 44021349,
   "features": {
     "question": {
       "dtype": "string",
@@ -36,17 +36,17 @@
   },
   "homepage": "",
   "license": "",
-  "size_in_bytes": 88821914,
+  "size_in_bytes": 87988700,
   "splits": {
     "train": {
       "name": "train",
-      "num_bytes": 40747125,
+      "num_bytes": 39539302,
       "num_examples": 18226,
       "dataset_name": "csv"
     },
     "val": {
       "name": "val",
-      "num_bytes": 3636601,
+      "num_bytes": 4428049,
       "num_examples": 2026,
       "dataset_name": "csv"
     }

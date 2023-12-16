@@ -29,6 +29,7 @@ from transformers import (
 )
 from datasets import DatasetDict, Dataset
 from trl import SFTTrainer
+import json
 
 # This example fine-tunes Llama v2 model on Guanace dataset
 # using QLoRA. At the end of the script we perform merging the weights
@@ -52,7 +53,7 @@ class ScriptArguments:
     """
 
     local_rank: Optional[int] = field(default=-1, metadata={"help": "Used for multi-gpu"})
-    save_total_limit: Optional[int] = field(default=5)
+    save_total_limit: Optional[int] = field(default=3)
     per_device_train_batch_size: Optional[int] = field(default=4)
     per_device_eval_batch_size: Optional[int] = field(default=1)
     gradient_accumulation_steps: Optional[int] = field(default=2)
@@ -145,6 +146,19 @@ script_args = parser.parse_args_into_dataclasses()[0]
 print(script_args)
 
 
+def print_trainable_parameters(model):
+    """
+    Prints the number of trainable parameters in the model.
+    """
+    trainable_params = 0
+    all_param = 0
+    for _, param in model.named_parameters():
+        all_param += param.numel()
+        if param.requires_grad:
+            trainable_params += param.numel()
+    return {'trainable_params':trainable_params, 'all_param':all_param, 'trainable_percent': 100 * trainable_params / all_param}
+
+
 def create_and_prepare_model(script_args):
     model_name = script_args.model_name
     compute_dtype = getattr(torch, script_args.bnb_4bit_compute_dtype)
@@ -195,18 +209,25 @@ def create_and_prepare_model(script_args):
 
     tokenizer = AutoTokenizer.from_pretrained(model_name, trust_remote_code=True)
     tokenizer.pad_token = tokenizer.eos_token
-
+    params = print_trainable_parameters(model)
+    print(f"trainable params: {params['trainable_params']} || all params: {params['all_param']} || trainable%: {params['trainable_percent']}")
     return model, peft_config, tokenizer
 
 def train_model(script_args):
     total = script_args.num_clusters
     model_name = script_args.model_name
     model_dir = model_name.split('/')[-1]
+    args = asdict(script_args)
+    base_dir = f'/workspace/CS762_Project/Results/{model_dir}/total_clusters_{total}/'
+    if not os.path.exists(base_dir):
+        os.makedirs(base_dir)
+    with open(base_dir+'training_metadata.json', 'w') as json_file:
+        json.dump(args, json_file)
     for k in range(total):
-        save_steps = script_args.save_steps//total
-        output_dir = f'/workspace/CS762_Project/Results/{model_dir}/total_clusters_{total}/k_{k}'
+        output_dir = base_dir+f'k_{k}'
         dataset_name = f'/workspace/CS762_Project/Prepared_data/{model_dir}/k_{total}/generated_data_k_{total}_cluster_{k}'
         # dataset_name = f'/workspace/CS762_Project/Model/k_{total}/generated_data_k_{total}_cluster_{k}'
+        
         training_arguments = TrainingArguments(
             report_to='tensorboard',
             output_dir=output_dir,
@@ -214,10 +235,10 @@ def train_model(script_args):
             per_device_eval_batch_size=script_args.per_device_eval_batch_size,
             gradient_accumulation_steps=script_args.gradient_accumulation_steps,
             evaluation_strategy='steps',
-            eval_steps=save_steps,
+            eval_steps=script_args.save_steps,
             optim=script_args.optim,
             save_strategy='steps',
-            save_steps=save_steps,
+            save_steps=script_args.save_steps,
             logging_steps=script_args.logging_steps,
             learning_rate=script_args.learning_rate,
             fp16=script_args.fp16,

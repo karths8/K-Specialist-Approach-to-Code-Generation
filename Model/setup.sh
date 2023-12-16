@@ -3,6 +3,7 @@ pip install peft
 pip install openai
 pip install bitsandbytes loralib --upgrade
 pip install uuid
+pip install tensorboardX
 pip install accelerate
 pip install evaluate
 pip3 install -U click

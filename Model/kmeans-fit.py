@@ -10,8 +10,8 @@ import argparse
 
 parser = argparse.ArgumentParser(description='Options')
 parser.add_argument('--kmeans_base_path', default='/workspace/CS762_Project/Kmeans_data', type=str, help="kmeans output path")
-parser.add_argument('--data_path', default='/workspace/CS762_Project/Data_files/final_combined_data_Dec15.json', type=str, help="path for input data")
-parser.add_argument('--emb_path', default='final_combined_data_Dec15_embeddings.npy', type=str, help="path for precomputed embeddings based on data_path")
+parser.add_argument('--data_path', default='/workspace/CS762_Project/Data_files/final_combined_data_Dec15_mod_asserts.json', type=str, help="path for input data")
+parser.add_argument('--emb_path', default='/workspace/CS762_Project/Notebooks/final_combined_data_Dec15_embeddings.npy', type=str, help="path for precomputed embeddings based on data_path")
 parser.add_argument('--num_clusters', default=1, type=int, help="Number of clusters for kmeans")
 parser.add_argument('--model_name', default='/workspace/CS762_Project/e5-large-v2', type=str, help="Name of the sentence t model")
 args = parser.parse_args()

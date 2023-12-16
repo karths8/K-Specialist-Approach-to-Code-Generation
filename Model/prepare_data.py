@@ -9,7 +9,7 @@ from datasets import load_dataset
 from sklearn.model_selection import train_test_split
 
 parser = argparse.ArgumentParser(description='Options')
-parser.add_argument('--input_file', default='/workspace/CS762_Project/Data_files/final_seed_data.json', type=str, help="input file")
+parser.add_argument('--input_file', default='/workspace/CS762_Project/Data_files/final_combined_data_Dec15_mod_asserts.json', type=str, help="input file")
 parser.add_argument('--tokenizer_dir', default='/workspace/CS762_Project/CodeLlama-7b-Python-hf', type=str, help="tokenizer directory")
 parser.add_argument('--output_file', default='generated_data', type=str, help="output directory")
 parser.add_argument('--kmeans_data_path', default='/workspace/CS762_Project/Kmeans_data', type=str, help="kmeans data path")
@@ -32,9 +32,8 @@ def write_csv(rows,file_path):
         writer.writerows(rows)
 
 def make_prompt_str(data):
-    assert_num = min(random.randint(0,4), len(data['asserts']))
-    
-    assert_str = '\n'.join(random.sample(data['asserts'], assert_num))
+    assert_num = min(random.randint(0,4), len(data['modified_asserts']))
+    assert_str = '\n'.join(random.sample(data['modified_asserts'], assert_num))
     prompt_str=f'''
 [Question]
         
@@ -45,7 +44,7 @@ def make_prompt_str(data):
 [/Question]
 '''
     code_str = f'''
-\n[Code]
+\n\n[Code]
 
 {data['code']} 
 
@@ -81,7 +80,11 @@ def get_llama_prompts(data, args, test=False):
     # print(prompt_list[0])
     for idx,i in enumerate(prompt_list):
         chat_content = i[:-1] if test else i
-        llama_prompts.append({'question':data[idx]['question'],'prompt':tokenizer.apply_chat_template(chat_content, tokenize=False), 'code':data[idx]['code'], 'asserts':str('\n'.join(data[idx]['asserts']))})
+        if isinstance(data[idx]['asserts'], list):
+            asserts_string = str('\n'.join(data[idx]['asserts']))
+        else:
+            asserts_string = data[idx]['asserts']
+        llama_prompts.append({'question':data[idx]['question'],'prompt':tokenizer.apply_chat_template(chat_content, tokenize=False), 'code':data[idx]['code'], 'asserts':asserts_string})
     return llama_prompts
 
 def make_set_list(data_prompts):
@@ -104,7 +107,7 @@ def main():
             data_k = clustered_data[k]
             train_data, test_data = split_train_test(data_k)
             train_prompts = get_llama_prompts(train_data, args)
-            test_prompts = get_llama_prompts(test_data, args, test=True)
+            test_prompts = get_llama_prompts(test_data, args)
             # print(train_prompts[0])
             train_list = make_set_list(train_prompts)
             test_list = make_set_list(test_prompts)

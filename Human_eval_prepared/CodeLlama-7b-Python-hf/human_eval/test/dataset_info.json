@@ -1,0 +1,46 @@
+{
+  "builder_name": "csv",
+  "citation": "",
+  "config_name": "default",
+  "dataset_name": "csv",
+  "dataset_size": 190214,
+  "description": "",
+  "download_checksums": {
+    "/workspace/CS762_Project/Human_eval_prepared/CodeLlama-7b-Python-hf/human_eval.csv": {
+      "num_bytes": 190557,
+      "checksum": null
+    }
+  },
+  "download_size": 190557,
+  "features": {
+    "task_id": {
+      "dtype": "string",
+      "_type": "Value"
+    },
+    "question": {
+      "dtype": "string",
+      "_type": "Value"
+    },
+    "prompt": {
+      "dtype": "string",
+      "_type": "Value"
+    }
+  },
+  "homepage": "",
+  "license": "",
+  "size_in_bytes": 380771,
+  "splits": {
+    "test": {
+      "name": "test",
+      "num_bytes": 190214,
+      "num_examples": 164,
+      "dataset_name": "csv"
+    }
+  },
+  "version": {
+    "version_str": "0.0.0",
+    "major": 0,
+    "minor": 0,
+    "patch": 0
+  }
+}

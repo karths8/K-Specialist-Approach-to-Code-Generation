@@ -3,19 +3,19 @@
   "citation": "",
   "config_name": "default",
   "dataset_name": "csv",
-  "dataset_size": 5372013,
+  "dataset_size": 5376984,
   "description": "",
   "download_checksums": {
     "/workspace/CS762_Project/Prepared_data/phi-2/k_10/k_10_train_2.csv": {
-      "num_bytes": 4926552,
+      "num_bytes": 4838590,
       "checksum": null
     },
     "/workspace/CS762_Project/Prepared_data/phi-2/k_10/k_10_val_2.csv": {
-      "num_bytes": 446238,
+      "num_bytes": 539150,
       "checksum": null
     }
   },
-  "download_size": 5372790,
+  "download_size": 5377740,
   "features": {
     "question": {
       "dtype": "string",
@@ -36,17 +36,17 @@
   },
   "homepage": "",
   "license": "",
-  "size_in_bytes": 10744803,
+  "size_in_bytes": 10754724,
   "splits": {
     "train": {
       "name": "train",
-      "num_bytes": 4925668,
+      "num_bytes": 4837754,
       "num_examples": 2076,
       "dataset_name": "csv"
     },
     "val": {
       "name": "val",
-      "num_bytes": 446345,
+      "num_bytes": 539230,
       "num_examples": 231,
       "dataset_name": "csv"
     }

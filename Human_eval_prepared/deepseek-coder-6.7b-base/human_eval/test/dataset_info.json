@@ -1,0 +1,46 @@
+{
+  "builder_name": "csv",
+  "citation": "",
+  "config_name": "default",
+  "dataset_name": "csv",
+  "dataset_size": 194478,
+  "description": "",
+  "download_checksums": {
+    "/workspace/CS762_Project/Human_eval_prepared/deepseek-coder-6.7b-base/human_eval.csv": {
+      "num_bytes": 194821,
+      "checksum": null
+    }
+  },
+  "download_size": 194821,
+  "features": {
+    "task_id": {
+      "dtype": "string",
+      "_type": "Value"
+    },
+    "question": {
+      "dtype": "string",
+      "_type": "Value"
+    },
+    "prompt": {
+      "dtype": "string",
+      "_type": "Value"
+    }
+  },
+  "homepage": "",
+  "license": "",
+  "size_in_bytes": 389299,
+  "splits": {
+    "test": {
+      "name": "test",
+      "num_bytes": 194478,
+      "num_examples": 164,
+      "dataset_name": "csv"
+    }
+  },
+  "version": {
+    "version_str": "0.0.0",
+    "major": 0,
+    "minor": 0,
+    "patch": 0
+  }
+}

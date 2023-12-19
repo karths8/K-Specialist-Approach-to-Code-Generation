@@ -6,6 +6,32 @@
 
 We introduce a new model training and inference pipeline involving the use of K-means clustering and a novel dataset to perform SFT (Supervised Fine Tuning) for code generation. We adopt a number of techniques to generate data samples synthetically with an emphasis on data quality and complexity. Benchmarking our dataset against other SFT datasets for code generation, we find that ours has the highest complexity scores, as evidenced by higher Cyclomatic and Halstead Complexity measures, while underperforming on the Diversity benchmark. During the training phase, we train phi-2 (2.7B) and CodeLlama-Python-7B using a novel procedure. We leveraged our collected data to train a K-means clustering model using embeddings from a Sentence Embedding model. By training the K-means model on embeddings from our collected SFT dataset, we are able to split the SFT data into K splits. We use these K data splits to train K LoRA adapters. Using our method, our best model, phi-2 (K=10), achieves **53.54%** *pass@1* on the HumanEval benchmark, which is comparable to the _pass@1_ performance of the CodeLlama-Python-34B variant. Moreover, we see an increase in performance as we increase K while keeping the number of data points the same. 
 
+## Results
+
+| Model                   | pass@1 | pass@10 |
+|-------------------------|--------|---------|
+| **Closed-Source Models** |        |         |
+| GPT-3.5                 | 48.10% | -       |
+| GPT-4                   | **67.00%** | -       |
+| PaLM-Coder              | 36.00% | -       |
+| Codex                   | 28.8%  | 46.8%   |
+| **Open-Source Models**   |        |         |
+| CodeLlama-Python-7B     | 38.4%  | 70.3%   |
+| CodeLlama-Python-13B    | 43.3%  | 77.4%   |
+| CodeLlama-Python-34B    | 53.7%  | 82.8%   |
+| Llama-2-70B             | 29.9%  | -       |
+| CodeT5+                 | 29.3%  | -       |
+| StarCoder Prompted      | 40.8%  | -       |
+| phi-2                   | 48.00%| -       |
+| **Ours**                 |        |         |
+| phi-2 **(K=1)**             | 49.27% | 70.97%  |
+| phi-2 **(K=5)**            | 50.00% | 71.81%  |
+| phi-2 **(K=10)**           | <ins>53.54%</ins> | 70.77%  |
+| CodeLlama-Python-7B **(K=1)**| 41.95%| 68.33%  |
+| CodeLlama-Python-7B **(K=5)**| 44.63%| 69.40%  |
+| CodeLlama-Python-7B **(K=10)**|42.44%| 69.50%  |
+
+
 ## Information on Code
 
 The following sub-heading refer to a folder in the codebase and following that will be a description of what we used is for and details about the files within

@@ -51,7 +51,7 @@ def main():
     merged_models_path = '/workspace/CS762_Project/Merged_models'
     model_name = args.model_dir.split('/')[-1]
     base_dir = f'/workspace/CS762_Project/Results/{model_name}/total_clusters_{args.num_clusters}/'
-    with open(f'/workspace/CS762_Project/Model/human_eval_clustered/clustered_data_{args.num_clusters}.json', 'r') as fp:
+    with open(f'/workspace/CS762_Project/Model/human_eval_clustered/{model_name}/clustered_data_{args.num_clusters}.json', 'r') as fp:
         clustered_data = json.load(fp)
     
     for k in clustered_data:
@@ -63,7 +63,7 @@ def main():
             human_eval_ids = [t['task_id'] for t in clustered_data[k]]
             sample_temp = args.temp
             sampling_params = SamplingParams(temperature=sample_temp, top_p=0.95,max_tokens=1000, stop=['[/STOP]'])
-            llm = LLM(model=merged_model_path, trust_remote_code=True)
+            llm = LLM(model=merged_model_path,tokenizer=args.model_dir, trust_remote_code=True)
             for s in range(args.num_samples):
                 print(f'Generating {s} Sample')
                 outputs = llm.generate(human_eval_prompts, sampling_params)

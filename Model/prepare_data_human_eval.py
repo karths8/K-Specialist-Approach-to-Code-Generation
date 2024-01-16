@@ -45,7 +45,9 @@ def make_prompt_str(data):
     return prompt_str, code_str
 
 def clean_prompt(p):
-    new_p = '\n'.join(p.strip().split('\n')[:-1])
+    new_p = p.replace('</s>','')
+    # new_p = '\n'.join(p.strip().split('\n')[:-1])
+    # return new_p.strip()
     return new_p.strip()
 
 def get_data_list(data):

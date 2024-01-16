@@ -1,0 +1,10 @@
+/usr/local/lib/python3.10/dist-packages/trl/trainer/ppo_config.py:141: UserWarning: The `optimize_cuda_cache` arguement will be deprecated soon, please use `optimize_device_cache` instead.
+  warnings.warn(
+/usr/local/lib/python3.10/dist-packages/transformers/models/auto/auto_factory.py:472: FutureWarning: The `use_auth_token` argument is deprecated and will be removed in v5 of Transformers. Please use `token` instead.
+  warnings.warn(
+ScriptArguments(local_rank=-1, save_total_limit=3, per_device_train_batch_size=2, per_device_eval_batch_size=1, gradient_accumulation_steps=2, learning_rate=0.0002, max_grad_norm=0.3, weight_decay=0.001, lora_alpha=256, lora_dropout=0.1, lora_r=128, max_seq_length=1024, model_name='/workspace/CS762_Project/deepseek-coder-6.7b-base', dataset_name='/workspace/CS762_Project/generated_data', use_4bit=True, use_nested_quant=False, bnb_4bit_compute_dtype='float16', bnb_4bit_quant_type='nf4', num_train_epochs=2, fp16=True, bf16=False, packing=False, gradient_checkpointing=True, optim='paged_adamw_32bit', lr_scheduler_type='cosine', max_steps=10000, warmup_ratio=0.05, group_by_length=True, save_steps=300, logging_steps=10, merge_and_push=False, output_dir='./results', num_clusters=5)
+================================================================================
+Your GPU supports bfloat16, you can accelerate training with the argument --bf16
+================================================================================
+Loading checkpoint shards:   0%|                                                                                                                                                                                                                             | 0/2 [00:00<?, ?it/s]/usr/local/lib/python3.10/dist-packages/torch/_utils.py:831: UserWarning: TypedStorage is deprecated. It will be removed in the future and UntypedStorage will be the only storage class. This should only matter to you if you are using storages directly.  To access UntypedStorage directly, use tensor.untyped_storage() instead of tensor.storage()
+  return self.fget.__get__(instance, owner)()

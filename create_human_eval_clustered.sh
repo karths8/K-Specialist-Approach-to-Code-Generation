@@ -1,0 +1,3 @@
+python /workspace/CS762_Project/Model/create_human_eval_clustered.py --human_eval_path /workspace/CS762_Project/Human_eval_prepared/CodeLlama-7b-Python-hf/human_eval
+# python /workspace/CS762_Project/Model/create_human_eval_clustered.py --human_eval_path /workspace/CS762_Project/Human_eval_prepared/deepseek-coder-6.7b-base/human_eval
+# python /workspace/CS762_Project/Model/create_human_eval_clustered.py --human_eval_path /workspace/CS762_Project/Human_eval_prepared/phi-2/human_eval

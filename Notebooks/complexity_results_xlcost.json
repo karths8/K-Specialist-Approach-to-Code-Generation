@@ -1,0 +1,104 @@
+{
+    "seed": {
+        "avg_halstead": {
+            "vocabulary": 12.293103448275861,
+            "length": 18.70689655172414,
+            "calculated_length": 36.645160986033815,
+            "volume": 73.70833599509005,
+            "difficulty": 2.7000891833662464,
+            "effort": 281.281759261,
+            "time": 15.626764403388885,
+            "bugs": 0.02456944533169668
+        },
+        "avg_cyclomatic": {
+            "total_complexity": 3.5172413793103448,
+            "average_complexity": 3.3620689655172415
+        },
+        "avg_source_code_len": 12.206896551724139
+    },
+    "self_instruct": {
+        "avg_halstead": {
+            "vocabulary": 11.158940397350994,
+            "length": 17.346026490066226,
+            "calculated_length": 33.186429548784425,
+            "volume": 68.54219321002823,
+            "difficulty": 2.578360452411546,
+            "effort": 308.00752927607175,
+            "time": 17.111529404226232,
+            "bugs": 0.02284739773667625
+        },
+        "avg_cyclomatic": {
+            "total_complexity": 4.241721854304636,
+            "average_complexity": 3.6235168322295794
+        },
+        "avg_source_code_len": 10.433774834437086
+    },
+    "xlcost_base": {
+        "avg_halstead": {
+            "vocabulary": 14.400884445298981,
+            "length": 24.020380696019995,
+            "calculated_length": 46.92444482513202,
+            "volume": 101.03465942211633,
+            "difficulty": 3.267990831242175,
+            "effort": 497.5206509365621,
+            "time": 27.6400361631422,
+            "bugs": 0.033678219807371616
+        },
+        "avg_cyclomatic": {
+            "total_complexity": 4.696212266871756,
+            "average_complexity": 3.9906707501304695
+        },
+        "avg_source_code_len": 11.716400692174583
+    },
+    "xlcost_diverse_instruct_v1": {
+        "avg_halstead": {
+            "vocabulary": 13.607523862998315,
+            "length": 20.472768107804605,
+            "calculated_length": 44.7184058813085,
+            "volume": 86.9110364065254,
+            "difficulty": 2.773203626865678,
+            "effort": 406.4824501189089,
+            "time": 22.582358339939336,
+            "bugs": 0.028970345468841866
+        },
+        "avg_cyclomatic": {
+            "total_complexity": 4.87478944413251,
+            "average_complexity": 3.705655374633472
+        },
+        "avg_source_code_len": 12.058394160583942
+    },
+    "xlcost_diverse_instruct_v2": {
+        "avg_halstead": {
+            "vocabulary": 14.23895299746693,
+            "length": 21.763861525471434,
+            "calculated_length": 46.64023480430232,
+            "volume": 91.91823129545922,
+            "difficulty": 2.917463684408198,
+            "effort": 420.9952395530892,
+            "time": 23.388624419615766,
+            "bugs": 0.03063941043181966
+        },
+        "avg_cyclomatic": {
+            "total_complexity": 4.941457922882072,
+            "average_complexity": 3.8471442644043297
+        },
+        "avg_source_code_len": 12.378834787503518
+    },
+    "xlcost_diverse_instruct_v3": {
+        "avg_halstead": {
+            "vocabulary": 14.399078117418728,
+            "length": 22.03833090732654,
+            "calculated_length": 47.104274875761966,
+            "volume": 93.03591044332718,
+            "difficulty": 2.96059995190623,
+            "effort": 426.88590803844727,
+            "time": 23.715883779913817,
+            "bugs": 0.03101197014777463
+        },
+        "avg_cyclomatic": {
+            "total_complexity": 4.967855409995148,
+            "average_complexity": 3.8767686744760925
+        },
+        "avg_source_code_len": 12.497937894226103
+    }
+}

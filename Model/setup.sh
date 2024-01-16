@@ -1,4 +1,6 @@
 pip install vllm
+pip install lexicalrichness
+pip install radon
 pip install peft
 pip install openai
 pip install bitsandbytes loralib --upgrade

@@ -17,7 +17,7 @@ import pprint
 import submitit
 import pathlib
 from typing import Union, Optional
-from utils import get_logger
+from .utils import get_logger
 
 
 def faiss_index_to_gpu(cpu_index):

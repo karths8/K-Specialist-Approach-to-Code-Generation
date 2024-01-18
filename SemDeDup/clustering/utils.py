@@ -34,43 +34,6 @@ def seed_everything(seed: int = 42):
     torch.backends.cudnn.benchmark = False
 
 
-# def get_logger(
-#     file_name="logger.log", level=logging.INFO, stdout=False
-# ) -> logging.Logger:
-#     """
-#     When the level is set to "logging.INFO", the debugging logs will not be saved (lower level).
-#     """
-#     # See https://www.loggly.com/ultimate-guide/python-logging-basics/ for more information about pyhton logging module
-#     logger = logging.getLogger()  # uses the module name
-#     # set log level
-#     logger.setLevel(level)
-#     logger.handlers = []
-#     # define file handler and set formatter
-#     file_handler = logging.FileHandler(
-#         file_name
-#     )  # or use logging.handlers.WatchedFileHandler(os.environ.get("LOGFILE", file_name))
-#     # define formatter
-#     formatter = logging.Formatter(
-#         "%(asctime)s : %(levelname)s : %(name)s : %(message)s"
-#     )  # or use logging.BASIC_FORMAT
-#     file_handler.setFormatter(formatter)
-
-#     stdout_handler = (
-#         logging.StreamHandler()
-#     )  # .setLevel(logging.DEBUG) #.setFormatter(CustomFormatter(fmt))
-
-#     # add handler to logger
-#     # if not logger.hasHandlers():
-#     logger.addHandler(file_handler)
-#     if stdout:
-#         logger.addHandler(stdout_handler)
-
-#     return logger
-
-
-#     import logging
-
-
 def get_logger(
     file_name: str = "logger.log", level: int = logging.INFO, stdout: bool = False
 ) -> logging.Logger:

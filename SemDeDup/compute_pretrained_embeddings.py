@@ -6,7 +6,7 @@ from tqdm import tqdm
 from sentence_transformers import SentenceTransformer
 from torch.utils.data import Dataset, DataLoader
 
-def get_embeddings(model, dataloader, emd_memmap):
+def get_embeddings(model, dataloader, emd_memmap, paths_memmap):
     """
     Function to compute and store representations for the data from pre-trained sentence transformers. 
     It is preferable to parallelize this function on multiple devices (GPUs). Each device will process part of the data.
@@ -30,8 +30,10 @@ def get_embeddings(model, dataloader, emd_memmap):
         for batch in tqdm(dataloader):
             data_batch = batch['data']
             batch_indices = batch['index']
+            paths_batch = batch['path']
             embeddings = model.encode(data_batch)
             emd_memmap[batch_indices] = embeddings
+            paths_memmap[batch_indices] = paths_batch
 
 class CodeJsonDataset(Dataset):
     def __init__(self, dataset_json_file_path: str):
@@ -42,13 +44,14 @@ class CodeJsonDataset(Dataset):
         return len(self.code_data)
 
     def __getitem__(self, idx: int):
-        sample = self.code_data[idx]
-        return {'data': sample, 'index': idx}
+        sample = self.code_data['instruction'][idx]
+        path = self.code_data['ID'][idx]
+        return {'data': sample, 'index': idx, 'path': path}
 
     def load_json_data(self):
         df = pd.read_json(self.dataset_json_file_path)
-        df = df['instruction']
-        return df.values
+        df['ID'] = range(0, len(df))
+        return df
 
 if __name__ == '__main__':
     # dataset to be deduped
@@ -63,10 +66,12 @@ if __name__ == '__main__':
 
     # params for storing embeddings
     emb_memory_loc = './code_alpaca_results/emb_mmap.dat'
+    paths_memory_loc = './code_alpaca_results/paths_mmap.dat'
     dataset_size = len(code_dataset)
     
     # model embedding size
     emb_size = 1024
     emb_mmap = np.memmap(emb_memory_loc, dtype='float32', mode='w+', shape=(dataset_size, emb_size))
+    path_mmap = np.memmap(paths_memory_loc, dtype='float32', mode='w+', shape=(dataset_size,))
     
-    get_embeddings(model, dataloader, emb_mmap)
+    get_embeddings(model, dataloader, emb_mmap, path_mmap)

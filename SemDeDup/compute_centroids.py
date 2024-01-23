@@ -27,7 +27,7 @@ compute_centroids(
     ncentroids=params['ncentroids'],
     niter=params['niter'],
     seed=params['seed'],
-    Kmeans_with_cos_dist=params['Kmeans_with_cos_dist'],
+    Kmeans_with_cos_dist=params['kmeans_with_cos_dist'],
     save_folder=params['save_folder'],
     logger=logger,
     verbose=True,

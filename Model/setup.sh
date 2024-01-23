@@ -40,47 +40,47 @@ sudo apt install python3.12
 # git lfs pull
 # cd /workspace/CS762_Project
 
-cd /workspace/CS762_Project
-git clone https://huggingface.co/deepseek-ai/deepseek-coder-6.7b-base
-cd deepseek-coder-6.7b-base
-git-lfs install
-git lfs pull
-cd /workspace/CS762_Project
+# cd /workspace/CS762_Project
+# git clone https://huggingface.co/deepseek-ai/deepseek-coder-6.7b-base
+# cd deepseek-coder-6.7b-base
+# git-lfs install
+# git lfs pull
+# cd /workspace/CS762_Project
 
-cd /workspace/CS762_Project
-git clone https://huggingface.co/microsoft/phi-2
-cd phi-2
-git-lfs install
-git lfs pull
-cd /workspace/CS762_Project
+# cd /workspace/CS762_Project
+# git clone https://huggingface.co/microsoft/phi-2
+# cd phi-2
+# git-lfs install
+# git lfs pull
+# cd /workspace/CS762_Project
 
 # git clone https://huggingface.co/meta-llama/Llama-2-13b-hf
 # cd Llama-2-13b-hf
 # git-lfs install
 # git lfs pull
-cd /workspace/CS762_Project
-git clone https://huggingface.co/codellama/CodeLlama-7b-Python-hf
-cd CodeLlama-7b-Python-hf
-git-lfs install
-git lfs pull
-cd /workspace/CS762_Project
+# cd /workspace/CS762_Project
+# git clone https://huggingface.co/codellama/CodeLlama-7b-Python-hf
+# cd CodeLlama-7b-Python-hf
+# git-lfs install
+# git lfs pull
+# cd /workspace/CS762_Project
 
 # git clone https://huggingface.co/codellama/CodeLlama-34b-Python-hf
 # cd CodeLlama-34b-Python-hf
 # git-lfs install
 # git lfs pull
 
-git clone https://huggingface.co/intfloat/e5-base-v2
-cd e5-base-v2
-git-lfs install
-git lfs pull
-cd /workspace/CS762_Project
+# git clone https://huggingface.co/intfloat/e5-base-v2
+# cd e5-base-v2
+# git-lfs install
+# git lfs pull
+# cd /workspace/CS762_Project
 
-git clone https://huggingface.co/intfloat/e5-large-v2
-cd e5-large-v2
-git-lfs install
-git lfs pull
-cd /workspace/CS762_Project
+# git clone https://huggingface.co/intfloat/e5-large-v2
+# cd e5-large-v2
+# git-lfs install
+# git lfs pull
+# cd /workspace/CS762_Project
 
 # git config --global user.email "karthiksuresh324@gmail.com"
 # git config --global user.name "Karthik Suresh"

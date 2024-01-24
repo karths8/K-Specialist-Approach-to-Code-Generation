@@ -24,6 +24,9 @@ sudo apt-get install git-lfs
 sudo apt-get install unzip
 sudo apt-get install htop
 sudo apt-get install nano
+curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+unzip awscliv2.zip
+sudo ./aws/install
 # for openai
 sudo apt install python3.12 
 # git clone https://huggingface.co/meta-llama/Llama-2-13b-hf
@@ -75,6 +78,11 @@ sudo apt install python3.12
 # git-lfs install
 # git lfs pull
 # cd /workspace/CS762_Project
+
+git clone https://huggingface.co/Salesforce/codegen-350M-mono
+cd codegen-350M-mono
+git-lfs install
+git lfs pull
 
 # git clone https://huggingface.co/intfloat/e5-large-v2
 # cd e5-large-v2

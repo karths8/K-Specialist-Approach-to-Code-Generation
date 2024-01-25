@@ -30,8 +30,12 @@ sudo ./aws/install
 export AWS_ACCESS_KEY_ID=AKIAU6GDU6QKYDI55MJV
 export AWS_SECRET_ACCESS_KEY=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
 export AWS_DEFAULT_REGION=us-east-2
+# Pull from AWS
 aws s3 cp --recursive s3://codegen-project-bucket/Datasets/ /workspace/CS762_Project/Datasets
 aws s3 cp --recursive s3://codegen-project-bucket/Ablations/ /workspace/CS762_Project/Ablations
+# Push to AWS
+aws s3 cp --recursive /workspace/CS762_Project/Datasets s3://codegen-project-bucket/Datasets/ 
+aws s3 cp --recursive /workspace/CS762_Project/Ablations s3://codegen-project-bucket/Ablations/ 
 # for openai
 sudo apt install python3.12 
 # git clone https://huggingface.co/meta-llama/Llama-2-13b-hf

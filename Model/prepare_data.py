@@ -9,12 +9,11 @@ from datasets import load_dataset
 from sklearn.model_selection import train_test_split
 
 parser = argparse.ArgumentParser(description='Options')
-parser.add_argument('--input_file', default='/workspace/CS762_Project/Data_files/final_combined_data_Dec15_mod_asserts.json', type=str, help="input file")
+parser.add_argument('--train_file', default='/workspace/CS762_Project/Ablations/Data_Quantity/data_splits_powers_of_2.json', type=str, help="training file")
+parser.add_argument('--val_file', default='/workspace/CS762_Project/Ablations/Data_Quantity/data_splits_powers_of_2_val.json', type=str, help="validation file")
+parser.add_argument('--output_path', default='/workspace/CS762_Project/Ablations/Data_Quantity/', type=str, help="output path")
 parser.add_argument('--tokenizer_dir', default='/workspace/CS762_Project/CodeLlama-7b-Python-hf', type=str, help="tokenizer directory")
 parser.add_argument('--output_file', default='generated_data', type=str, help="output directory")
-parser.add_argument('--kmeans_data_path', default='/workspace/CS762_Project/Kmeans_data', type=str, help="kmeans data path")
-# parser.add_argument('--total', default=5, type=int, help="total clusters")
-
 args = parser.parse_args()
 
 system_prompt = '''You are an assistant tasked with generating code given a question and some Examples and/or Explanations along with the question. The question as well as some examples with input and expected outputs will be between [Question] and [/Question]. You must answer the programming question with python code within the [Code] and [/Code] blocks'''
@@ -23,7 +22,7 @@ def make_chat_template(chat_type,data):
     if chat_type=='system':
         chat = [{"role": "system","content":data['input']}]
     elif chat_type=='sample':
-        chat = [{"role": "user","content":data['input']},{"role": "assistant","content":data['output']}]
+        chat = [{"role": "user","content":data['question']},{"role": "assistant","content":data['output']}]
     return chat
 
 def write_csv(rows,file_path):
@@ -32,14 +31,10 @@ def write_csv(rows,file_path):
         writer.writerows(rows)
 
 def make_prompt_str(data):
-    assert_num = min(random.randint(0,4), len(data['modified_asserts']))
-    assert_str = '\n'.join(random.sample(data['modified_asserts'], assert_num))
     prompt_str=f'''
 [Question]
         
 {data['question']}
-
-{assert_str}
 
 [/Question]
 '''
@@ -80,10 +75,6 @@ def get_llama_prompts(data, args, test=False):
     # print(prompt_list[0])
     for idx,i in enumerate(prompt_list):
         chat_content = i[:-1] if test else i
-        if isinstance(data[idx]['asserts'], list):
-            asserts_string = str('\n'.join(data[idx]['asserts']))
-        else:
-            asserts_string = data[idx]['asserts']
         llama_prompts.append({'question':data[idx]['question'],'prompt':tokenizer.apply_chat_template(chat_content, tokenize=False), 'code':data[idx]['code'], 'asserts':asserts_string})
     return llama_prompts
 
@@ -94,35 +85,24 @@ def make_set_list(data_prompts):
     return data_list
 
 def main():
-    folders = os.listdir(args.kmeans_data_path)
-    model_name = args.tokenizer_dir.split('/')[-1]
-    base_path = f'/workspace/CS762_Project/Prepared_data/{model_name}'
-    for folder in folders:
-        total = int(folder[2:])
-        data_path = os.path.join(args.kmeans_data_path, folder, 'clustered_data.json')
-        with open(data_path, 'r') as json_file:
-            clustered_data = json.load(json_file)
-
-        for k in clustered_data:
-            data_k = clustered_data[k]
-            train_data, test_data = split_train_test(data_k)
-            train_prompts = get_llama_prompts(train_data, args)
-            test_prompts = get_llama_prompts(test_data, args)
-            # print(train_prompts[0])
-            train_list = make_set_list(train_prompts)
-            test_list = make_set_list(test_prompts)
-            # print(test_prompts[0])
-            dir_path = os.path.join(base_path, f'k_{total}')
-            os.makedirs(dir_path, exist_ok=True)
-            train_op_path = os.path.join(dir_path,f'k_{total}_train_{k}.csv')
-            val_op_path = os.path.join(dir_path,f'k_{total}_val_{k}.csv')
-            write_csv(train_list,train_op_path)
-            write_csv(test_list,val_op_path)
-            dataset = load_dataset("csv", data_files={'train':train_op_path, 'val':val_op_path})
-            print('Dataset Loaded: ')
-            print(dataset)
-            dataset_op_path = os.path.join(dir_path,args.output_file+f'_k_{total}_cluster_{k}')
-            dataset.save_to_disk(dataset_op_path)
+    with open(args.train_file, 'r') as json_file:
+        train_data = json.load(json_file)
+    with open(args.val_file, 'r') as json_file:
+        val_data = json.load(json_file)
+    train_prompts = get_llama_prompts(train_data, args)
+    val_prompts = get_llama_prompts(val_data, args)
+    # print(train_prompts[0])
+    train_list = make_set_list(train_prompts)
+    test_list = make_set_list(test_prompts)
+    train_op_path = os.path.join(args.output_path, 'train.csv')
+    val_op_path = os.path.join(args.output_path, 'validation.csv')
+    write_csv(train_list,train_op_path)
+    write_csv(test_list,val_op_path)
+    dataset = load_dataset("csv", data_files={'train':train_op_path, 'val':val_op_path})
+    print('Dataset Loaded: ')
+    print(dataset)
+    dataset_op_path = os.path.join(args.output_path, 'prepared_data')
+    dataset.save_to_disk(dataset_op_path)
 
 
 if __name__=='__main__':

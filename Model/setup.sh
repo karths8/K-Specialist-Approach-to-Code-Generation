@@ -1,5 +1,4 @@
 pip install vllm
-pip install lexicalrichness
 pip install radon
 pip install peft
 pip install openai
@@ -15,6 +14,7 @@ pip install sentence-transformers
 pip install matplotlib
 pip install trl
 pip install einops
+pip install voyageai
 pip install -U git+https://github.com/huggingface/transformers.git 
 pip install -U git+https://github.com/huggingface/peft.git
 pip install -U git+https://github.com/huggingface/accelerate.git
@@ -27,6 +27,11 @@ sudo apt-get install nano
 curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
 unzip awscliv2.zip
 sudo ./aws/install
+export AWS_ACCESS_KEY_ID=AKIAU6GDU6QKYDI55MJV
+export AWS_SECRET_ACCESS_KEY=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
+export AWS_DEFAULT_REGION=us-east-2
+aws s3 cp --recursive s3://codegen-project-bucket/Datasets/ /workspace/CS762_Project/Datasets
+aws s3 cp --recursive s3://codegen-project-bucket/Ablations/ /workspace/CS762_Project/Ablations
 # for openai
 sudo apt install python3.12 
 # git clone https://huggingface.co/meta-llama/Llama-2-13b-hf
@@ -57,19 +62,20 @@ sudo apt install python3.12
 # git lfs pull
 # cd /workspace/CS762_Project
 
-# git clone https://huggingface.co/meta-llama/Llama-2-13b-hf
-# cd Llama-2-13b-hf
-# git-lfs install
-# git lfs pull
 # cd /workspace/CS762_Project
-# git clone https://huggingface.co/codellama/CodeLlama-7b-Python-hf
-# cd CodeLlama-7b-Python-hf
+# git clone https://huggingface.co/codellama/CodeLlama-7b-hf
+# cd CodeLlama-7b-hf
 # git-lfs install
 # git lfs pull
 # cd /workspace/CS762_Project
 
-# git clone https://huggingface.co/codellama/CodeLlama-34b-Python-hf
-# cd CodeLlama-34b-Python-hf
+# git clone https://huggingface.co/codellama/CodeLlama-34b-hf
+# cd CodeLlama-13b-hf
+# git-lfs install
+# git lfs pull
+
+# git clone https://huggingface.co/codellama/CodeLlama-13b-hf
+# cd CodeLlama-13b-hf
 # git-lfs install
 # git lfs pull
 
@@ -79,10 +85,10 @@ sudo apt install python3.12
 # git lfs pull
 # cd /workspace/CS762_Project
 
-git clone https://huggingface.co/Salesforce/codegen-350M-mono
-cd codegen-350M-mono
-git-lfs install
-git lfs pull
+# git clone https://huggingface.co/Salesforce/codegen-350M-mono
+# cd codegen-350M-mono
+# git-lfs install
+# git lfs pull
 
 # git clone https://huggingface.co/intfloat/e5-large-v2
 # cd e5-large-v2
@@ -90,5 +96,5 @@ git lfs pull
 # git lfs pull
 # cd /workspace/CS762_Project
 
-# git config --global user.email "karthiksuresh324@gmail.com"
-# git config --global user.name "Karthik Suresh"
+git config --global user.email "karthiksuresh324@gmail.com"
+git config --global user.name "Karthik Suresh"

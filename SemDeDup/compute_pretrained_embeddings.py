@@ -51,7 +51,8 @@ class CodeJsonDataset(Dataset):
     def load_json_data(self):
         df = pd.read_json(self.dataset_json_file_path)
         df['ID'] = range(0, len(df))
-        return df
+        # remove the .head(200) post validating
+        return df.head(200)
 
 if __name__ == '__main__':
     # dataset to be deduped

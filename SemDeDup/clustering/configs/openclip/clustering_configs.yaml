@@ -7,8 +7,8 @@ paths_memory_loc: "/workspace/CS762_Project/SemDeDup/code_alpaca_results/paths_m
 sorted_clusters_file_loc: "/workspace/CS762_Project/SemDeDup/code_alpaca_results/sorted_clusters"
 save_folder: "/workspace/CS762_Project/SemDeDup/code_alpaca_results/save_location"
 path_str_dtype: "float32"
-ncentroids: 1000
-dataset_size: 2017
+ncentroids: 20
+dataset_size: 200
 emb_size: 1024
 niter: 100
 seed: 1234

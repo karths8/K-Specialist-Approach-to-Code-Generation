@@ -36,6 +36,7 @@ aws s3 cp --recursive s3://codegen-project-bucket/Ablations/ /workspace/CS762_Pr
 # Push to AWS
 # aws s3 cp --recursive /workspace/CS762_Project/Datasets s3://codegen-project-bucket/Datasets/ 
 # aws s3 cp --recursive /workspace/CS762_Project/Ablations s3://codegen-project-bucket/Ablations/ 
+# aws s3 cp --recursive /workspace/CS762_Project/Backup s3://codegen-project-bucket/Backup/ 
 # for openai
 sudo apt install python3.12 
 # git clone https://huggingface.co/meta-llama/Llama-2-13b-hf

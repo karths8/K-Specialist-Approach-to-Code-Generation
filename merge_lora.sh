@@ -1,7 +1,0 @@
-# python /workspace/CS762_Project/Model/merge_lora.py --num_clusters 1 --model_dir /workspace/CS762_Project/phi-2 --lora_0 2000
-# python /workspace/CS762_Project/Model/merge_lora.py --num_clusters 5 --model_dir /workspace/CS762_Project/phi-2 --lora_0 700 --lora_1 400 --lora_2 1300 --lora_3 1400 --lora_4 600
-# python /workspace/CS762_Project/Model/merge_lora.py --num_clusters 10 --model_dir /workspace/CS762_Project/phi-2 --lora_0 500 --lora_1 500 --lora_2 500 --lora_3 450 --lora_4 350 --lora_5 400 --lora_6 250 --lora_7 450 --lora_8 500 --lora_9 450
-# python /workspace/CS762_Project/Model/merge_lora.py --num_clusters 1 --model_dir /workspace/CS762_Project/CodeLlama-7b-Python-hf --lora_0 9000
-# python /workspace/CS762_Project/Model/merge_lora.py --num_clusters 5 --model_dir /workspace/CS762_Project/CodeLlama-7b-Python-hf --lora_0 1200 --lora_1 600 --lora_2 2400 --lora_3 2700 --lora_4 1200
-python /workspace/CS762_Project/Model/merge_lora.py --num_clusters 10 --model_dir /workspace/CS762_Project/CodeLlama-7b-Python-hf --lora_0 1000 --lora_1 1000 --lora_2 1000 --lora_3 900 --lora_4 700 --lora_5 800 --lora_6 500 --lora_7 900 --lora_8 1000 --lora_9 900
-# python /workspace/CS762_Project/Model/merge_lora.py --num_clusters 1 --model_dir /workspace/CS762_Project/deepseek-coder-6.7b-base --lora_0 9000

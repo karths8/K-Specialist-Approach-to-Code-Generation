@@ -1,0 +1,9 @@
+python Model/train_model.py --model_name /workspace/CS762_Project/phi-2 --num_clusters 1 --lora_r=128 --lora_alpha=256 --per_device_train_batch_size 4 --save_steps 500 --num_train_epochs 1 2>&1 | tee /workspace/CS762_Project/logs/phi-2_k_1.log
+python Model/train_model.py --model_name /workspace/CS762_Project/phi-2 --num_clusters 5 --lora_r=128 --lora_alpha=256 --per_device_train_batch_size 4 --save_steps 100 --num_train_epochs 2 2>&1 | tee /workspace/CS762_Project/logs/phi-2_k_5.log
+python Model/train_model.py --model_name /workspace/CS762_Project/phi-2 --num_clusters 10 --lora_r=128 --lora_alpha=256 --per_device_train_batch_size 4 --save_steps 50 --num_train_epochs 2 2>&1 | tee /workspace/CS762_Project/logs/phi-2_k_10.log
+
+# python Model/train_model.py --model_name /workspace/CS762_Project/deepseek-coder-6.7b-base --num_clusters 1 --lora_r=128 --lora_alpha=256 --per_device_train_batch_size 2 --save_steps 1000 --num_train_epochs 2 2>&1 | tee /workspace/CS762_Project/logs/deepseek-coder-6.7b-base_k_1.log
+# python Model/train_model.py --model_name /workspace/CS762_Project/deepseek-coder-6.7b-base --num_clusters 5 --lora_r=128 --lora_alpha=256 --per_device_train_batch_size 2 --save_steps 300 --num_train_epochs 2 2>&1 | tee /workspace/CS762_Project/logs/deepseek-coder-6.7b-base_k_5.log
+
+# python Model/train_model.py --model_name /workspace/CS762_Project/CodeLlama-7b-Python-hf --num_clusters 1 --lora_r=128 --lora_alpha=256 --per_device_train_batch_size 2 --save_steps 1000 --num_train_epochs 2 2>&1 | tee /workspace/CS762_Project/logs/CodeLlama-7b-Python-hf_k_1.log
+# python Model/train_model.py --model_name /workspace/CS762_Project/CodeLlama-7b-Python-hf --num_clusters 5 --lora_r=128 --lora_alpha=256 --per_device_train_batch_size 2 --save_steps 300 --num_train_epochs 2 2>&1 | tee /workspace/CS762_Project/logs/CodeLlama-7b-Python-hf_k_5.log

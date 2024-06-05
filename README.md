@@ -12,6 +12,8 @@ Please click [here](https://drive.google.com/file/d/1ZcJ-SixqcS4sSS8PtZCU-i7z79v
 
 We introduce a new model training and inference pipeline involving K-means clustering and a novel dataset to perform SFT (Supervised Fine Tuning) for code generation. We adopt several techniques to generate data samples synthetically, emphasizing data quality and complexity. Benchmarking our dataset against other SFT datasets for code generation, we find ours has the highest complexity scores, as evidenced by higher Cyclomatic and Halstead Complexity measures. Using a novel procedure, we train phi-2 (2.7B) and CodeLlama-Python-7B. We leveraged our collected data to train a K-means clustering model using embeddings from a Sentence Embedding model. By training the K-means model on embeddings from our collected SFT dataset, we can split the SFT data into K splits. We use these K data splits to train K LoRA adapters, acting as K experts on the given semantic cluster of questions. Using our method, our best model, phi-2 (K=10), achieves **53.54%** *pass@1* on the HumanEval benchmark, comparable to the _pass@1_ performance of larger parameter models. As we increase the K value, we also see an increase in coding performance.
 
+<!-- 
+
 # Synthetic Data Generation
 
 ![Screen Shot 2024-06-05 at 4 06 31 PM](https://github.com/karths8/K-Specialist-Approach-to-Code-Generation/assets/47289950/e29a16d4-952f-40b0-bd1d-bd545b2f1b08)
@@ -20,6 +22,11 @@ Three Data Generation Strategies we prototyped for our training dataset. **Strat
 keyword list to produce a meaningful question-code pair. **Strategy 2** generated data points similar to the in-context examples
 with slight modifications. **Strategy 3**, a combination of **Strategy 1** and **Strategy 2**, generated complex and
 unique data points.
+
+-->
+
+
+
 
 ## Model Training
 

@@ -42,6 +42,8 @@ model (2.7B) and CodeLlama-7B Python variant. The Sentence Embedding model we us
 
 We achieved a **53.54%** *pass@1* rate using phi-2 2.7B when **K=10** and training on the dataset we had collected. This is comparable to many of the higher parameter code generation models in terms of coding performance as assessed by the [HumanEval benchmark]([url](https://github.com/openai/human-eval)) 
 
+<div style="text-align: center;">
+
 | Model                   | pass@1 | pass@10 |
 |-------------------------|--------|---------|
 | **Closed-Source Models** |        |         |
@@ -64,6 +66,8 @@ We achieved a **53.54%** *pass@1* rate using phi-2 2.7B when **K=10** and traini
 | CodeLlama-Python-7B **(K=1)**| 41.95%| 68.33%  |
 | CodeLlama-Python-7B **(K=5)**| 44.63%| 69.40%  |
 | CodeLlama-Python-7B **(K=10)**|42.44%| 69.50%  |
+
+</div>
 
 ## Reproducibility
 

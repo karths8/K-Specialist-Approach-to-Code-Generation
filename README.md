@@ -1,6 +1,6 @@
 # CS762 Final Project: K-Specialist Approach to Code Generation
 
-**Authors (In descending order of contribution):** \
+**Authors:** \
 \
 Karthik Suresh (ksuresh6@wisc.edu)\
 Hafeez Ali Anees Ali (aneesali@wisc.edu)\
@@ -39,47 +39,6 @@ We achieved a **53.54%** *pass@1* rate using phi-2 2.7B when **K=10** and traini
 | CodeLlama-Python-7B **(K=5)**| 44.63%| 69.40%  |
 | CodeLlama-Python-7B **(K=10)**|42.44%| 69.50%  |
 
-
-## Information on Code
-
-The following sub-heading refers to a folder in the codebase, and following that will be a description of what we used it for and details about the files within
-
-### Data
-
-The dataset we collect with the collection process as detailed in the paper is stored in `collected_data.json`
-
-### Data Generation
-
-These are the files that we used to prompt GPT-3.5
-
-`generate_new_examples_gpt.py` has code that prompts GPT-3.5 for a response. 
-
-`multiprocess_generate.py` leverages multiprocessing capabilities to spawn multiple requests to GPT-3.5 on multiple threads. This helped us in getting synthetic data at good speeds. Care must be taken to ensure that the rate limits on the requests to the OpenAI servers are not crossed.
-
-### Data Processing
-
-The files here are used to process the data into types and styles we may need during data generation, training, and inferencing. 
-
-`prepare_data.py` is used to prepare data from a `json` file for training. We use the [Huggingface Chat Templating](https://huggingface.co/docs/transformers/main/en/chat_templating) capabilities to tailor the prompt style for each of the models we train 
-
-`prepare_data_human_eval.py` is used to prepare the [HumanEval](https://github.com/openai/human-eval) data
-
-### Training
-
-Files related to training the models are kept here
-
-`kmeans-fit.py` is used to train a K-means Clustering model given the input training data
-
-`train_model.py` handles the training of the phi-2 and CodeLlama models by leveraging [QLoRA](https://github.com/artidoro/qlora)
-
-`merge_lora.py` is used as and when we need to merge the LoRA adapter weights to the base PLM (Pretrained Language Model)
-
-### Inference
-
-`inference.py` is used to perform inference given a model path
-
-`vllm_inference.py` leverages the ultrafast inferencing capabilities of the [vLLM engine](https://github.com/vllm-project/vllm) to produce generations
-
 ## Reproducibility
 
 Since running trainings or the model pipeline is not computationally feasible for reproducibility, we provide the `.jsonl` files that were generate for the HumanEval benchmark
@@ -107,5 +66,48 @@ You may use a conda env for this as outlined in the [human-eval](https://github.
 ```
 $ evaluate_functional_correctness /path/to/dir/{M}-humaneval-generations/human_eval_k_{K}_temp_{T}.jsonl
 ```
+
+
+The following sub-heading refers to a folder in the codebase, and following that will be a description of what we used it for and details about the files within
+
+## Data
+
+The dataset we collect with the collection process as detailed in the paper is stored in `collected_data.json`
+
+<br/>
+
+## Data Generation
+
+These are the files that we used to prompt GPT-3.5
+
+`generate_new_examples_gpt.py` has code that prompts GPT-3.5 for a response. 
+
+`multiprocess_generate.py` leverages multiprocessing capabilities to spawn multiple requests to GPT-3.5 on multiple threads. This helped us in getting synthetic data at good speeds. Care must be taken to ensure that the rate limits on the requests to the OpenAI servers are not crossed.
+<br/>
+## Data Processing
+
+The files here are used to process the data into types and styles we may need during data generation, training, and inferencing. 
+
+`prepare_data.py` is used to prepare data from a `json` file for training. We use the [Huggingface Chat Templating](https://huggingface.co/docs/transformers/main/en/chat_templating) capabilities to tailor the prompt style for each of the models we train 
+
+`prepare_data_human_eval.py` is used to prepare the [HumanEval](https://github.com/openai/human-eval) data
+<br/>
+## Training
+
+Files related to training the models are kept here
+
+`kmeans-fit.py` is used to train a K-means Clustering model given the input training data
+
+`train_model.py` handles the training of the phi-2 and CodeLlama models by leveraging [QLoRA](https://github.com/artidoro/qlora)
+
+`merge_lora.py` is used as and when we need to merge the LoRA adapter weights to the base PLM (Pretrained Language Model)
+<br/>
+## Inference
+
+`inference.py` is used to perform inference given a model path
+
+`vllm_inference.py` leverages the ultrafast inferencing capabilities of the [vLLM engine](https://github.com/vllm-project/vllm) to produce generations
+
+
 
 where K is one of {1, 5, 10} and temp is one of {0.2, 0.8} and M is one of {'phi-2', 'Codellama-Python-7B'}

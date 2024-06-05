@@ -1,15 +1,15 @@
 # CS762 Final Project: K-Specialist Approach to Code Generation
 
 **Authors (In order of contribution):** 
-Karthik Suresh (ksuresh6@wisc.edu)
-Hafeez Ali Anees Ali (aneesali@wisc.edu)
+Karthik Suresh (ksuresh6@wisc.edu)\
+Hafeez Ali Anees Ali (aneesali@wisc.edu)\
 Calvin Kranig (ckranig@wisc.edu)
 
 Note: our report is include at `report.pdf`
 
 ## Abstract
 
-We introduce a new model training and inference pipeline involving the use of K-means clustering and a novel dataset to perform SFT (Supervised Fine Tuning) for code generation. We adopt a number of techniques to generate data samples synthetically with an emphasis on data quality and complexity. Benchmarking our dataset against other SFT datasets for code generation, we find that ours has the highest complexity scores, as evidenced by higher Cyclomatic and Halstead Complexity measures, while underperforming on the Diversity benchmark. During the training phase, we train phi-2 (2.7B) and CodeLlama-Python-7B using a novel procedure. We leveraged our collected data to train a K-means clustering model using embeddings from a Sentence Embedding model. By training the K-means model on embeddings from our collected SFT dataset, we are able to split the SFT data into K splits. We use these K data splits to train K LoRA adapters. Using our method, our best model, phi-2 (K=10), achieves **53.54%** *pass@1* on the HumanEval benchmark, which is comparable to the _pass@1_ performance of the CodeLlama-Python-34B variant. Moreover, we see an increase in performance as we increase K while keeping the number of data points the same. 
+We introduce a new model training and inference pipeline involving the use of K-means clustering and a novel dataset to perform SFT (Supervised Fine Tuning) for code generation. We adopt several techniques to generate data samples synthetically, emphasizing data quality and complexity. Benchmarking our dataset against other SFT datasets for code generation, we find ours has the highest complexity scores, as evidenced by higher Cyclomatic and Halstead Complexity measures. Using a novel procedure, we train phi-2 (2.7B) and CodeLlama-Python-7B. We leveraged our collected data to train a K-means clustering model using embeddings from a Sentence Embedding model. By training the K-means model on embeddings from our collected SFT dataset, we can split the SFT data into K splits. We use these K data splits to train K LoRA adapters which act as K experts on the given semantic cluster of questions. Using our method, our best model, phi-2 (K=10), achieves **53.54%** *pass@1* on the HumanEval benchmark, which is comparable to the _pass@1_ performance of larger parameter models. As we increase the K value, we also see an increase in coding performance.
 
 ## Results
 
@@ -51,11 +51,11 @@ These are the files that we used to prompt GPT-3.5
 
 `generate_new_examples_gpt.py` has code that prompts GPT-3.5 for a response. 
 
-`multiprocess_generate.py` leverages multiprocessing capabilities to spawn multiple requests to GPT-3.5 on multiple threads. This helped us in getting synthetic data at good speeds.
+`multiprocess_generate.py` leverages multiprocessing capabilities to spawn multiple requests to GPT-3.5 on multiple threads. This helped us in getting synthetic data at good speeds. Care must be taken to ensure that the rate limits on the requests to the OpenAI servers are not crossed.
 
 ### Data Processing
 
-The files here are used to process the data into types and styles that we may need during data generation, training and inferencing. 
+The files here are used to process the data into types and styles we may need during data generation, training, and inferencing. 
 
 `prepare_data.py` is used to prepare data from a `json` file for training. We use the [Huggingface Chat Templating](https://huggingface.co/docs/transformers/main/en/chat_templating) capabilities to tailor the prompt style for each of the models we train 
 

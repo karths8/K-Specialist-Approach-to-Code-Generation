@@ -6,7 +6,7 @@ Karthik Suresh (ksuresh6@wisc.edu)\
 Hafeez Ali Anees Ali (aneesali@wisc.edu)\
 Calvin Kranig (ckranig@wisc.edu)
 
-Please click [here]([url](https://drive.google.com/file/d/1ZcJ-SixqcS4sSS8PtZCU-i7z79vDHf__/view)) or open `report.pdf` in this repository to take a look at our paper!
+Please click [here](https://drive.google.com/file/d/1ZcJ-SixqcS4sSS8PtZCU-i7z79vDHf__/view) or open `report.pdf` in this repository to take a look at our paper!
 
 ## Abstract
 

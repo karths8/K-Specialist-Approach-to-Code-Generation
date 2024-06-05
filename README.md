@@ -1,17 +1,20 @@
 # CS762 Final Project: K-Specialist Approach to Code Generation
 
-**Authors (In order of contribution):** 
+**Authors (In descending order of contribution):** \
+\
 Karthik Suresh (ksuresh6@wisc.edu)\
 Hafeez Ali Anees Ali (aneesali@wisc.edu)\
 Calvin Kranig (ckranig@wisc.edu)
 
-Note: our report is include at `report.pdf`
+Please take a look at `report.pdf` to see our full paper
 
 ## Abstract
 
-We introduce a new model training and inference pipeline involving the use of K-means clustering and a novel dataset to perform SFT (Supervised Fine Tuning) for code generation. We adopt several techniques to generate data samples synthetically, emphasizing data quality and complexity. Benchmarking our dataset against other SFT datasets for code generation, we find ours has the highest complexity scores, as evidenced by higher Cyclomatic and Halstead Complexity measures. Using a novel procedure, we train phi-2 (2.7B) and CodeLlama-Python-7B. We leveraged our collected data to train a K-means clustering model using embeddings from a Sentence Embedding model. By training the K-means model on embeddings from our collected SFT dataset, we can split the SFT data into K splits. We use these K data splits to train K LoRA adapters which act as K experts on the given semantic cluster of questions. Using our method, our best model, phi-2 (K=10), achieves **53.54%** *pass@1* on the HumanEval benchmark, which is comparable to the _pass@1_ performance of larger parameter models. As we increase the K value, we also see an increase in coding performance.
+We introduce a new model training and inference pipeline involving K-means clustering and a novel dataset to perform SFT (Supervised Fine Tuning) for code generation. We adopt several techniques to generate data samples synthetically, emphasizing data quality and complexity. Benchmarking our dataset against other SFT datasets for code generation, we find ours has the highest complexity scores, as evidenced by higher Cyclomatic and Halstead Complexity measures. Using a novel procedure, we train phi-2 (2.7B) and CodeLlama-Python-7B. We leveraged our collected data to train a K-means clustering model using embeddings from a Sentence Embedding model. By training the K-means model on embeddings from our collected SFT dataset, we can split the SFT data into K splits. We use these K data splits to train K LoRA adapters, acting as K experts on the given semantic cluster of questions. Using our method, our best model, phi-2 (K=10), achieves **53.54%** *pass@1* on the HumanEval benchmark, comparable to the _pass@1_ performance of larger parameter models. As we increase the K value, we also see an increase in coding performance.
 
 ## Results
+
+We achieved a **53.54%** *pass@1* rate using phi-2 2.7B when **K=10** and training on the dataset we had collected. This is comparable to many of the higher parameter code generation models in terms of coding performance as assessed by the [HumanEval benchmark]([url](https://github.com/openai/human-eval)) 
 
 | Model                   | pass@1 | pass@10 |
 |-------------------------|--------|---------|
@@ -39,7 +42,7 @@ We introduce a new model training and inference pipeline involving the use of K-
 
 ## Information on Code
 
-The following sub-heading refer to a folder in the codebase and following that will be a description of what we used is for and details about the files within
+The following sub-heading refers to a folder in the codebase, and following that will be a description of what we used it for and details about the files within
 
 ### Data
 

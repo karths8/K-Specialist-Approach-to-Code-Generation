@@ -1,6 +1,9 @@
 # CS762 Final Project: K-Specialist Approach to Code Generation
 
-**Authors:** Karthik Suresh (ksuresh6@wisc.edu), Hafeez Ali Anees Ali (aneesali@wisc.edu), Calvin Kranig (ckranig@wisc.edu)
+**Authors (In order of contribution):** 
+Karthik Suresh (ksuresh6@wisc.edu)
+Hafeez Ali Anees Ali (aneesali@wisc.edu)
+Calvin Kranig (ckranig@wisc.edu)
 
 Note: our report is include at `report.pdf`
 

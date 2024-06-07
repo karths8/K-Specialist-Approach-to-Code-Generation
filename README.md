@@ -1,4 +1,4 @@
-# CS762 Final Project: K-Specialist Approach to Code Generation
+# K-Specialist Approach to Code Generation
 
 **Authors:** \
 \
@@ -6,7 +6,7 @@ Karthik Suresh (ksuresh6@wisc.edu)\
 Hafeez Ali Anees Ali (aneesali@wisc.edu)\
 Calvin Kranig (ckranig@wisc.edu)
 
-Please click [here](https://drive.google.com/file/d/1ZcJ-SixqcS4sSS8PtZCU-i7z79vDHf__/view) or open `report.pdf` in this repository to take a look at our paper!
+Please click [here](https://drive.google.com/file/d/1ZcJ-SixqcS4sSS8PtZCU-i7z79vDHf__/view) or open `report.pdf` in this repository to view our paper!
 
 ## Abstract
 
@@ -34,7 +34,7 @@ unique data points.
 
 Above is the training pipeline we followed to train our model. The Training dataset we used corresponds to the dataset we collected, as
 detailed in Section 2. The PLM (Pretrained Language model), which we use as our base for training, is one of two models: The phi-2
-model (2.7B) and CodeLlama-7B Python variant. The Sentence Embedding model we use is e5-base-v2
+model (2.7B) and CodeLlama-7B Python variant. The Sentence Embedding model we use is [e5-base-v2](https://huggingface.co/intfloat/e5-base-v2)
 . The K different ∆W’s correspond to K different LoRA weight updates.
 
 
